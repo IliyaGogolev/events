@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'home_widget.dart';
-import 'login/ui/login.dart';
 import 'login/ui/signup.dart';
 
 class Application extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
-    LoginWidget.tag: (context) => LoginWidget(),
+    SignupWidget.tag: (context) => SignupWidget(),
     HomeWidget.tag: (context) => HomeWidget(),
   };
 

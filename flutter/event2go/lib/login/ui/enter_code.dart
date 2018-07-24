@@ -54,7 +54,7 @@ class EnterSmsCodeState extends State<EnterSmsCodeWidget> {
 
         ),
         children: <TextSpan>[
-          new TextSpan(text: 'Activation code was sent via SMS to \n'),
+          new TextSpan(text: 'We just sent you activation code to \n'),
           new TextSpan(text: '${widget.phoneNumber}', style: new TextStyle(fontWeight: FontWeight.bold)),
           new TextSpan(text: ' Wrong Number? ', style: new TextStyle(color: Colors.blue),
               recognizer: new TapGestureRecognizer()
@@ -73,15 +73,29 @@ class EnterSmsCodeState extends State<EnterSmsCodeWidget> {
       ],
     );
 
-    int maxLength = 6;
+    int codeMaxLength = 6;
+    String codeText;
 
-    final codeText = TextField(
+    final codeTextField = TextField(
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         controller: _controllerCode,
         onChanged: (String newVal) {
-          if(newVal.length == maxLength){
-              onCodeEntered();
+          if(newVal.length > codeMaxLength){
+            _controllerCode.value = new TextEditingValue(
+                text: codeText,
+                selection: new TextSelection(
+                    baseOffset: codeMaxLength,
+                    extentOffset: codeMaxLength,
+                    affinity: TextAffinity.downstream,
+                    isDirectional: false
+                ),
+                composing: new TextRange(
+                    start: 0, end: codeMaxLength
+                )
+            );
+          } else {
+            codeText = newVal;
           }
 
         },
@@ -121,29 +135,45 @@ class EnterSmsCodeState extends State<EnterSmsCodeWidget> {
     );
 
 
-    final codeTextField = Container(
+    final codeTextContainer = Container(
       width: 130.0,
-      child: codeText,
+      child: codeTextField,
     );
 
-    final loginButton = Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0),
-//        child: Material(
-//          elevation: 5.0,
-          child: FlatButton(
-//            minWidth: 200.0,
-//            height: 42.0,
-            onPressed: () {
-              onResendSmsButtonClicked();
 
-              print("Resend");
-            },
-            child: Text(
-              'Resend SMS',
-              style: TextStyle(color: Colors.green, fontSize: 16.0),
-            ),
-//          ),
-        ));
+    var verifyButton = new Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new OutlineButton(
+//          borderSide: BorderSide(width: 2.0),
+            child: Text('Verifye Me'),
+            color: Colors.blue,
+            borderSide: new BorderSide(color: Colors.indigo, width: 2.0),
+            onPressed: (() {
+              onVerifyCodeButtonClicked();
+            }))
+      ],
+    );
+
+
+    var resendCodeButton = new Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new MaterialButton(
+//          borderSide: BorderSide(width: 2.0),
+            child: Text('Resend SMS'),
+//            color: Colors.blue,
+            textColor: Colors.green,
+//            borderSide: new BorderSide(color: Colors.green, width: 2.0),
+            onPressed: (() {
+              print("Resend sms / code");
+              onResendSmsButtonClicked();
+            })),
+
+      ],
+    );
 
 // todo    https://stackoverflow.com/questions/47065098/how-work-with-progress-indicator-in-flutter
 
@@ -160,13 +190,15 @@ class EnterSmsCodeState extends State<EnterSmsCodeWidget> {
                        crossAxisAlignment: CrossAxisAlignment.center,
                        mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        codeTextField,
+                        codeTextContainer,
                         SizedBox(height: 10.0),
                         codeTextHint
                       ]
                    ),
-                  SizedBox(height: 38.0),
-                  loginButton,
+                  SizedBox(height: 17.0),
+                   verifyButton,
+                   SizedBox(height: 28.0),
+                  resendCodeButton,
                   SizedBox(height: 38.0),
 
                 ],
@@ -206,4 +238,10 @@ class EnterSmsCodeState extends State<EnterSmsCodeWidget> {
   void onCodeEntered() {
     domain.sendCode(widget.verificationId, _controllerCode.text);
   }
+
+  void onVerifyCodeButtonClicked() {
+    domain.sendCode(widget.verificationId, _controllerCode.text);
+  }
+
+
 }

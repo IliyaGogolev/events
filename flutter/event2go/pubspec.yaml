@@ -25,6 +25,17 @@ dev_dependencies:
     sdk: flutter
 
 
+# [+] Help
+# ios 'Flutter/Flutter.h' not found
+# https://github.com/dart-flitter/flutter_webview_plugin/issues/78
+
+# open ios project, run from terminal
+# open ios/Runner.xcworkspace
+
+# permission denied
+# chmod a+x /Users/Username/Project/.../ios/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh
+# [-] Help end
+
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 

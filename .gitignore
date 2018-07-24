@@ -41,3 +41,4 @@ app/release/
 old/*
 google-services.json
 key.jks
+GoogleService-Info.plist

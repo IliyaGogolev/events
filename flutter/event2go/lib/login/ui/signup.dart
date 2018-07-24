@@ -6,8 +6,8 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 //https://medium.com/@boldijar.paul/comboboxes-in-flutter-cabc9178cc95
 
 class SignupWidget extends StatefulWidget {
-//  List<String> _countrycodes = ["+65", "+91"];
-//  List<String> _colors = ['', 'red', 'green', 'blue', 'orange'];
+
+  static String tag = 'signup-widget';
 
   var domain = new SendPhoneNumberUseCase();
 
@@ -29,7 +29,8 @@ class SignupPageState extends State<SignupWidget> {
   String _currentCity;
 
   TextEditingController _controllerCode = new TextEditingController();
-  MaskedTextController _controllerPhone = new MaskedTextController(mask: '(000) 000-0000');
+  TextEditingController _controllerPhone = new MaskedTextController(mask: '(000) 000-0000');
+//  TextEditingController _controllerPhone = new TextEditingController();
   String _selectedCountryName;
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
@@ -141,11 +142,17 @@ class SignupPageState extends State<SignupWidget> {
           }
 
         },
+        style: new TextStyle(
+            fontSize: 18.0,
+            color: Colors.black
+        ),
       autofocus: false,
 //      initialValue: '1',
+      textAlign: TextAlign.center,
       decoration: InputDecoration(
+
         hintText: '',
-        contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+        contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
 //        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
         border: UnderlineInputBorder(),
       )
@@ -160,6 +167,10 @@ class SignupPageState extends State<SignupWidget> {
         controller: _controllerPhone,
         keyboardType: TextInputType.number,
         autofocus: false,
+        style: new TextStyle(
+          fontSize: 18.0,
+          color: Colors.black
+        ),
         decoration: InputDecoration(
           hintText: 'phone number',
           contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
@@ -170,38 +181,25 @@ class SignupPageState extends State<SignupWidget> {
 //          LengthLimitingTextInputFormatter.digitsOnly,
 //        ]
     );
+    _controllerPhone.text = "408-555-6969";
 
 
-    final test = Container(
+    final inputRowContainer = Container(
         child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-//              Expanded(
-//                  child: Column(
-//                    crossAxisAlignment: CrossAxisAlignment.start,
-//                    children: [
-//
-//                      codeTextField,
-//                    ],
-//                  ),
-//              )
-//        Expanded(
-//
-//              child:Container(
-//                width: 30.0,
-//                child: codeTextField,
-//              )),
-//              Text("+", textAlign: TextAlign.justify, ),
               new Container(
                   padding: EdgeInsets.only(top: 8.0),
                   child: new Text(
                       '+',
                       style: new TextStyle(
                         fontFamily: 'Roboto',
+                        fontSize: 18.0
                       )
                   )
               ),
               Container(
-                width: 60.0,
+                width: 50.0,
                 child: codeTextField,
               ),
               SizedBox(width: 18.0),
@@ -230,16 +228,9 @@ class SignupPageState extends State<SignupWidget> {
             Center(
               child: cities,
             ),
-//                email,
-//                SizedBox(height: 18.0),
-//                password,
-//                SizedBox(height: 18.0),
-//                passwordConfirmation,
-//                SizedBox(height: 18.0),
-//                 countryCode,
+
             SizedBox(height: 18.0),
-//            codeTextField,
-            test,
+            inputRowContainer,
             SizedBox(height: 18.0),
             loginButton,
             SizedBox(height: 38.0),
@@ -250,9 +241,16 @@ class SignupPageState extends State<SignupWidget> {
 //  validator: _validatePhoneNumber,
   String _validatePhoneNumber(String value) {
 //    _formWasEdited = true;
-    final RegExp phoneExp = new RegExp(r'^\(\d\d\d\) \d\d\d\-\d\d\d\d$');
-    if (!phoneExp.hasMatch(value))
-      return '(###) ###-#### - Enter a US phone number.';
+//    final RegExp phoneExp = new RegExp(r'^\(\d\d\d\) \d\d\d\-\d\d\d\d$');
+//    if (!phoneExp.hasMatch(value))
+//      return '(###) ###-#### - Enter a US phone number.';
+
+    final RegExp phoneExp = new RegExp("(\\+[0-9]+[\\- \\.]*)?"        // +<digits><sdd>*
+        + "(\\([0-9]+\\)[\\- \\.]*)?"   // (<digits>)<sdd>*
+        + "([0-9][0-9\\- \\.]+[0-9])"); // <digit><digit|sdd>+<digit>
+    if (!phoneExp.hasMatch(value) || value.length <= 7)
+      return 'Enter a valid phone number.';
+
     return null;
   }
 
@@ -278,14 +276,46 @@ class SignupPageState extends State<SignupWidget> {
     phoneNumber = phoneNumber.replaceAll("-", "");
     phoneNumber = phoneNumber.replaceAll(" ", "");
     print("phone number: $phoneNumber");
-    widget.domain.testVerifyPhoneNumber(phoneNumber);
 
-    var route = new MaterialPageRoute(
-        builder: (BuildContext context) =>
-        new EnterSmsCodeWidget(phoneNumber : formattedPhoneNumber, verificationId: widget.domain.verificationId)
+    var error = _validatePhoneNumber(phoneNumber);
+    if (error == null) {
+      widget.domain.testVerifyPhoneNumber(phoneNumber);
+
+      var route = new MaterialPageRoute(
+          builder: (BuildContext context) =>
+          new EnterSmsCodeWidget(phoneNumber: formattedPhoneNumber,
+              verificationId: widget.domain.verificationId)
+      );
+
+      Navigator.of(context).push(route);
+    } else {
+      _openNewInputPopup(error);
+    }
+  }
+
+  void _openNewInputPopup(String text) {
+    print("popup will open");
+
+    AlertDialog dialog = new AlertDialog(
+        content: new SingleChildScrollView(
+          child: new Column(
+            children: <Widget>[
+              new Text(text,
+                style: new TextStyle(fontSize: 18.0),),
+            ],
+          ),
+        ),
+
+        actions: <Widget> [
+          new FlatButton(onPressed: () {
+            Navigator.of(context).pop();
+          }, child: new Text('Ok')),
+
+        ]
     );
 
-    Navigator.of(context).push(route);
+
+    showDialog(context: context, child: dialog);
   }
 
 }

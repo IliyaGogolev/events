@@ -1,7 +1,8 @@
 import 'package:event2go/application.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
-import 'login/ui/login.dart';
+//import 'login/ui/login.dart';
+import 'login/ui/signup.dart';
 
 //void main() => runApp(new DemoApp());
 void main() => runApp(new Application());
@@ -13,7 +14,8 @@ class DemoApp extends StatelessWidget{
         routes: <String, WidgetBuilder>{
           '/add': (BuildContext context) => new _AddContactPage()
         },
-        home: LoginWidget()
+//        home: LoginWidget()
+        home: SignupWidget()
     );
   }
 }
