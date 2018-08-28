@@ -1,28 +1,27 @@
-import 'package:event2go/application.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 
-//void main() => runApp(new DemoApp());
-void main() => runApp(new Application());
-
-class DemoApp extends StatelessWidget{
+class ContactsDemoApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
         routes: <String, WidgetBuilder>{
           '/add': (BuildContext context) => new _AddContactPage()
         },
-        home: new MyDemoApp()
+//        home: LoginWidget()
+//        home: SignupWidget()
     );
   }
 }
 
-class MyDemoApp extends StatefulWidget {
+// TEST READ CONTACTS!!!
+class MyApp extends StatefulWidget {
   @override
-  _DemoAppState createState() => new _DemoAppState();
+  _MyAppState createState() => new _MyAppState();
 }
 
-class _DemoAppState extends State<MyDemoApp> {
+class _MyAppState extends State<MyApp> {
   Iterable<Contact> _contacts;
 
   @override
