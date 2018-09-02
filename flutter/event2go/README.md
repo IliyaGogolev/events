@@ -6,3 +6,11 @@ A new Flutter application.
 
 For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).
+
+
+Issues I met: <br/>
+<ul>
+     <li>
+        Routes didn't work - two MaterialApp used, had to remove one. 
+     </li>
+</ul>

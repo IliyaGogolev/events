@@ -13,6 +13,8 @@ dependencies:
   google_sign_in: ^3.0.4
   firebase_auth: ^0.5.14
   flutter_masked_text: ^0.5.0
+  # date formatter, https://pub.dartlang.org/packages/intl#-readme-tab-
+  intl: ^0.15.7
 #  firebase_auth:
 #    git:
 #      url: git@github.com:flutter/plugins.git

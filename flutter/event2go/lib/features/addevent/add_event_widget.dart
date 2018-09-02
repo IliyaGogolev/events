@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'event_time_widget.dart';
+
 class AddEventWidget extends StatefulWidget {
   static String tag = '/addeventwidget';
 
@@ -10,7 +12,6 @@ class AddEventWidget extends StatefulWidget {
 class AddEventState extends State<AddEventWidget> {
 //  TextEditingController _controller;
 
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -20,7 +21,7 @@ class AddEventState extends State<AddEventWidget> {
         body: new SingleChildScrollView(
             child: new Column(children: <Widget>[
           new ListTile(
-            leading: const Icon(Icons.event),
+            leading: const Icon(Icons.title),
             title: new TextField(
               decoration: new InputDecoration(
                 hintText: "Name",
@@ -28,22 +29,28 @@ class AddEventState extends State<AddEventWidget> {
             ),
           ),
           new ListTile(
-            leading: const Icon(Icons.date_range),
-            title: new TextFormField(
-              initialValue: new DateTime.now().toString(),
-              decoration: new InputDecoration(
-                hintText: "Date",
-              ),
-
-            ),
-            onTap: () => showDatePicker(
-                  context: context,
-                  initialDate: new DateTime.now(),
-                  firstDate:
-                      new DateTime.now().subtract(new Duration(days: 30)),
-                  lastDate: new DateTime.now().add(new Duration(days: 30)),
-                ),
-          ),
+              leading: const Icon(Icons.date_range),
+              title: new EventTimeItem()),
+//              new ListTile(
+//                  leading: const Icon(Icons.person),
+//                  title:  new TextViewDatePicker(context)
+//              ),
+//          new ListTile(
+//            leading: const Icon(Icons.date_range),
+//            title: new TextFormField(
+//              initialValue: new DateTime.now().toString(),
+//              decoration: new InputDecoration(
+//                hintText: "Date",
+//              ),
+//            ),
+//            onTap: () => showDatePicker(
+//                  context: context,
+//                  initialDate: new DateTime.now(),
+//                  firstDate:
+//                      new DateTime.now().subtract(new Duration(days: 30)),
+//                  lastDate: new DateTime.now().add(new Duration(days: 30)),
+//                ),
+//          ),
           new ListTile(
             leading: const Icon(Icons.person_pin_circle),
             title: new TextField(

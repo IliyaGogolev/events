@@ -1,14 +1,10 @@
+import 'attendee_counts.dart';
+
 class EventPlacard {
 
-  final String eventId;
-  final DateTime dateStart;
-  final DateTime dateEnd;
-  final AttendeeCounts counts;
+  String eventId;
+  DateTime dateStart;
+  DateTime dateEnd;
+  AttendeeCounts counts;
 }
 
-class AttendeeCounts {
-  int coming;
-  int needsAction;
-  int tentative;
-  int notComing;
-}
