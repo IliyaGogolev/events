@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 // https://medium.com/flutter-community/breaking-layouts-in-rows-and-columns-in-flutter-8ea1ce4c1316
 
 class EventTimeItem extends StatefulWidget {
+
   @override
   _DateState createState() => new _DateState();
 }
@@ -26,13 +27,15 @@ class _DateState extends State<EventTimeItem> {
     _date = new DateTime.now();
     _time = new TimeOfDay.now();
     _dateText = _formatter.format(_date);
-    _timeText = _time.toString();
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    _timeText = _time.format(context);
+
     return new Container(
       child: new Row(
         children: <Widget>[
