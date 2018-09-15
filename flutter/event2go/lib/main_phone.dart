@@ -1,7 +1,8 @@
 import 'package:event2go/application.dart';
-import 'package:event2go/features/selectcontacts/ui/phone_contact_List.dart';
+//import 'package:event2go/features/selectcontacts/ui/phone_contact_List.dart';
+import 'package:event2go/features/phone/ui/select_contacts.dart';
 import 'package:flutter/material.dart';
-import 'features/selectcontacts/ui/add_contact_page.dart';
+import 'features/phone//ui/add_contact_page.dart';
 import 'package:contacts_service/contacts_service.dart';
 
 void main() => runApp(new Application());
@@ -13,7 +14,7 @@ class DemoApp extends StatelessWidget{
         routes: <String, WidgetBuilder>{
           '/add': (BuildContext context) => new AddContactPage()
         },
-        home: new PhoneContactListWidget()
+        home: new SelectContactsWidget()
     );
   }
 }

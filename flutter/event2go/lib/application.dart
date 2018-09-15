@@ -6,7 +6,7 @@ import 'home_widget.dart';
 import 'login/ui/signup.dart';
 import 'home/ui/home_tabs_view.dart';
 import 'features/addevent/add_event_widget.dart';
-import 'features/selectcontacts/ui/phone_contact_list.dart';
+import 'features/phone/ui/select_contacts.dart';
 
 class Application extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
@@ -15,7 +15,7 @@ class Application extends StatelessWidget {
     HomeWidget.tag: (context) => HomeWidget(),
     HomeTabsView.tag: (context) => HomeTabsView(),
     AddEventWidget.tag: (context) => AddEventWidget(),
-    PhoneContactListWidget.tag: (context)=> PhoneContactListWidget(),
+    SelectContactsWidget.tag: (context)=> SelectContactsWidget(),
 //
 
   };

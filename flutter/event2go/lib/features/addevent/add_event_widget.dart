@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:event2go/features/selectcontacts/ui/phone_contact_list.dart';
+import 'package:event2go/features/phone//ui/select_contacts.dart';
 import 'event_time_widget.dart';
 
 class AddEventWidget extends StatefulWidget {
@@ -70,7 +70,7 @@ class AddEventState extends State<AddEventWidget> {
 
   void _onInviteClicked(BuildContext context) {
     print("_onInviteClicked");
-    Navigator.pushNamed(context, PhoneContactListWidget.tag);
+    Navigator.pushNamed(context, SelectContactsWidget.tag);
 
   }
 }
