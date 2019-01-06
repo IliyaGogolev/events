@@ -2,8 +2,6 @@
 FLUTTER_ROOT=/Users/iliya/Qsync/Dev/Flutter/flutter
 FLUTTER_APPLICATION_PATH=/Users/iliya/Qsync/Dev/Event2go/flutter/event2go
 FLUTTER_TARGET=lib/main.dart
-FLUTTER_BUILD_MODE=debug
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios
 FLUTTER_FRAMEWORK_DIR=/Users/iliya/Qsync/Dev/Flutter/flutter/bin/cache/artifacts/engine/ios
-PREVIEW_DART_2=true

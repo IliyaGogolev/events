@@ -8,17 +8,50 @@ import 'package:simple_permissions/simple_permissions.dart';
 class SelectContactsWidget extends StatefulWidget {
   static String tag = '/phone_contacts';
 
+  final List<Contact> selectedContacts;
+
+  SelectContactsWidget(this.selectedContacts);
+
   @override
-  _SelectContactsState createState() => new _SelectContactsState();
+  _SelectContactsState createState() => new _SelectContactsState(selectedContacts);
 }
 
 class _SelectContactsState extends State<SelectContactsWidget> {
   TextEditingController controller = new TextEditingController();
 
   List<Contact> _contacts;
+  Set<String> _argContacts = new Set();
+  List<Contact> _argSelectedContacts;
+
 //  List<PhoneContact> _allContacts = List<PhoneContact>();
   List<PhoneContact> _uiCustomContacts = List<PhoneContact>();
   bool _isLoading = false;
+
+  String _toolbarText = "Select Friends ";
+  int selectedCount = 0;
+
+  _SelectContactsState(List<Contact> selectedContacts) {
+    if (selectedContacts != null) {
+      selectedCount = selectedContacts.length;
+      for (var value in selectedContacts) {
+        String phoneNumber = value.phones.first.value;
+        _argContacts.add(phoneNumber);
+        print("phoneNumber $phoneNumber");
+      }
+
+//      void iterateMapEntry(contact) {
+//        print('$contact');//string interpolation in action
+//      }
+
+//      selectedContacts.forEach(iterateMapEntry);
+//      _argContacts = Map.fromIterable(selectedContacts,
+//          key: (item) => item.phones, value: (v) => v);
+//      _argContacts = Map.fromIterable(selectedContacts,
+//          key: (item) => item.phones[0], value: (v) => v);
+
+      updateToolbarText();
+    }
+  }
 
   @override
   initState() {
@@ -27,8 +60,10 @@ class _SelectContactsState extends State<SelectContactsWidget> {
   }
 
   initPlatformState() async {
-    getContactsPermission().then((granted) async {
-      if (granted) {
+    getContactsPermission().then((permission) async {
+      if (permission == PermissionStatus.authorized) {
+        print("GetContacts !!!!");
+
         var contacts = await ContactsService.getContacts();
         setState(() {
           _populateContacts(contacts);
@@ -57,8 +92,20 @@ class _SelectContactsState extends State<SelectContactsWidget> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-            title: new Text('Select Friends '),
+          title: new Text('$_toolbarText'),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+//                  _formKey.currentState.save();
+//                  contact.postalAddresses = [address];
+//                  ContactsService.addContact(contact);
 
+                  List<Contact> selectedContacts = getSelectedContacts();
+                  Navigator.of(context).pop(selectedContacts);
+                },
+                child: Text("Save",
+                    style: TextStyle(color: Colors.white, fontSize: 16.0)))
+          ],
         ),
 //      floatingActionButton: new FloatingActionButton(
 //          child: new Icon(Icons.add),
@@ -133,21 +180,41 @@ class _SelectContactsState extends State<SelectContactsWidget> {
             activeColor: Colors.green,
             value: c.isChecked,
             onChanged: (bool value) {
-              setState(() {
-                c.isChecked = value;
-              });
-            }),
+              onContactClicked(c);
+            }
+//    ,
+//            onChanged: (bool value) {
+//              setState(() {
+//                c.isChecked = value;
+//              });
+//            }
+            ),
       ),
       onTap: () {
-        setState(() {
-          c.isChecked = !c.isChecked;
-        });
+        onContactClicked(c);
       },
     );
   }
 
-  void onSearchTextChanged(String text) async {
+  void onContactClicked(PhoneContact c) {
+    setState(() {
+      c.isChecked = !c.isChecked;
 
+      selectedCount += c.isChecked ? 1 : -1;
+
+      updateToolbarText();
+    });
+  }
+
+  void updateToolbarText() {
+    if (selectedCount > 0) {
+      _toolbarText = "$selectedCount selected";
+    } else {
+      _toolbarText = "Select Friends";
+    }
+  }
+
+  void onSearchTextChanged(String text) async {
     if (text.isEmpty) {
       _populateContacts(_contacts);
       return;
@@ -162,7 +229,6 @@ class _SelectContactsState extends State<SelectContactsWidget> {
   }
 
   void _populateContacts(Iterable<Contact> contacts) {
-
     _contacts = contacts.where((item) => item.displayName != null).toList();
 
     _contacts.sort((a, b) => a.displayName.compareTo(b.displayName));
@@ -175,6 +241,15 @@ class _SelectContactsState extends State<SelectContactsWidget> {
     });
   }
 
-  Future<bool> getContactsPermission() =>
+  Future<PermissionStatus> getContactsPermission() =>
       SimplePermissions.requestPermission(Permission.ReadContacts);
+
+  List<Contact> getSelectedContacts() {
+    List<Contact> selectedContacts = _uiCustomContacts
+        .where((i) => i.isChecked)
+        .map((i) => i.contact)
+        .toList();
+
+    return selectedContacts;
+  }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'features/phone//ui/add_contact_page.dart';
 import 'package:contacts_service/contacts_service.dart';
 
-void main() => runApp(new Application());
+void main() => runApp(new ApplicationWidget());
 
 class DemoApp extends StatelessWidget{
   @override
@@ -14,7 +14,7 @@ class DemoApp extends StatelessWidget{
         routes: <String, WidgetBuilder>{
           '/add': (BuildContext context) => new AddContactPage()
         },
-        home: new SelectContactsWidget()
+        home: new SelectContactsWidget(null)
     );
   }
 }

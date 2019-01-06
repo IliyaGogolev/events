@@ -42,3 +42,6 @@ old/*
 google-services.json
 key.jks
 GoogleService-Info.plist
+LICENSE
+
+google-cloud-sdk/*
