@@ -14,6 +14,7 @@ class HomeTabsView extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             bottom: TabBar(
               tabs: [
                 Tab(
@@ -23,7 +24,7 @@ class HomeTabsView extends StatelessWidget {
                 Tab(text: "Notification",),
               ],
             ),
-            title: Text('Tabs Demo'),
+            title: Text('My Events'),
           ),
           body: TabBarView(
             children: [

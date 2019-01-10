@@ -1,10 +1,11 @@
 import 'package:event2go/data/app_provider.dart';
+import 'package:event2go/data/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AppProviderWidget extends StatefulWidget {
   // Your apps state is managed by the container
-  final AppProvider appProvider;
+  final AppModel appModel;
 
   // This widget is simply the root of the tree,
   // so it has to have a child!
@@ -12,7 +13,7 @@ class AppProviderWidget extends StatefulWidget {
 
   AppProviderWidget({
     @required this.child,
-    this.appProvider,
+    this.appModel,
   });
 
   // This creates a method on the AppProvider that's just like 'of'
@@ -31,7 +32,7 @@ class AppProviderWidget extends StatefulWidget {
 class _AppProviderWidgetState extends State<AppProviderWidget> {
   // Just padding the state through so we don't have to
   // manipulate it with widget.state.
-  AppProvider appProvider;
+  AppModel appProvider;
 
   @override
   void initState() {
@@ -46,8 +47,10 @@ class _AppProviderWidgetState extends State<AppProviderWidget> {
   // AppProviderContainer --> InheritedStateContainer --> The rest of your app.
   @override
   Widget build(BuildContext context) {
-    appProvider = new AppProvider(
-      child: widget.child);
+    appProvider = new AppModel(
+      child: widget.child,
+        user: new User()
+    );
 //    return widget.child;
     return appProvider;
   }

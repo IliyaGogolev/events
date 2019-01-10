@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:event2go/data/user.dart';
 
-class AppProvider extends InheritedModel<String> {
+class AppModel extends InheritedModel<String> {
 
-  AppProvider({
+  AppModel({
     @required Widget child,
-    this.user = const User()
+    this.user
   }) : assert(child != null),
         assert(user != null),
         super(child: child);
@@ -13,16 +13,16 @@ class AppProvider extends InheritedModel<String> {
   final User user;
 
   @override
-  bool updateShouldNotify(AppProvider old) => false;
+  bool updateShouldNotify(AppModel old) => false;
 
 //    return user.token.compareTo(old.user.token) != 0
 
   @override
-  bool updateShouldNotifyDependent(AppProvider old, Set<String> aspects) => false;
+  bool updateShouldNotifyDependent(AppModel old, Set<String> aspects) => false;
 //    return (user.token != old.user.token && aspects.contains('user'));
 //  }
 
-  static AppProvider of(BuildContext context) =>
-      context.inheritFromWidgetOfExactType(AppProvider);
+  static AppModel of(BuildContext context) =>
+      context.inheritFromWidgetOfExactType(AppModel);
 
 }
