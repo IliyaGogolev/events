@@ -65,9 +65,52 @@ FIREBASE_CONFIG="{\"databaseURL\":\"https://event2go-1234.firebaseio.com\",\"sto
 
 FIREBASE_CONFIG="{\"databaseURL\":\"https://event2go-1234.firebaseio.com\",\"storageBucket\":\"event2go-1234.appspot.com\",\"projectId\":\"event2go-1234\"}" functions deploy --trigger-http --timeout 600s someMethod1
 
+call:
+set FIREBASE_CONFIG="{\"databaseURL\":\"https://event2go-1234.firebaseio.com\",\"storageBucket\":\"event2go-1234.appspot.com\",\"projectId\":\"event2go-1234\"}" 
+functions deploy --trigger-http --timeout 600s someMethod1
+
 
 ***
 * Troubleshooting 
 *** 
 1. firebase Failed to load gRPC binary module because it was not installed for the current system
 Solution: run $> npm rebuild
+
+
+******************
+March 31, 2019
+******************
+Run local function, generated key:
+export GOOGLE_APPLICATION_CREDENTIALS=../event2go-1234-715f9cdbbe4c.json 
+
+In case of grpc build error, do:
+1. rm -r $HOME/.node-gyp
+2. npm i -S grpc
+
+Get admin config
+$>firebase setup:web
+
+console.log(JSON.stringify(JSON.stringify({
+  "apiKey": "AIzaSyBO1ahb1TOR5NHqb-BFfl3tSueqJEnM1yU",
+  "databaseURL": "https://event2go-1234.firebaseio.com",
+  "storageBucket": "event2go-1234.appspot.com",
+  "authDomain": "event2go-1234.firebaseapp.com",
+  "messagingSenderId": "894550020348",
+  "projectId": "event2go-1234"
+})))
+
+
+///  REBUILD Node (rebuild lib folder)
+$> npm run build
+$> npm --prefix functions run build
+
+// Rebuild  (lib folder) and deploy
+$> firebase deploy --only functions
+
+
+1. npm run build
+2. functions deploy CCCC  --trigger-http
+3. functions inspect CCCC
+4. chrome://inspect
+5. Source, add lib folder
+6. functions call CCCC

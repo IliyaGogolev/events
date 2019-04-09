@@ -6,14 +6,41 @@ import * as functions from 'firebase-functions';
 
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 
+// var serviceAccount = require('event2go-1234-715f9cdbbe4c.json');
+
 const admin = require('firebase-admin');
 admin.initializeApp();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
+// admin.initializeApp({
+//   "apiKey": "AIzaSyBO1ahb1TOR5NHqb-BFfl3tSueqJEnM1yU",
+//   "databaseURL": "https://event2go-1234.firebaseio.com",
+//   "storageBucket": "event2go-1234.appspot.com",
+//   "authDomain": "event2go-1234.firebaseapp.com",
+//   "messagingSenderId": "894550020348",
+//   "projectId": "event2go-1234"
+// });
+
+const settings = {
+	// credential: admin.credential.cert(serviceAccount),
+	timestampsInSnapshots: true};
 admin.firestore().settings(settings);
 
- export const helloWorld = functions.https.onRequest((request, response) => {
-  // response.send("Hello from Firebase!");
-  response.status(200).send('Hello, World!');
+
+
+
+
+ export const CCCC = functions.https.onRequest((request, response) => {
+	// response.send("Hello from  AAA Firebase!");
+	// admin.auth().getUserByPhoneNumber("+14085556969").then(
+	// 	function(userRecord) {
+	// 		console.log("Successfully fetched user data:", userRecord.toJSON());
+	// 		response.status(200).send(userRecord.toJSON());
+	// 	}).catch(function(error) {
+	// 		console.log("Error fetching user data:", error);
+	// 		response.status(200).send('Hello, World! ' + error.message);
+	//  });
+
+	response.status(200).send("CCCC");
+  
  });
 
 
@@ -82,10 +109,7 @@ exports.someMethod1 = functions.https.onRequest((req, response) => {
 		response.json(reason.messages);
 		
 	})
-});
-
-
-// const functions = require('firebase-functions');
+});// const functions = require('firebase-functions');
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 // const admin = require('firebase-admin');
