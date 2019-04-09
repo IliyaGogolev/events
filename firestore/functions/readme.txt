@@ -4,6 +4,7 @@
 npm install -g @google-cloud/functions-emulator
 npm install -g firebase-tools
 firebase setup:emulators:database
+yarn add express.
 
 *********************
 * functions-emulator config
@@ -107,7 +108,10 @@ $> npm --prefix functions run build
 // Rebuild  (lib folder) and deploy
 $> firebase deploy --only functions
 
+// transactions:
+https://firebase.google.com/docs/firestore/manage-data/transactions
 
+0. cd functions
 1. npm run build
 2. functions deploy CCCC  --trigger-http
 3. functions inspect CCCC

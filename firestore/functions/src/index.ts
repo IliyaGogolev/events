@@ -3,7 +3,13 @@ import * as functions from 'firebase-functions';
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
+const express = require('express');
+const cors = require('cors');
 
+const app = express();
+
+// Automatically allow cross-origin requests
+app.use(cors({ origin: true }));
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 
 // var serviceAccount = require('event2go-1234-715f9cdbbe4c.json');
