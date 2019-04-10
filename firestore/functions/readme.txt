@@ -3,8 +3,10 @@
 ******
 npm install -g @google-cloud/functions-emulator
 npm install -g firebase-tools
+npm install express --save
+npm install cors --save
 firebase setup:emulators:database
-yarn add express.
+
 
 *********************
 * functions-emulator config
@@ -114,6 +116,7 @@ https://firebase.google.com/docs/firestore/manage-data/transactions
 0. cd functions
 1. npm run build
 2. functions deploy CCCC  --trigger-http
+2.1 Use "firebase deploy --only functions" <-- maybe deploying to server
 3. functions inspect CCCC
 4. chrome://inspect
 5. Source, add lib folder

@@ -3,27 +3,27 @@ import * as functions from 'firebase-functions';
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
-const express = require('express');
-const cors = require('cors');
+// const express = require('express');
+// const cors = require('cors');
 
-const app = express();
+// const app = express();
 
 // Automatically allow cross-origin requests
-app.use(cors({ origin: true }));
+// app.use(cors({ origin: true }));
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 
 // var serviceAccount = require('event2go-1234-715f9cdbbe4c.json');
 
 const admin = require('firebase-admin');
-admin.initializeApp();
-// admin.initializeApp({
-//   "apiKey": "AIzaSyBO1ahb1TOR5NHqb-BFfl3tSueqJEnM1yU",
-//   "databaseURL": "https://event2go-1234.firebaseio.com",
-//   "storageBucket": "event2go-1234.appspot.com",
-//   "authDomain": "event2go-1234.firebaseapp.com",
-//   "messagingSenderId": "894550020348",
-//   "projectId": "event2go-1234"
-// });
+// admin.initializeApp();
+admin.initializeApp({
+  "apiKey": "AIzaSyBO1ahb1TOR5NHqb-BFfl3tSueqJEnM1yU",
+  "databaseURL": "https://event2go-1234.firebaseio.com",
+  "storageBucket": "event2go-1234.appspot.com",
+  "authDomain": "event2go-1234.firebaseapp.com",
+  "messagingSenderId": "894550020348",
+  "projectId": "event2go-1234"
+});
 
 const settings = {
 	// credential: admin.credential.cert(serviceAccount),
@@ -132,3 +132,69 @@ exports.someMethod1 = functions.https.onRequest((req, response) => {
 //    return res.redirect(303, snapshot.ref.toString());
 //  });
 //});
+
+
+
+// Add middleware to authenticate requests
+// app.use(myMiddleware);
+
+const express = require('express');
+const cors = require('cors');
+const app = express();
+var bodyParser = require('body-parser');
+
+// Automatically allow cross-origin requests
+app.use(cors({ origin: true }));
+
+//configure bodyparser
+var bodyParserJSON = bodyParser.json();
+var bodyParserURLEncoded = bodyParser.urlencoded({extended:true});
+
+// configure app.use()
+// app.use(log);
+app.use(bodyParserJSON);
+app.use(bodyParserURLEncoded);
+
+
+// // build multiple CRUD interfaces:
+// app.get('/:id', (req, res) => res.send(Widgets.getById(req.params.id)));
+// app.post('/', (req, res) => res.send(Widgets.create()));
+// app.put('/:id', (req, res) => res.send(Widgets.update(req.params.id, req.body)));
+// app.delete('/:id', (req, res) => res.send(Widgets.delete(req.params.id)));
+// app.get('/', (req, res) => res.send(Widgets.list()));
+
+// use express router
+var eventRouter = express.Router();
+// module.exports = function(router) {
+    // router.post('/getEvent/:id', (req, res) => res.send(req.params.id));
+    eventRouter.get('/get/:id', (req, res) => res.send(req.params.id));
+    // router.get('/get/:name', Heros.getHero);
+    // router.put('/update/:id', Heros.updateHero);
+    // router.delete('/remove/:id', Heros.removeHero);
+// }
+app.use('/event',eventRouter);
+// http://localhost:8010/event2go-1234/us-central1/api/event/get/123
+
+var userRouter = express.Router();
+// module.exports = function(router) {
+    // router.post('/getEvent/:id', (req, res) => res.send(req.params.id));
+    userRouter.get('/:id', (req, res) => res.send(req.params.id));
+    // router.get('/get/:name', Heros.getHero);
+    // router.put('/update/:id', Heros.updateHero);
+    // router.delete('/remove/:id', Heros.removeHero);
+// }
+app.use('/user',userRouter);
+
+
+// Error handling
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+     res.setHeader("Access-Control-Allow-Credentials", "true");
+     res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+     res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization");
+   next();
+ });
+//  http://localhost:8010/event2go-1234/us-central1/api/user/2343
+
+// Expose Express API as a single Cloud Function:
+exports.api = functions.https.onRequest(app);
