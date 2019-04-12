@@ -9,14 +9,16 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
-  "main": "lib/index.js",
+  "main": "build/index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "firebase-admin": "^6.5.1",
     "firebase-functions": "^2.2.1",
     "firebase-tools": "^6.6.0",
-    "grpc": "^1.19.0"
+    "grpc": "^1.19.0",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "tslint": "~5.8.0",

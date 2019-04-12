@@ -72,6 +72,10 @@ call:
 set FIREBASE_CONFIG="{\"databaseURL\":\"https://event2go-1234.firebaseio.com\",\"storageBucket\":\"event2go-1234.appspot.com\",\"projectId\":\"event2go-1234\"}" 
 functions deploy --trigger-http --timeout 600s someMethod1
 
+****
+* CHECK 
+*****
+nodemod for firebase - auto restart node when code changed
 
 ***
 * Troubleshooting 
@@ -121,3 +125,6 @@ https://firebase.google.com/docs/firestore/manage-data/transactions
 4. chrome://inspect
 5. Source, add lib folder
 6. functions call CCCC
+
+
+https://github.com/bradtraversy/express_crash_course/tree/master/routes/api
