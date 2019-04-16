@@ -117,6 +117,7 @@ $> firebase deploy --only functions
 // transactions:
 https://firebase.google.com/docs/firestore/manage-data/transactions
 
+00. [sudo] functions start
 0. cd functions
 1. npm run build
 2. functions deploy CCCC  --trigger-http

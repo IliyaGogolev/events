@@ -105,5 +105,5 @@ const validateFirebaseIdToken = async (req, res, next) => {
 // APIs
 // app.use(validateFirebaseIdToken);
 app.use('/user', require('./routers/api/users'));
-
+app.use('/event', require('./routers/api/events'));
 exports.api = functions.https.onRequest(app);
