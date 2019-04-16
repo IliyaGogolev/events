@@ -128,3 +128,6 @@ https://firebase.google.com/docs/firestore/manage-data/transactions
 
 
 https://github.com/bradtraversy/express_crash_course/tree/master/routes/api
+
+https://us-central1-event2go-1234.cloudfunctions.net/api/user/DxiAmnzhTcRRHabUukHEAdQUsq12
+http://localhost:8010/event2go-1234/us-central1/api/user/fTS9AUhwhNb7RgE93sZnkDXeixQ2

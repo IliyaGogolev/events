@@ -4,10 +4,7 @@ const express = require('express');
 var usersRouter = express.Router();
 const admin = require('firebase-admin');
 
-// module.exports = function(router) {
-    // router.post('/getEvent/:id', (req, res) => res.send(req.params.id));
-		// userRouter.get('/:id', (req, res) => res.send(req.params.id));
-usersRouter.get('/:id', (req, res) => {
+usersRouter.get('/test/:id', (req, res) => {
 
     const users = [{
         id: `1`,
@@ -27,22 +24,34 @@ usersRouter.get('/:id', (req, res) => {
     }
 });
 
+
+
+usersRouter.get('/:uid', (req, res) => {
+
+    let stuff = [];	
+	const db = admin.firestore();
+
+	admin.auth().getUser(req.params.uid).then(snapshot => {
+    // fTS9AUhwhNb7RgE93sZnkDXeixQ2
+    // db.auth.doc(req.params.uid).get().then(snapshot => {
+
+		 console.log('snapshot ' + snapshot);
+		//  if (snapshot.exists) {
+			res.json(snapshot);
+		//  } else {
+            // res.status(400).json({ msg: `No user with id ${req.params.id}`})
+		//  }
+
+    }).catch(reason => {
+        res.status(400).json({ msg: `No user with id ${req.params.id}`, error: reason.message})
+        // res.json(reason.messages);
+    })
+});
+
 usersRouter.get('/db/:id', (req, res) => {
 
     let stuff = [];	
 	const db = admin.firestore();
-	
-
-// 	const comments = []
-// firebase.firestore().collection('/comments').get().then(snapshot => {
-//   snapshot.docs.forEach(doc => {
-//     const comment = doc.data()
-//     comment.userRef.get().then(snap => {
-//       comment.user = snap.data()
-//       comments.push(comment)
-//     })
-//   })
-// })
 
     db.collection("events").doc("DqVjCk3WyWhLlPS7Aoa8").get().then(snapshot => {
 
@@ -91,7 +100,57 @@ usersRouter.get('/db/:id', (req, res) => {
     })
 });
 
+usersRouter.get('/db/:id', (req, res) => {
 
+    let stuff = [];	
+	const db = admin.firestore();
+
+    db.collection("events").doc("DqVjCk3WyWhLlPS7Aoa8").get().then(snapshot => {
+
+		 console.log('snapshot ' + snapshot);
+		 if (snapshot.exists) {
+			// var returnArr = [];
+
+			// snapshot.forEach(function(childSnapshot) {
+			// 	var item = childSnapshot.val();
+			// 	item.key = childSnapshot.key;
+
+			// 	returnArr.push(item);
+			// });
+
+			//return returnArr;
+			res.json(snapshot.data());
+		 } else {
+			res.json();
+		 }
+ 		// if (snapshot.docs.length === 1) {
+ 	    //       	const newelement = {
+	    //             "id": snapshot.doc.id,
+	    //             "location_name": snapshot.doc.data().location_name,
+	    //         }
+	    //         stuff = stuff.concat(newelement);
+		// } else {
+	    //     snapshot.forEach(doc => {
+
+	    //     	console.log('doc ' + doc);
+	    //       	const newelement = {
+	    //             "id": doc.id,
+	    //             "location_name": doc.data().location_name,
+	    //         }
+	    //         stuff = stuff.concat(newelement);
+		// 	});
+		// }
+        // }
+			// response.status(200).send('Hello, World 1!');
+		
+    }).catch(reason => {
+		console.log('BBB (1): ' + reason);
+    	console.log('BBB (2): ' + reason.messages);
+		
+		res.json(reason.messages);
+		
+    })
+});
 
 // export const CCCC = functions.https.onRequest((request, response) => {
 	// response.send("Hello from  AAA Firebase!");
