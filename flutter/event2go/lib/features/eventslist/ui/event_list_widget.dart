@@ -1,4 +1,4 @@
-import 'package:event2go/login/ui/signup.dart';
+// import 'package:event2go/login/ui/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:event2go/features/addevent/add_event_widget.dart';
 
@@ -12,7 +12,7 @@ class EventListState extends State<EventListWidget> {
   Widget build(BuildContext context) {
 //    return Text("AA");
     return new Scaffold(
-      body: Text("EVNETS EVENTS"),
+      body: Text("EVENTS TAB"),
       floatingActionButton: eventsFab()
 
     );

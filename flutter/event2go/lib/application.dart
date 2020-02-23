@@ -1,11 +1,11 @@
 import 'package:event2go/features/splash/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 
 import 'home_widget.dart';
-import 'login/ui/signup.dart';
-import 'home/ui/home_tabs_view.dart';
+import 'features/login/ui/signup.dart';
+import 'features/home/ui/home_tabs_view.dart';
 import 'features/addevent/add_event_widget.dart';
 import 'features/phone/ui/select_contacts.dart';
 
@@ -49,8 +49,8 @@ class ApplicationWidget extends StatelessWidget {
 
 //      home: HomeTabsView(),
 //      home: ChatListView(),
-//      initialRoute: '/',
-      initialRoute: SplashScreen.tag,
+      initialRoute: '/',
+//      initialRoute: SplashScreen.tag,
 //      routes: routes,
       routes: routes
     );

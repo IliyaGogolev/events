@@ -1,12 +1,14 @@
 class User {
 
-  User({this.token, this.test = "111"});
+//  User({this.token, this.test = "111"});
+  User({this.token, this.uid, this.phoneNumber, this.email});
 
-  final String test;
+//  final String test;
 
   String token;
   String uid;
   String phoneNumber;
+  String email;
 
 //  final String phoneNumber;
 //  final String name;

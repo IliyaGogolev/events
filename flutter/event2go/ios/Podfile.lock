@@ -1,5 +1,5 @@
 PODS:
-  - contacts_service (0.0.1):
+  - contacts_service (0.2.1):
     - Flutter
   - Firebase/Auth (5.4.1):
     - Firebase/CoreOnly
@@ -56,15 +56,18 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - simple_permissions (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - contacts_service (from `.symlinks/plugins/contacts_service/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
+  - simple_permissions (from `.symlinks/plugins/simple_permissions/ios`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -85,23 +88,26 @@ EXTERNAL SOURCES:
     :path: ".symlinks/flutter/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
+  simple_permissions:
+    :path: ".symlinks/plugins/simple_permissions/ios"
 
 SPEC CHECKSUMS:
-  contacts_service: 3d584b5457e56df4e68608a765b0dfc88b80479c
+  contacts_service: 64ebf2a313b34bff0acf668efac52ae402ba9be0
   Firebase: 355bd535bfdacaa82a7fe8d9784115edefd6fc03
-  firebase_auth: 27a5a77a032d557c18f8e223aaf8ec1368f6cdbc
+  firebase_auth: 6023fc2e28feabd6571d9a105b678cce7978be90
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseAuth: 096e457cdd4274412a66c4a35874787e411f5a03
   FirebaseCore: 4c28e3b9708ba48a765e76515f913a71596eb5dd
   FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
-  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  google_sign_in: cbeb57b96679823d14df6b2240b629b983a42d79
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  google_sign_in: 27e70a98b529f0b076d4b19f231b81da28b1750b
   GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
+  GTMOAuth2: e8b6512c896235149df975c41d9a36c868ab7fba
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  simple_permissions: 149cd87a11f83c24bf99f6e8a82f9fc8b70be233
 
-PODFILE CHECKSUM: 52215c9b7a2aeded63e5ae399bd7a3bd52f8df3b
+PODFILE CHECKSUM: 42e01ae90c1ef2dbe353486cb269745a61352c44
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.8.1

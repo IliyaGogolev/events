@@ -49,11 +49,12 @@ class _MyAppState extends State<MyApp> {
           itemCount: _contacts?.length ?? 0,
           itemBuilder: (BuildContext context, int index) {
             Contact c = _contacts?.elementAt(index);
+            var c2 = c;
             return new ListTile(
               onTap: () { Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new _ContactDetails(c)));},
               leading: (c.avatar != null && c.avatar.length > 0) ?
               new CircleAvatar(backgroundImage: new MemoryImage(c.avatar)):
-              new CircleAvatar(child:  new Text(c.displayName?.length > 1 ? c.displayName?.substring(0, 2) : "")),
+              new CircleAvatar(child:  new Text(c2.displayName.length > 1 ? c.displayName?.substring(0, 2) : "")),
               title: new Text(c.displayName ?? ""),
             );
           },
