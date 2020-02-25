@@ -1,4 +1,5 @@
 // import 'package:event2go/login/ui/signup.dart';
+import 'package:event2go/net/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:event2go/features/addevent/add_event_widget.dart';
 
@@ -8,6 +9,12 @@ class EventListWidget extends StatefulWidget {
 }
 
 class EventListState extends State<EventListWidget> {
+  @override
+  void initState() {
+    super.initState();
+    loadEvents();
+  }
+
   @override
   Widget build(BuildContext context) {
 //    return Text("AA");
@@ -38,6 +45,14 @@ class EventListState extends State<EventListWidget> {
 ////      int index = _todoItems.length;
 ////      _todoItems.add('Item ' + index.toString());
 //    });
+  }
+
+  void loadEvents() async {
+    ApiProvider p = new ApiProvider();
+    var events = await p.getEvents();
+    for (final e in events) {
+      print ("Event $e");
+    }
   }
 
 }

@@ -1,47 +1,47 @@
+import 'package:event2go/utils/pair.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // used tutorial:
 // https://medium.com/flutter-community/breaking-layouts-in-rows-and-columns-in-flutter-8ea1ce4c1316
+// TODO add address auto complete https://www.youtube.com/watch?v=cRw7s4p9vn8
 
-class EventTimeItem extends StatefulWidget {
+///  Pass `new DateTime.now()` as date to set up default value;
+class DateSelectionWidget extends StatefulWidget {
+  final ValueChanged<DateTime> onChange;
+  DateTime date;
+
+  DateSelectionWidget({DateTime date, TimeOfDay time, this.onChange, Key key})
+      : date = date ?? DateTime.now(),
+        super(key: key);
 
   @override
   _DateState createState() => new _DateState();
 }
 
-class _DateState extends State<EventTimeItem> {
+class _DateState extends State<DateSelectionWidget> {
   TextEditingController _c;
 
   var _formatter = new DateFormat('MM-dd-yyyy');
 
-  DateTime _date;
-  TimeOfDay _time;
   String _dateText;
   String _timeText;
 
   @override
   void initState() {
     _c = new TextEditingController();
-
-    _date = new DateTime.now();
-    _time = new TimeOfDay.now();
-    _dateText = _formatter.format(_date);
-
+    _dateText = _formatter.format(widget.date);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    _timeText = _time.format(context);
+    TimeOfDay time = TimeOfDay.fromDateTime(widget.date);
+    _timeText = time.format(context);
 
     return new Container(
       child: new Row(
-        children: <Widget>[
-          getDateTextView(context),
-          getTimeTextView(context)
-        ],
+        children: <Widget>[getDateTextView(context), getTimeTextView(context)],
       ),
     );
   }
@@ -62,13 +62,13 @@ class _DateState extends State<EventTimeItem> {
                     fontSize: 16.0,
                   )),
               onTap: () => showDatePicker(
-                    context: context,
-                    initialDate: _date,
-                    firstDate: _date.subtract(new Duration(days: 30)),
-                    lastDate: _date.add(new Duration(days: 30)),
-                  ).then((value) {
-                    _onDateChanged(value);
-                  }),
+                context: context,
+                initialDate: widget.date,
+                firstDate: widget.date.subtract(new Duration(days: 30)),
+                lastDate: widget.date.add(new Duration(days: 30)),
+              ).then((value) {
+                _onDateChanged(value);
+              }),
             ),
           ],
         ),
@@ -87,7 +87,8 @@ class _DateState extends State<EventTimeItem> {
 //                "9:50",
                 style: new TextStyle(fontSize: 16.0),
               ),
-              onTap: () => showTimePicker(context: context, initialTime: _time)
+              onTap: () =>
+                  showTimePicker(context: context, initialTime: getTime())
                       .then((value) {
                     _onTimeChanged(value, context);
                   })),
@@ -98,10 +99,11 @@ class _DateState extends State<EventTimeItem> {
 
   void _onDateChanged(date) {
     setState(() {
-      // If the lake is currently favorited, unfavorite it.
       if (date != null) {
-        _date = date;
+        widget.date = new DateTime(date.year, date.month,
+            date.day, widget.date.hour, widget.date.minute);
         _dateText = _formatter.format(date);
+        onDateTimeChanged();
       }
     });
   }
@@ -110,9 +112,20 @@ class _DateState extends State<EventTimeItem> {
     setState(() {
       // If the lake is currently favorited, unfavorite it.
       if (time != null) {
-        _time = time;
-        _timeText =_time.format(context);
+//        widget.time = time;
+        widget.date = new DateTime(widget.date.year, widget.date.month,
+            widget.date.day, time.hour, time.minute);
+        _timeText = time.format(context);
+        onDateTimeChanged();
       }
     });
+  }
+
+  void onDateTimeChanged() {
+    widget.onChange(widget.date);
+  }
+
+  TimeOfDay getTime() {
+    return TimeOfDay.fromDateTime(widget.date);
   }
 }
