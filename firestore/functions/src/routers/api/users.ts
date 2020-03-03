@@ -1,5 +1,8 @@
 // import { user } from "firebase-functions/lib/providers/auth";
 
+// Fix for cannot redeclare block-scoped variable
+export {};
+
 const express = require('express');
 var usersRouter = express.Router();
 const admin = require('firebase-admin');

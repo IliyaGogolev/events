@@ -3,20 +3,19 @@ const express1 = require('express');
 var eventsRouter = express1.Router();
 const admin1 = require('firebase-admin');
 
-// http://localhost:8010/event2go-1234/us-central1/api/event/
-// body example:
+// Example: 
 // {
 // 	"confirm_attending_type": "days",
-// 	"confirm_attending_val": 2,
-// 	"description": "My awesome event",
+// 	"confirm_attending_val": 12,
+// 	"description": "My aaa event",
 // 	"location": {
-// 		"latitude": 34.163345,
+// 		"latitude": 32.163345,
 // 		"longitude": -118.379921
 // 	},
 // 	"location_name": "Topange mall",
 // 	"name": "Test event",
-// 	"end_at": "",
-// 	"start_at": ""
+// 	"end_at": "2013-09-29T18:46:19-0700",
+// 	"start_at": "2013-09-29T18:46:19-0000"
 // }
 eventsRouter.post('/', (req, res) => {
     
@@ -31,20 +30,21 @@ eventsRouter.post('/', (req, res) => {
         return
     }
 
-    let d = new Date();
-    let date = {
+    let data = {
         name : jsonData.name,
         description : jsonData.description, 
         confirm_attending_type : jsonData.confirm_attending_type,
         confirm_attending_val : jsonData.confirm_attending_val,        
-        loc : point,
+        location : point,
         location_name : jsonData.location_name,
-        // end_at : "",
-        // start_at: ""        
-        created_at: d.getTime()
+        end_at : new Date(jsonData.end_at),
+        start_at: new Date(jsonData.start_at),     
+        created_at: new Date(), 
+        // created_at: admin1.firestore().FieldValue.serverTimestamp()
+
     }
 
-    db.collection("events").add(jsonData)
+    db.collection("events").add(data)
     .then(function(docRef) {
         console.log("Event document written with ID: ", docRef.id);
         res.json({ id: docRef.id})
@@ -71,6 +71,36 @@ eventsRouter.get('/:id', (req, res) => {
 		
     }).catch(reason => {
 		res.status(400).json({ msg: `No event with id ${req.params.id}`, error: reason.message})
+    })
+});
+
+eventsRouter.delete('/:id', (req, res) => {
+    let stuff = [];	
+    const db = admin1.firestore();
+    
+    // var sessionsRef = firebase.database().ref("sessions");
+// sessionsRef.push({
+// startedAt: firebase.database.ServerValue.TIMESTAMP // this will write 'startedAt: 1537806936331`
+// });
+
+    const eventId = req.params.id;
+    if (!eventId) throw new Error('id is blank');
+
+    db.collection("events").doc(eventId).get().then(snapshot => {
+
+        console.log('snapshot ' + snapshot);
+        if (!snapshot.exists) {
+           res.status(400).json({"success":false,  msg: `No event with id ${req.params.id}`})
+        }
+       
+   }).catch(reason => {
+       res.status(400).json({"success":false, msg: `No event with id ${req.params.id}`, error: reason.message})
+   })
+
+    db.collection("events").doc(eventId).delete().then(function() {
+		res.json({"success":true});
+    }).catch(reason => {
+        res.status(400).json({ "success":false, msg: `No event with id ${req.params.id}`, error: reason.message})
     })
 });
 
