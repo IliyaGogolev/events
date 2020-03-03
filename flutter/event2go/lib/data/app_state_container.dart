@@ -19,8 +19,7 @@ class AppStateContainer extends StatefulWidget {
   // On MediaQueries, Theme, etc
   // This is the secret to accessing your AppState all over your app
   static _AppStateContainerState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(_InheritedStateContainer)
-            as _InheritedStateContainer)
+    return context.dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()
         .data;
   }
 

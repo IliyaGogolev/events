@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:event2go/data/app_provider.dart';
+import 'package:event2go/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:event2go/login/ui/signup.dart';
+import 'package:event2go/features/login/ui/signup.dart';
 
 class SplashScreen extends StatefulWidget {
   static String tag = 'splashscreen';
@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     appModel = AppModel.of(context);
-    debugPrint("AAA: " + appModel.user.test);
+    debugPrint("AAA: " + appModel.user.uid);
 
     return Scaffold(
       backgroundColor: widget.backgroundColor,

@@ -1,6 +1,22 @@
 name: event2go
 description: A new Flutter application.
 
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+# environment:
+#   sdk: ">=2.1.0 <3.0.0"
+  
 dependencies:
   flutter:
     sdk: flutter
@@ -8,16 +24,23 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
   english_words: ^3.1.0
-  contacts_service: ^0.0.8
+  contacts_service: ^0.2.8
   google_sign_in: ^3.0.4
   firebase_auth: ^0.5.14
   flutter_masked_text: ^0.6.0
-  simple_permissions: ^0.1.6
+  simple_permissions: ^0.1.9
   # date formatter, https://pub.dartlang.org/packages/intl#-readme-tab-
   intl: ^0.15.7
   # used for @immutable
   meta: ^1.1.6
-
+  http: ^0.12.0+4
+# https://flutter.dev/docs/development/data-and-backend/json#code-generation
+# $> flutter packages pub run build_runner build
+  json_annotation: ^3.0.1
+# https://github.com/flutterchina/dio#examples
+  dio: ^3.0.9
+https://flutter:
+  dev/docs/development/data-and-backend/json#code-generation:
 #  firebase_auth:
 #    git:
 #      url: git@github.com:flutter/plugins.git
@@ -28,6 +51,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^1.0.0
+  json_serializable: ^3.2.5
 
 #environment:
 #    sdk: '>=1.23.0 <3.0.0'

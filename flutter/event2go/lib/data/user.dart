@@ -1,12 +1,23 @@
+import 'package:json_annotation/json_annotation.dart';
+
+/// the star denotes the source file name.
+part 'user.g.dart';
+
+@JsonSerializable()
 class User {
 
-  User({this.token, this.test = "111"});
+//  User({this.token, this.test = "111"});
+  User({this.token, this.uid, this.phoneNumber, this.email});
 
-  final String test;
+//  final String test;
 
   String token;
   String uid;
   String phoneNumber;
+  String email;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
 //  final String phoneNumber;
 //  final String name;
