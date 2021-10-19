@@ -380,6 +380,7 @@ class SignupPageState extends State<SignupWidget> {
               child: new Text('Ok')),
         ]);
 
-    showDialog(context: context, child: dialog);
+    showDialog(context: context,
+        builder: (_) => dialog);
   }
 }

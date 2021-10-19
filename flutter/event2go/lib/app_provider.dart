@@ -10,7 +10,7 @@ class AppModel extends InheritedModel<String> {
         assert(user != null),
         super(child: child);
 
-  final User user;
+  final MyUser user;
 
   @override
   bool updateShouldNotify(AppModel old) => false;

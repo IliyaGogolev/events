@@ -49,7 +49,7 @@ class _AppProviderWidgetState extends State<AppProviderWidget> {
   Widget build(BuildContext context) {
     appProvider = new AppModel(
       child: widget.child,
-        user: new User()
+        user: new MyUser()
     );
 //    return widget.child;
     return appProvider;

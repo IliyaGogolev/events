@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AppState {
-  final User user;
+  final MyUser user;
 
   AppState(this.user);
 

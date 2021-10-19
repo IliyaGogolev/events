@@ -7,6 +7,6 @@ class LoginRepository{
   void testVerifyPhoneNumber(String phoneNumber, Function func) async {}
   Future<bool> sendCode(String verificationId, String smsCode) async {}
 
-  void updateAppUser(User user) {}
+  void updateAppUser(MyUser user) {}
 
 }

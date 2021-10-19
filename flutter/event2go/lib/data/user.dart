@@ -4,10 +4,10 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
-class User {
+class MyUser {
 
 //  User({this.token, this.test = "111"});
-  User({this.token, this.uid, this.phoneNumber, this.email});
+  MyUser({this.token, this.uid, this.phoneNumber, this.email});
 
 //  final String test;
 
@@ -16,7 +16,7 @@ class User {
   String phoneNumber;
   String email;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory MyUser.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
 //  final String phoneNumber;

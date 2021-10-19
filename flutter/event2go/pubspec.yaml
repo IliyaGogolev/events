@@ -14,9 +14,10 @@ description: A new Flutter application.
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
-# environment:
-#   sdk: ">=2.1.0 <3.0.0"
-  
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+#  sdk: ">=2.3.0-dev.0.5 <3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
@@ -25,19 +26,22 @@ dependencies:
   cupertino_icons: ^0.1.0
   english_words: ^3.1.0
   contacts_service: ^0.2.8
-  google_sign_in: ^3.0.4
-  firebase_auth: ^0.5.14
-  flutter_masked_text: ^0.6.0
-  simple_permissions: ^0.1.9
+#  google_sign_in: ^3.0.4
+#  firebase_core: ^0.7.0
+#  firebase_auth: ^0.20.1
   # date formatter, https://pub.dartlang.org/packages/intl#-readme-tab-
-  intl: ^0.15.7
+  intl: ^0.16.1
   # used for @immutable
+#  firebase_auth: ^0.5.14
+#  intl: ^0.15.7
+  flutter_masked_text: ^0.6.0
+#  permission_handler: ^8.2.5
   meta: ^1.1.6
   http: ^0.12.0+4
-# https://flutter.dev/docs/development/data-and-backend/json#code-generation
-# $> flutter packages pub run build_runner build
+  # https://flutter.dev/docs/development/data-and-backend/json#code-generation
+  # $> flutter packages pub run build_runner build
   json_annotation: ^3.0.1
-# https://github.com/flutterchina/dio#examples
+  # https://github.com/flutterchina/dio#examples
   dio: ^3.0.9
 https://flutter:
   dev/docs/development/data-and-backend/json#code-generation:
@@ -81,7 +85,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/
+    - assets/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

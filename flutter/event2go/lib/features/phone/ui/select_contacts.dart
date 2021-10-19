@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:event2go/features/phone/data/phone_contact.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_permissions/simple_permissions.dart';
+// import 'package:simple_permissions/simple_permissions.dart';
 
 class SelectContactsWidget extends StatefulWidget {
   static String tag = '/phone_contacts';
@@ -56,37 +56,41 @@ class _SelectContactsState extends State<SelectContactsWidget> {
   @override
   initState() {
     super.initState();
-    initPlatformState();
+    // initPlatformState();
   }
 
-  initPlatformState() async {
-    getContactsPermission().then((permission) async {
-      if (permission == PermissionStatus.authorized) {
-        print("GetContacts !!!!");
+  // TODO ILIYA commented out
+//   initPlatformState() async {
+//     getContactsPermission().then((permission) async {
+//       if (permission == PermissionStatus.authorized) {
+//         print("GetContacts !!!!");
+//
+//         var contacts = await ContactsService.getContacts();
+//         setState(() {
+//           _populateContacts(contacts);
+// //          _contacts = contacts;
+//         });
+//       } else {
+//         showDialog(
+//           context: context,
+//           builder: (context) => AlertDialog(
+//                 title: const Text('Oops!'),
+//                 content: const Text(
+//                     'Looks like permission to read contacts is not granted.'),
+//                 actions: <Widget>[
+//                   FlatButton(
+//                     child: const Text('OK'),
+//                     onPressed: () => Navigator.pop(context),
+//                   ),
+//                 ],
+//               ),
+//         );
+//       }
+//     });
+//   }
+//   Future<PermissionStatus> getContactsPermission() =>
+//       SimplePermissions.requestPermission(Permission.ReadContacts);
 
-        var contacts = await ContactsService.getContacts();
-        setState(() {
-          _populateContacts(contacts);
-//          _contacts = contacts;
-        });
-      } else {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text('Oops!'),
-                content: const Text(
-                    'Looks like permission to read contacts is not granted.'),
-                actions: <Widget>[
-                  FlatButton(
-                    child: const Text('OK'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-        );
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,9 +244,6 @@ class _SelectContactsState extends State<SelectContactsWidget> {
       _isLoading = false;
     });
   }
-
-  Future<PermissionStatus> getContactsPermission() =>
-      SimplePermissions.requestPermission(Permission.ReadContacts);
 
   List<Contact> getSelectedContacts() {
     List<Contact> selectedContacts = _uiCustomContacts
