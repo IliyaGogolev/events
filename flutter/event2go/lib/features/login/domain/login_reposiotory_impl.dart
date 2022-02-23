@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   LoginRepositoryImpl({@required this.user, @required this.signUpModel})
-      : assert(user != null),
+  : assert(user != null),
         assert(signUpModel != null);
 //
   @override
