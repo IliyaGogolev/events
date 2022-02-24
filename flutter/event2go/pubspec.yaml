@@ -43,6 +43,9 @@ dependencies:
   json_annotation: ^3.0.1
   # https://github.com/flutterchina/dio#examples
   dio: ^3.0.9
+  networking:
+    path: networking
+
 https://flutter:
   dev/docs/development/data-and-backend/json#code-generation:
 #  firebase_auth:
