@@ -148,6 +148,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.9"
+  content_feed:
+    dependency: "direct main"
+    description:
+      path: "modules/content_feed"
+      relative: true
+    source: path
+    version: "0.0.1"
   convert:
     dependency: transitive
     description:
@@ -168,7 +175,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.3"
+    version: "1.0.4"
   dart_style:
     dependency: transitive
     description:
@@ -242,6 +249,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  home:
+    dependency: "direct main"
+    description:
+      path: "modules/home"
+      relative: true
+    source: path
+    version: "0.0.1"
   http:
     dependency: "direct main"
     description:
@@ -329,7 +343,7 @@ packages:
   networking:
     dependency: "direct main"
     description:
-      path: networking
+      path: "modules/networking"
       relative: true
     source: path
     version: "0.0.1"

@@ -8,7 +8,34 @@ class EventListWidget extends StatefulWidget {
   State<StatefulWidget> createState() => new EventListState();
 }
 
+class Contact {
+  String identifier,
+      displayName,
+      givenName,
+      middleName,
+      prefix,
+      suffix,
+      familyName,
+      company,
+      jobTitle,
+      note;
+
+  Contact(this.givenName, this.middleName, this.prefix, this.suffix,
+      this.familyName, this.company, this.jobTitle, this.note);
+}
+
 class EventListState extends State<EventListWidget> {
+  final Contact _contact = new Contact(
+    "givenName",
+    "middleName",
+    "prefix",
+    "suffix",
+    "familyName",
+    "company",
+    "jobTitle",
+    "note",
+  );
+
   @override
   void initState() {
     super.initState();
@@ -17,14 +44,57 @@ class EventListState extends State<EventListWidget> {
 
   @override
   Widget build(BuildContext context) {
-//    return Text("AA");
     return new Scaffold(
-      body: Text("EVENTS TAB"),
-      floatingActionButton: eventsFab()
-
-    );
+        body: new SafeArea(
+          child: new ListView(
+            children: <Widget>[
+              new ListTile(
+                  title: new Text("Name"),
+                  trailing: new Text(_contact.givenName ?? "")),
+              new ListTile(
+                  title: new Text("Middle name"),
+                  trailing: new Text(_contact.middleName ?? "")),
+              new ListTile(
+                  title: new Text("Family name"),
+                  trailing: new Text(_contact.familyName ?? "")),
+              new ListTile(
+                  title: new Text("Prefix"),
+                  trailing: new Text(_contact.prefix ?? "")),
+              new ListTile(
+                  title: new Text("Suffix"),
+                  trailing: new Text(_contact.suffix ?? "")),
+              new ListTile(
+                  title: new Text("Company"),
+                  trailing: new Text(_contact.company ?? "")),
+              new ListTile(
+                  title: new Text("Job"),
+                  trailing: new Text(_contact.jobTitle ?? "")),
+              new ListTile(
+                  title: new Text("Name"),
+                  trailing: new Text(_contact.givenName ?? "")),
+              new ListTile(
+                  title: new Text("Middle name"),
+                  trailing: new Text(_contact.middleName ?? "")),
+              new ListTile(
+                  title: new Text("Family name"),
+                  trailing: new Text(_contact.familyName ?? "")),
+              new ListTile(
+                  title: new Text("Prefix"),
+                  trailing: new Text(_contact.prefix ?? "")),
+              new ListTile(
+                  title: new Text("Suffix"),
+                  trailing: new Text(_contact.suffix ?? "")),
+              new ListTile(
+                  title: new Text("Company"),
+                  trailing: new Text(_contact.company ?? "")),
+              new ListTile(
+                  title: new Text("Job"),
+                  trailing: new Text(_contact.jobTitle ?? "")),
+            ],
+          ),
+        ),
+        floatingActionButton: eventsFab());
   }
-
 
   Widget eventsFab() {
     return FloatingActionButton(
@@ -51,9 +121,7 @@ class EventListState extends State<EventListWidget> {
     ApiProvider p = new ApiProvider();
     var events = await p.getEvents();
     for (final e in events) {
-      print ("Event $e");
+      print("Event $e");
     }
   }
-
 }
-

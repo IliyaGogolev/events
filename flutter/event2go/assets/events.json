@@ -1,12 +1,12 @@
 {
   "events" : [
     {
-      "title": "Event 1",
+      "name": "Event 1",
       "startAt": "2020-02-12 20:18:04Z",
       "endAt": "2020-03-12 16:00:00Z"
     },
     {
-      "title": "Event 2",
+      "name": "Event 2",
       "startAt": "2021-02-12 14:00:00.000",
       "endAt": "2021-03-12 16:00:00.000"
     }
