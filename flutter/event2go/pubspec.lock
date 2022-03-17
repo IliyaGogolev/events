@@ -151,7 +151,7 @@ packages:
   content_feed:
     dependency: "direct main"
     description:
-      path: "modules/content_feed"
+      path: "features/content_feed"
       relative: true
     source: path
     version: "0.0.1"
@@ -252,7 +252,7 @@ packages:
   home:
     dependency: "direct main"
     description:
-      path: "modules/home"
+      path: "features/home"
       relative: true
     source: path
     version: "0.0.1"
@@ -343,7 +343,7 @@ packages:
   networking:
     dependency: "direct main"
     description:
-      path: "modules/networking"
+      path: "features/networking"
       relative: true
     source: path
     version: "0.0.1"

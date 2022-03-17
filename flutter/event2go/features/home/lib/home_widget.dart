@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+export 'package:home/home_widget.dart';
 
 class HomeWidget extends StatefulWidget {
   static String tag = 'home-widget';
@@ -46,7 +47,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               value: selectedCountry,
               onChanged: (s) {
                 setState(() {
-                  selectedCountry = s;
+                  selectedCountry = s!;
 //
                 });
               }

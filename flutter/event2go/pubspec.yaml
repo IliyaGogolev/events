@@ -44,11 +44,11 @@ dependencies:
   # https://github.com/flutterchina/dio#examples
   dio: ^3.0.9
   content_feed:
-    path: modules/content_feed
+    path: features/content_feed
   networking:
-    path: modules/networking
+    path: features/networking
   home:
-    path: modules/home
+    path: features/home
 
 https://flutter:
   dev/docs/development/data-and-backend/json#code-generation:

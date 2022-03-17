@@ -1,5 +1,5 @@
 import 'package:event2go/app_provider.dart';
-import 'package:event2go/features/home/ui/home_tabs_view.dart';
+import 'package:home/home_tabs_view.dart';
 import 'package:event2go/features/login/data/countries.dart';
 import 'package:event2go/features/login/data/signup_model.dart';
 import 'package:event2go/features/login/domain/login_reposiotory_impl.dart';
