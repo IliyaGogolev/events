@@ -53,7 +53,8 @@ class _SplashScreenState extends State<SplashScreen> {
         debugPrint("User token: ");
 
       if (appModel.user.token?.isEmpty ?? true) {
-        navigateTo(new SignupWidget());
+        // todo navigate to signup
+        // navigateTo(new SignupWidget());
       } else {
         Timer(Duration(seconds: widget.seconds), () {
           navigateTo(widget.navigateAfterSeconds);

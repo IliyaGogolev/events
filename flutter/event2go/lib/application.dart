@@ -19,7 +19,7 @@ class ApplicationWidget extends StatelessWidget {
   // TODO CHECK HOW ROUTE WORKS
   final routes = <String, WidgetBuilder>{
     '/': (context) => HomeTabsView(HomeTabsFactory()),
-    SignupWidget.tag: (context) => SignupWidget(),
+    // SignupWidget.tag: (context) => SignupWidget(),
     // HomeWidget.tag: (context) => HomeWidget(),
     HomeTabsView.tag: (context) => HomeTabsView(HomeTabsFactory()),
     AddEventWidget.tag: (context) => AddEventWidget(),
