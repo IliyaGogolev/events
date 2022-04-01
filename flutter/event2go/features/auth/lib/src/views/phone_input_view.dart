@@ -1,15 +1,16 @@
+import 'package:auth/src/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart' hide Title;
 import 'package:auth/auth.dart';
 import '../widgets/universal_button.dart';
 import '../widgets/title.dart';
+import 'package:flutter/material.dart';
 
 typedef SMSCodeRequestedCallback = void Function(
-    BuildContext context,
-    AuthAction? action,
-    Object flowKey,
-    String phoneNumber,
-    );
+  BuildContext context,
+  AuthAction? action,
+  Object flowKey,
+  String phoneNumber,
+);
 
 typedef PhoneNumberSubmitCallback = void Function(String phoneNumber);
 
@@ -41,7 +42,7 @@ class _PhoneInputViewState extends State<PhoneInputView> {
   final phoneInputKey = GlobalKey<PhoneInputState>();
 
   PhoneNumberSubmitCallback onSubmit(PhoneAuthController ctrl) =>
-          (String phoneNumber) {
+      (String phoneNumber) {
         if (widget.onSubmit != null) {
           widget.onSubmit!(phoneNumber);
         } else {
@@ -61,54 +62,42 @@ class _PhoneInputViewState extends State<PhoneInputView> {
     final l = FlutterFireUILocalizations.labelsOf(context);
     final countryCode = Localizations.localeOf(context).countryCode;
 
-    return AuthFlowBuilder<PhoneAuthController>(
-      flowKey: widget.flowKey,
-      action: widget.action,
-      auth: widget.auth,
-      listener: (oldState, newState, controller) {
-        if (newState is SMSCodeRequested) {
-          final cb = widget.onSMSCodeRequested ??
-              FlutterFireUIAction.ofType<SMSCodeRequestedAction>(context)
-                  ?.callback;
+    return AuthControllerProvider(
+        action: AuthAction.signIn,
+        child: Material(
+            child: Center(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+              CustomTitle(text: l.phoneVerificationViewTitleText),
+              const SizedBox(height: 32),
+              if (widget.subtitleBuilder != null)
+                widget.subtitleBuilder!(context),
+              // if (state is AwaitingPhoneNumber || state is SMSCodeRequested)
+              ...[
+                PhoneInput(
+                  initialCountryCode: countryCode!,
+                  // onSubmit: onSubmit(ctrl),
+                  key: phoneInputKey,
+                ),
+                const SizedBox(height: 16),
+                UniversalButton(
+                  text: l.verifyPhoneNumberButtonText,
+                  // onPressed: () => (),
+                ),
+                const Flexible(
+                    child: FractionallySizedBox(
+                  heightFactor: 0.3,
+                ))
+              ],
 
-          cb?.call(
-            context,
-            widget.action,
-            widget.flowKey,
-            PhoneInput.getPhoneNumber(phoneInputKey)!,
-          );
-        }
-      },
-      builder: (context, state, ctrl, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Title(text: l.phoneVerificationViewTitleText),
-            const SizedBox(height: 32),
-            if (widget.subtitleBuilder != null)
-              widget.subtitleBuilder!(context),
-            if (state is AwaitingPhoneNumber || state is SMSCodeRequested) ...[
-              PhoneInput(
-                initialCountryCode: countryCode!,
-                onSubmit: onSubmit(ctrl),
-                key: phoneInputKey,
-              ),
-              const SizedBox(height: 16),
-              UniversalButton(
-                text: l.verifyPhoneNumberButtonText,
-                onPressed: () => _next(ctrl),
-              ),
-            ],
-            if (state is AuthFailed) ...[
-              const SizedBox(height: 8),
-              ErrorText(exception: state.exception),
-              const SizedBox(height: 8),
-            ],
-            if (widget.footerBuilder != null) widget.footerBuilder!(context),
-          ],
-        );
-      },
-    );
+              // if (state is AuthFailed) ...[
+              //   const SizedBox(height: 8),
+              //   ErrorText(exception: state.exception),
+              //   const SizedBox(height: 8),
+              // ],
+              // if (widget.footerBuilder != null) widget.footerBuilder!(context),
+            ]))));
   }
 }

@@ -7,7 +7,7 @@ import 'package:home/home_widget.dart';
 void main() {
 //  runApp(new DemoApp());
   runApp(new AppProviderWidget(
-    child: new ApplicationWidget(),
+    child: new Event2GoAppWidget(),
   ));
 
   // final aa = Calculator();

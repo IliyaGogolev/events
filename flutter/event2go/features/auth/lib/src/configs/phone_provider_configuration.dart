@@ -11,7 +11,10 @@ class PhoneProviderConfiguration extends ProviderConfiguration {
 
   @override
   AuthFlow createFlow(FirebaseAuth? auth, AuthAction? action) {
-    return PhoneAuthFlow(auth: auth, action: action);
+    return PhoneAuthFlow(
+        auth: auth,
+        action: action
+    );
   }
 
   @override

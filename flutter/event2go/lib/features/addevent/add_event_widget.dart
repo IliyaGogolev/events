@@ -8,7 +8,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'dart:async';
 
 class AddEventWidget extends StatefulWidget {
-  static String tag = '/addeventwidget';
+  static String tag = '/addEvent';
 
   @override
   AddEventState createState() => AddEventState();

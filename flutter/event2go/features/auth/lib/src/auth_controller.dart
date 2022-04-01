@@ -41,12 +41,13 @@ abstract class AuthController {
 
 class AuthControllerProvider extends InheritedWidget {
   final AuthAction action;
-  final AuthController ctrl;
+  AuthController? ctrl;
 
   AuthControllerProvider({
     required Widget child,
     required this.action,
-    required this.ctrl,
+    // TODO ILIYA undo
+    // required this.ctrl,
   }) : super(child: child);
 
   @override

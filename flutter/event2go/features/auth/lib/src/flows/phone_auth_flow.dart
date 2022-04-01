@@ -43,12 +43,60 @@ abstract class PhoneAuthController extends AuthController {
   void verifySMSCode(String code);
 }
 
-// TODO
+// // TODO
+// class PhoneAuthFlow implements PhoneAuthController {
+//
+//   @override
+//   void acceptPhoneNumber(String phoneNumber) {
+//     // TODO: implement acceptPhoneNumber
+//   }
+//
+//   @override
+//   // TODO: implement action
+//   AuthAction get action => throw UnimplementedError();
+//
+//   @override
+//   // TODO: implement auth
+//   FirebaseAuth get auth => throw UnimplementedError();
+//
+//   @override
+//   Future<List<String>> findProvidersForEmail(String email, {
+//         AuthCredential? credential,
+//       }) async {
+//       throw AuthFailed(Exception("Aa"));
+//     }
+//
+//   @override
+//   Future<void> link(AuthCredential credential) {
+//     // TODO: implement link
+//     throw UnimplementedError();
+//   }
+//
+//   @override
+//   void reset() {
+//     // TODO: implement reset
+//   }
+//
+//   @override
+//   Future<User?> signIn(AuthCredential credential) {
+//     // TODO: implement signIn
+//     throw UnimplementedError();
+//   }
+//
+//   @override
+//   void verifySMSCode(String code) {
+//     // TODO: implement verifySMSCode
+//   }
+//
+// }
+
 class PhoneAuthFlow extends AuthFlow implements PhoneAuthController {
-    PhoneAuthFlow({
+  PhoneAuthFlow({
     FirebaseAuth? auth,
     AuthAction? action,
-  }) : super(auth: auth, initialState: AwaitingPhoneNumber(), action: action);
+  }) : super(
+        // auth: auth,
+        initialState: AwaitingPhoneNumber(), action: action);
 
   @override
   void acceptPhoneNumber(String phoneNumber) {

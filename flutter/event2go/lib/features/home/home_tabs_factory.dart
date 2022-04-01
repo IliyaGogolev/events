@@ -31,18 +31,24 @@ class HomeTabsFactory implements HomeBuilder {
 
   @override
   Widget tabWidget(int position) {
-    Widget widet;
+    Widget widget;
     switch (position) {
       case 0:
-        widet = EventListWidget();
+        widget = EventListWidget();
         break;
       case 1:
-        widet = ChatListView();
+        widget = ChatListView();
         break;
       case 2:
-        widet = Icon(Icons.directions_bike);
+        widget = Icon(Icons.directions_bike);
         break;
     }
-    return widet;
+    return widget;
+  }
+
+  @override
+  Future<bool> authorized() async{
+    // TODO: implement authorized
+    throw UnimplementedError();
   }
 }

@@ -58,13 +58,13 @@ class AuthFlowBuilder<T extends AuthController> extends StatefulWidget {
         ),
         super(key: key);
 
+
   @override
   // ignore: library_private_types_in_public_api
   _AuthFlowBuilderState createState() => _AuthFlowBuilderState<T>();
 }
 
-class _AuthFlowBuilderState<T extends AuthController>
-    extends State<AuthFlowBuilder> {
+class _AuthFlowBuilderState<T extends AuthController> extends State<AuthFlowBuilder> {
   @override
   AuthFlowBuilder<T> get widget => super.widget as AuthFlowBuilder<T>;
   AuthFlowBuilderCallback<T> get builder => widget.builder ?? _defaultBuilder;
@@ -129,7 +129,8 @@ class _AuthFlowBuilderState<T extends AuthController>
   Widget build(BuildContext context) {
     return AuthControllerProvider(
       action: flow.action,
-      ctrl: flow,
+      // TODO ILIYA undo
+      // ctrl: flow,
       child: ValueListenableBuilder<AuthState>(
         valueListenable: flow,
         builder: (context, value, _) {

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:event2go/features/login/ui/signup.dart';
 
+@Deprecated("flutter has its own splash screen, remove this")
 class SplashScreen extends StatefulWidget {
   static String tag = 'splashscreen';
 
@@ -80,7 +81,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     appModel = AppModel.of(context);
-    debugPrint("AAA: " + appModel.user.uid);
+    String log = "BB: $appModel.user.uid";
+    debugPrint(log);
 
     return Scaffold(
       backgroundColor: widget.backgroundColor,

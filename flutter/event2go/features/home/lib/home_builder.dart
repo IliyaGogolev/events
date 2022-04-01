@@ -5,4 +5,5 @@ abstract class HomeBuilder {
   int count();
   String tabTitle(int position);
   Widget tabWidget(int position);
+  Future<bool> authorized();
 }

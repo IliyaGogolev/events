@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // import 'package:simple_permissions/simple_permissions.dart';
 
 class SelectContactsWidget extends StatefulWidget {
-  static String tag = '/phone_contacts';
+  static String tag = '/selectContact';
 
   final List<Contact> selectedContacts;
 

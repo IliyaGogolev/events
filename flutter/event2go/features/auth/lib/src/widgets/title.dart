@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'platform_widget.dart';
 
-class Title extends PlatformWidget {
+class CustomTitle extends PlatformWidget {
   final String text;
-  const Title({Key? key, required this.text}) : super(key: key);
+  const CustomTitle({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget buildCupertino(BuildContext context) {
