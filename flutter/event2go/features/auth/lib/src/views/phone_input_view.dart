@@ -65,39 +65,45 @@ class _PhoneInputViewState extends State<PhoneInputView> {
     return AuthControllerProvider(
         action: AuthAction.signIn,
         child: Material(
-            child: Center(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-              CustomTitle(text: l.phoneVerificationViewTitleText),
-              const SizedBox(height: 32),
-              if (widget.subtitleBuilder != null)
-                widget.subtitleBuilder!(context),
-              // if (state is AwaitingPhoneNumber || state is SMSCodeRequested)
-              ...[
-                PhoneInput(
-                  initialCountryCode: countryCode!,
-                  // onSubmit: onSubmit(ctrl),
-                  key: phoneInputKey,
-                ),
-                const SizedBox(height: 16),
-                UniversalButton(
-                  text: l.verifyPhoneNumberButtonText,
-                  // onPressed: () => (),
-                ),
-                const Flexible(
-                    child: FractionallySizedBox(
-                  heightFactor: 0.3,
-                ))
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                          CustomTitle(text: l.phoneVerificationViewTitleText),
+                          const SizedBox(height: 24),
+                          if (widget.subtitleBuilder != null)
+                            widget.subtitleBuilder!(context),
+                          // if (state is AwaitingPhoneNumber || state is SMSCodeRequested)
+                          ...[
+                            PhoneInput(
+                              initialCountryCode: countryCode!,
+                              // onSubmit: onSubmit(ctrl),
+                              key: phoneInputKey,
+                            ),
+                            const SizedBox(height: 16),
+                            UniversalButton(
+                              text: l.verifyPhoneNumberButtonText,
+                              // onPressed: () => (),
+                            ),
+                            const Flexible(
+                                child: FractionallySizedBox(
+                              heightFactor: 0.3,
+                            ))
+                          ],
 
-              // if (state is AuthFailed) ...[
-              //   const SizedBox(height: 8),
-              //   ErrorText(exception: state.exception),
-              //   const SizedBox(height: 8),
-              // ],
-              // if (widget.footerBuilder != null) widget.footerBuilder!(context),
-            ]))));
+                          // if (state is AuthFailed) ...[
+                          //   const SizedBox(height: 8),
+                          //   ErrorText(exception: state.exception),
+                          //   const SizedBox(height: 8),
+                          // ],
+                          // if (widget.footerBuilder != null) widget.footerBuilder!(context),
+                        ])
+              ),
+            )
+        )
+    );
   }
 }
