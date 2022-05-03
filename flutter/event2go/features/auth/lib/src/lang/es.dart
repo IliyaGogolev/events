@@ -1,4 +1,4 @@
-import '../default_localizations.dart';
+import 'default_localizations.dart';
 
 class EsLocalizations extends FlutterFireUILocalizationLabels {
   @override

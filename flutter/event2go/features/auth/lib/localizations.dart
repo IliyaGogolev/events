@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'src/i10n/default_localizations.dart';
-import 'src/i10n/lang/en.dart';
+import 'src/lang/default_localizations.dart';
+import 'src/lang/en.dart';
 
 const kDefaultLocale = Locale('en');
 

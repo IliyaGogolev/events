@@ -3,26 +3,30 @@ library auth;
 
 //
 // export 'src/loading_indicator.dart';
-// export 'src/widgets/auth_flow_builder.dart';
-export 'src/auth_controller.dart' show AuthAction, AuthController;
-export 'src/auth_state.dart'
-    show
-    AuthState,
-    AuthStateListener,
-    CredentialLinked,
-    CredentialReceived,
-    SignedIn,
-    SigningIn,
-    AuthFailed;
-export 'src/flows/phone_auth_flow.dart';
-export 'src/i10n/lang/en.dart';
-export 'i10n.dart';
+export 'package:firebase_core/firebase_core.dart';
+export 'package:flutterfire_ui/auth.dart';
+export 'src/widgets/auth_flow_builder.dart';
+// export 'src/auth_controller.dart' show AuthAction, AuthController;
+// export 'src/auth_state.dart'
+//     show
+//     AuthState,
+//     AuthStateListener,
+//     CredentialLinked,
+//     CredentialReceived,
+//     SignedIn,
+//     SigningIn,
+//     AuthFailed;
+// export 'src/domain/phone_auth_flow.dart';
+export 'src/lang/en.dart';
+// @Deprecated("removed i10n folder")
+// export 'src/i10n/lang/en.dart';
+export 'localizations.dart';
 // export 'src/flows/email_link_flow.dart';
 //
 export 'src/widgets/phone_input.dart' show PhoneInputState, PhoneInput;
 export 'src/configs/default_provider_config_factory.dart';
-export 'src/configs/provider_configuration.dart';
-export 'src/configs/phone_provider_configuration.dart';
+// export 'src/configs/provider_configuration.dart';
+// export 'src/configs/phone_provider_configuration.dart';
 //     show PhoneProviderConfiguration;
 //
 // export 'src/widgets/sms_code_input.dart'
@@ -92,7 +96,7 @@ export 'src/views/phone_input_view.dart';
 // export 'src/navigation/phone_verification.dart';
 // export 'src/navigation/forgot_password.dart';
 // export 'src/navigation/authentication.dart';
-export 'src/actions.dart';
+// export 'src/actions.dart';
 //
 // export 'src/configs/email_provider_configuration.dart';
 // export 'src/configs/phone_provider_configuration.dart';
