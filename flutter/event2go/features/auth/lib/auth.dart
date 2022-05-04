@@ -5,6 +5,8 @@ library auth;
 // export 'src/loading_indicator.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutterfire_ui/auth.dart';
+export 'package:firebase_auth/firebase_auth.dart' hide PhoneVerificationFailed;
+
 // export 'src/widgets/auth_flow_builder.dart';
 // export 'src/auth_controller.dart' show AuthAction, AuthController;
 // export 'src/auth_state.dart'

@@ -13,7 +13,6 @@ import 'package:home/home_builder.dart';
 import 'features/addevent/add_event_widget.dart';
 import 'features/phone/ui/select_contacts.dart';
 
-// import 'package:flutterfire_ui/auth.dart';
 import 'package:auth/auth.dart';
 
 class Event2GoAppWidget extends StatelessWidget {
@@ -25,6 +24,24 @@ class Event2GoAppWidget extends StatelessWidget {
     HomeTabsView.tag: (context) => HomeTabsView(HomeTabsFactory()),
     AddEventWidget.tag: (context) => AddEventWidget(),
     SelectContactsWidget.tag: (context) => SelectContactsWidget(null),
+    '/sign-in': (context) {
+      // return PhoneInputView(
+      //   actions: [AuthStateChangeAction<PhoneInputView>((context, state) {
+      //       Navigator.pushReplacementNamed(context, HomeTabsView.tag);
+      //     },
+      //   ],
+      // );
+      return SignInScreen(
+        providerConfigs: [ PhoneProviderConfiguration()],
+        showAuthActionSwitch: false,
+
+        actions: [
+          AuthStateChangeAction<SignedIn>((context, state) {
+            Navigator.pushReplacementNamed(context, HomeTabsView.tag);
+          }),
+        ],
+      );
+    }
 
 //    "SplashScreen": (context)=> new SplashScreen(
 //     SplashScreen.tag: (context)=> new SplashScreen(
@@ -51,6 +68,8 @@ class Event2GoAppWidget extends StatelessWidget {
           debugPrint("authorized $authorized");
           return new MaterialApp(
               debugShowCheckedModeBanner: false,
+              // initialRoute: authorized ? HomeTabsView.tag : SplashScreen.tag,
+              initialRoute: authorized ? HomeTabsView.tag : '/sign-in',
 //        routes: <String, WidgetBuilder>{
 //          '/add': (BuildContext context) => new _AddContactPage()
 //        },
@@ -60,15 +79,12 @@ class Event2GoAppWidget extends StatelessWidget {
 //      home: HomeTabsView(),
 //      home: ChatListView(),
 //       initialRoute: '/',
-//         home: HomeTabsView(HomeTabsFactory()),
-              home: authorized ? HomeTabsView(HomeTabsFactory()) : Material(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 100.0, horizontal: 25.0),
-                      child: PhoneInputView())
-              ),
-              // initialRoute: authorized ? HomeTabsView.tag : SplashScreen.tag,
-              // initialRoute:
-//      routes: routes,
+              home: HomeTabsView(HomeTabsFactory()),
+              // home: authorized ? HomeTabsView(HomeTabsFactory()) : Material(
+              //     child: Padding(
+              //         padding: const EdgeInsets.symmetric(vertical: 100.0, horizontal: 25.0),
+              //         child: PhoneInputView())
+              // ),
               routes: routes);
         });
     return new MaterialApp(
@@ -87,5 +103,5 @@ class Event2GoAppWidget extends StatelessWidget {
         routes: routes);
   }
 
-  Future<bool> isAuthorized() async => false;
+  Future<bool> isAuthorized() async => FirebaseAuth.instance.currentUser == null;
 }
