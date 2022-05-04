@@ -27,3 +27,8 @@ https://medium.com/flutter-community/mastering-flutter-modularization-in-several
 flutter create --template=package home
 export `module.dart`
 /Applications/flutter/bin/flutter pub get
+
+# Firebase auth
+https://stackoverflow.com/questions/65040615/firebase-authentication-phone-invalid-cert-hash
+add sha1 & sha5 to
+https://console.firebase.google.com/u/0/project/event2go-1234/settings/general/android:com.event2go.android

@@ -5,7 +5,7 @@ library auth;
 // export 'src/loading_indicator.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutterfire_ui/auth.dart';
-export 'src/widgets/auth_flow_builder.dart';
+// export 'src/widgets/auth_flow_builder.dart';
 // export 'src/auth_controller.dart' show AuthAction, AuthController;
 // export 'src/auth_state.dart'
 //     show
@@ -23,7 +23,7 @@ export 'src/lang/en.dart';
 export 'localizations.dart';
 // export 'src/flows/email_link_flow.dart';
 //
-export 'src/widgets/phone_input.dart' show PhoneInputState, PhoneInput;
+// export 'src/widgets/phone_input.dart' show PhoneInputState, PhoneInput;
 export 'src/configs/default_provider_config_factory.dart';
 // export 'src/configs/provider_configuration.dart';
 // export 'src/configs/phone_provider_configuration.dart';
@@ -48,9 +48,9 @@ export 'src/configs/default_provider_config_factory.dart';
 // export 'src/oauth/providers/facebook_provider.dart'
 //     show FacebookProviderConfiguration;
 //
-export 'src/widgets/auth_flow_builder.dart';
+// export 'src/widgets/auth_flow_builder.dart';
 // export 'src/widgets/email_form.dart' show EmailForm, ForgotPasswordAction;
-export 'src/widgets/error_text.dart' show ErrorText;
+// export 'src/widgets/error_text.dart' show ErrorText;
 // export 'src/widgets/phone_verification_button.dart'
 //     show PhoneVerificationButton;
 //
@@ -73,7 +73,7 @@ export 'src/widgets/error_text.dart' show ErrorText;
 // export 'src/widgets/twitter_sign_in_button.dart';
 //
 // export 'src/views/login_view.dart';
-export 'src/views/phone_input_view.dart';
+// export 'src/views/phone_input_view.dart';
 
 // export 'src/views/sms_code_input_view.dart';
 // export 'src/views/reauthenticate_view.dart';
