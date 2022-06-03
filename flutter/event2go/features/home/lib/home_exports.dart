@@ -1,7 +1,7 @@
 library home;
 
 export 'home_exports.dart';
-export 'home_builder.dart';
+export 'tabs_factory.dart';
 
 //
 // import 'package:flutter/material.dart';

@@ -1,17 +1,16 @@
+import 'package:event2go/features/chat/users_selection_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ChatListView extends StatefulWidget {
-
+class ChatWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
 
   @override
-  _ChatListState createState() => _ChatListState();
+  ChatState createState() => ChatState();
 }
 
-class _ChatListState extends State<ChatListView> {
-
-  List<String> _todoItems = [];
+class ChatState extends State<ChatWidget> {
+  List<String> _chatList = [];
 
   @override
   void initState() {
@@ -27,7 +26,7 @@ class _ChatListState extends State<ChatListView> {
         backgroundColor: Colors.blue,
         onPressed: _onFabButtonClicked,
         tooltip: 'Toggle',
-        child: Icon(Icons.chat),
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -43,8 +42,8 @@ class _ChatListState extends State<ChatListView> {
         // itemBuilder will be automatically be called as many times as it takes for the
         // list to fill up its available space, which is most likely more than the
         // number of todo items we have. So, we need to check the index is OK.
-        if (index < _todoItems.length) {
-          return _buildTodoItem(_todoItems[index]);
+        if (index < _chatList.length) {
+          return _buildTodoItem(_chatList[index]);
         }
 
         return _buildTodoItem("");
@@ -61,15 +60,12 @@ class _ChatListState extends State<ChatListView> {
     // Putting our code inside "setState" tells the app that our state has changed, and
     // it will automatically re-render the list
     setState(() {
-//      int index = _todoItems.length;
-//      _todoItems.add('Item ' + index.toString());
+      Navigator.push(context, MaterialPageRoute(builder: (context) => UsersSelectionWidget()));
     });
   }
-
 
   @override
   dispose() {
     super.dispose();
   }
-
 }

@@ -9,7 +9,7 @@ import 'features/login/ui/signup.dart';
 
 // import '../features/home/lib/home_tabs_view.dart';
 import 'package:home/home_tabs_view.dart';
-import 'package:home/home_builder.dart';
+import 'package:home/tabs_factory.dart';
 import 'features/addevent/add_event_widget.dart';
 import 'features/phone/ui/select_contacts.dart';
 
@@ -68,8 +68,8 @@ class Event2GoAppWidget extends StatelessWidget {
           debugPrint("authorized $authorized");
           return new MaterialApp(
               debugShowCheckedModeBanner: false,
-              // initialRoute: authorized ? HomeTabsView.tag : SplashScreen.tag,
-              initialRoute: authorized ? HomeTabsView.tag : '/sign-in',
+              initialRoute: authorized ? HomeTabsView.tag : SplashScreen.tag,
+              // initialRoute: authorized ? HomeTabsView.tag : '/sign-in',
 //        routes: <String, WidgetBuilder>{
 //          '/add': (BuildContext context) => new _AddContactPage()
 //        },
@@ -103,5 +103,6 @@ class Event2GoAppWidget extends StatelessWidget {
         routes: routes);
   }
 
-  Future<bool> isAuthorized() async => FirebaseAuth.instance.currentUser == null;
+  // Future<bool> isAuthorized() async => FirebaseAuth.instance.currentUser == null;
+  Future<bool> isAuthorized() async => true;
 }

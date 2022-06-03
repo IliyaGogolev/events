@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:home/home_builder.dart';
+import 'package:home/tabs_factory.dart';
 
 export 'package:home/home_tabs_view.dart';
 
 class HomeTabsView extends StatelessWidget {
   static String tag = '/home';
-  final HomeBuilder tabBuilder;
+  final TabsFactory tabBuilder;
   const HomeTabsView(this.tabBuilder);
 
   @override
@@ -14,7 +14,7 @@ class HomeTabsView extends StatelessWidget {
 
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: tabBuilder.count(),
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -44,6 +44,7 @@ class HomeTabsView extends StatelessWidget {
     for (var i = 0; i < tabBuilder.count(); i++) {
       tabs.add(Tab(
         text: tabBuilder.tabTitle(i)
+
       ));
     }
     return tabs;

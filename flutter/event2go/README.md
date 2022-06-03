@@ -32,3 +32,8 @@ export `module.dart`
 https://stackoverflow.com/questions/65040615/firebase-authentication-phone-invalid-cert-hash
 add sha1 & sha5 to
 https://console.firebase.google.com/u/0/project/event2go-1234/settings/general/android:com.event2go.android
+
+
+Issues:
+Open issue - Exception `PhoneAuthFlow.verifySMSCode`:
+https://github.com/firebase/flutterfire/issues/8016
