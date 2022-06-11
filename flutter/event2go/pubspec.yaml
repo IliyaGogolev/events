@@ -26,6 +26,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   english_words: ^3.1.0
   contacts_service: ^0.6.3
+  permission_handler: ^9.2.0
+#  permission_handler: ^6.1.1
   google_sign_in: ^5.2.1
 #  firebase_core: ^0.7.0
 #  firebase_auth: ^0.20.1

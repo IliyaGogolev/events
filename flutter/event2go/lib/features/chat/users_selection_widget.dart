@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:contacts_service/contacts_service.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'contact_details.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
@@ -8,14 +11,54 @@ class UsersSelectionWidget extends StatefulWidget {
 }
 
 class UsersSelectionState extends State<UsersSelectionWidget> {
-  List<String> _chatList = [];
+  // List<String> _chatList = [];
+  Iterable<Contact> _contacts;
+
+  // bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    initContacts();
   }
 
-  Widget chatFab() {
+  initContacts() async {
+    PermissionStatus permission = await Permission.contacts.status;
+
+    if (permission != PermissionStatus.granted) {
+      await Permission.contacts.request();
+      PermissionStatus permission = await Permission.contacts.status;
+      if (permission == PermissionStatus.granted) {
+        loadContactsPermissionGranted();
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Oops!'),
+            content: const Text('Looks like permission to read contacts is not granted.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        );
+      }
+    } else {
+      loadContactsPermissionGranted();
+    }
+  }
+
+  void loadContactsPermissionGranted() async {
+    var contacts = await ContactsService.getContacts();
+    setState(() {
+      print("setState contacts: ${contacts.length}");
+      _contacts = contacts;
+    });
+  }
+
+  Widget selectUsersWidget() {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: new AppBar(title: new Text('Add Participants'), actions: <Widget>[
@@ -32,84 +75,80 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
         body: Column(
           children: <Widget>[
             createSearchEditText(),
-            Text('Deliver features faster'),
-            Text('Craft beautiful UIs'),
+            createContactsList()
           ],
         ));
   }
 
+  Expanded createContactsList() {
+    return new Expanded(
+      child: _contacts != null
+          ? new ListView.builder(
+              itemCount: _contacts?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                Contact c = _contacts?.elementAt(index);
+                var c2 = c;
+                return new ListTile(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(new MaterialPageRoute(builder: (BuildContext context) => new ContactDetails(c)));
+                  },
+                  leading: (c.avatar != null && c.avatar.length > 0)
+                      ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar))
+                      : new CircleAvatar(
+                          child: Icon(Icons.person)),
+                          // child: new Text(c2.displayName.length > 1 ? c.displayName?.substring(0, 2) : "")),
+                  title: new Text(c.displayName ?? ""),
+                );
+              },
+            )
+          : new Center(child: new CircularProgressIndicator()),
+    );
+  }
+
   Container createSearchEditText() {
     return Container(
-            // padding: const Edge.only(left: 8, top: 8, right: 8, bottom: 8),
-            margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              // color: Colors.red,
-              border: Border.all(
-                color: Colors.blue,
-              ),
-              borderRadius: BorderRadius.circular(10),
+      // padding: const Edge.only(left: 8, top: 8, right: 8, bottom: 8),
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        // color: Colors.red,
+        border: Border.all(
+          color: Colors.blue,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      // decoration: const BoxDecoration(
+      //   border: const Border(
+      //     bottom: BorderSide(
+      //       color: CupertinoColors.inactiveGray,
+      //     ),
+      //   ),
+      // ),
+      child: const ListTile(
+        horizontalTitleGap: 0,
+        leading: Icon(
+          Icons.search,
+          // color: Colors.black,
+          size: 28,
+        ),
+        title: TextField(
+          decoration: InputDecoration(
+            hintText: 'Search',
+            hintStyle: TextStyle(
+              // color: Colors.black,
+              fontSize: 18,
+              fontStyle: FontStyle.italic,
             ),
-            // decoration: const BoxDecoration(
-            //   border: const Border(
-            //     bottom: BorderSide(
-            //       color: CupertinoColors.inactiveGray,
-            //     ),
-            //   ),
-            // ),
-            child: const ListTile(
-              horizontalTitleGap: 0,
-              leading: Icon(
-                Icons.search,
-                // color: Colors.black,
-                size: 28,
-              ),
-              title: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: TextStyle(
-                    // color: Colors.black,
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          );
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return chatFab();
-  }
-
-  Widget _buildTodoList() {
-    return new ListView.builder(
-      itemBuilder: (context, index) {
-        // itemBuilder will be automatically be called as many times as it takes for the
-        // list to fill up its available space, which is most likely more than the
-        // number of todo items we have. So, we need to check the index is OK.
-        if (index < _chatList.length) {
-          return _buildTodoItem(_chatList[index]);
-        }
-
-        return _buildTodoItem("");
-      },
-    );
-  }
-
-  // Build a single todo item
-  Widget _buildTodoItem(String todoText) {
-    return new ListTile(title: new Text(todoText));
-  }
-
-  void _onFabButtonClicked() {
-    // Putting our code inside "setState" tells the app that our state has changed, and
-    // it will automatically re-render the list
-    setState(() {
-//      int index = _todoItems.length;
-//      _todoItems.add('Item ' + index.toString());
-    });
+    return selectUsersWidget();
   }
 
   @override

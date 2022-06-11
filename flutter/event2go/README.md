@@ -37,3 +37,6 @@ https://console.firebase.google.com/u/0/project/event2go-1234/settings/general/a
 Issues:
 Open issue - Exception `PhoneAuthFlow.verifySMSCode`:
 https://github.com/firebase/flutterfire/issues/8016
+
+# Reference
+Take a picture: https://github.com/QuisApp/flutter_contacts
