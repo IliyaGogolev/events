@@ -178,37 +178,25 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
         ),
         borderRadius: BorderRadius.circular(10),
       ),
-      // decoration: const BoxDecoration(
-      //   border: const Border(
-      //     bottom: BorderSide(
-      //       color: CupertinoColors.inactiveGray,
-      //     ),
-      //   ),
-      // ),
-      child:  ListTile(
-        horizontalTitleGap: 0,
-        leading: Icon(
-          Icons.search,
-          // color: Colors.black,
-          size: 28,
-        ),
-        title: TextField(
-          decoration: InputDecoration(
-            hintText: 'Search',
-            hintStyle: TextStyle(
-              // color: Colors.black,
-              fontSize: 18,
-              fontStyle: FontStyle.italic,
+      child:  TextField(
+        decoration: InputDecoration(
+            prefixIcon: Icon(Icons.search),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                setState(() {
+                  _searchFilterText = "";
+                });
+              },
             ),
-            border: InputBorder.none,
-          ),
-          onChanged: (text) {
-            print('search $text');
-            setState(() {
-              _searchFilterText = text;
-            });
-          },
-        ),
+            hintText: 'Search...',
+            border: InputBorder.none),
+            onChanged: (text) {
+              print('search $text');
+              setState(() {
+                _searchFilterText = text;
+              });
+            }
       ),
     );
   }
