@@ -1,6 +1,7 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated("NOT USED")
 class ContactDetails extends StatelessWidget{
 
   ContactDetails(this._contact);

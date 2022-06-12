@@ -1,10 +1,6 @@
-import 'dart:ffi';
-
-import 'package:event2go/features/chat/no_glow_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'contact_details.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
@@ -101,6 +97,7 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
                               child: Column(
                                 children: <Widget>[
                                   contactCircleAvatar(contact),
+                                  SizedBox(height: 6),
                                   Text(
                                     contact.displayName,
                                     maxLines: 1,
@@ -109,7 +106,10 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
                                 ],
                               ),
                             ),
-                            Container(child: Align(alignment: Alignment(1, -1), child: Icon(Icons.close, size: 18)))
+                            Container(child: Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
+                            ))
                           ]),
                         ),
                       ))
