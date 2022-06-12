@@ -80,49 +80,58 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
         ));
   }
 
-  SingleChildScrollView addSelectedContacts() {
+  LayoutBuilder addSelectedContacts() {
     return _selectedContacts.isNotEmpty
-        ? SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-            scrollDirection: Axis.horizontal,
-            controller: _scrollController,
-            child: Row(
-              children: _selectedContacts
-                  .map((contact) => InkWell(
-                        onTap: () => removeSelectedContact(contact),
-                        child: Container(
-                          width: selectedContactWidth,
-                          child: Stack(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  contactCircleAvatar(contact),
-                                  SizedBox(height: 6),
-                                  Text(
-                                    contact.displayName,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
+        ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            return SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                scrollDirection: Axis.horizontal,
+                controller: _scrollController,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: viewportConstraints.maxWidth),
+                  child: Row(
+                    children: _selectedContacts
+                        .map((contact) => InkWell(
+                              onTap: () => removeSelectedContact(contact),
+                              child: Container(
+                                width: selectedContactWidth,
+                                child: Stack(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        contactCircleAvatar(contact),
+                                        SizedBox(height: 6),
+                                        Text(
+                                          contact.displayName,
+                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                  Container(
+                                      child: Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child:
+                                        Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
+                                  ))
+                                ]),
                               ),
-                            ),
-                            Container(child: Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
                             ))
-                          ]),
-                        ),
-                      ))
-                  .toList(),
-            ),
-          )
+                        .toList(),
+                  ),
+                ));
+          })
         : null;
   }
 
   Expanded createContactsList() {
-    Iterable<Contact> filteredContacts = _contacts.where((element) =>
-        element.displayName.toLowerCase().startsWith(_searchFilterText.toLowerCase())).toList();
+    Iterable<Contact> filteredContacts = _contacts != null
+        ? _contacts
+            .where((element) => element.displayName.toLowerCase().startsWith(_searchFilterText.toLowerCase()))
+            .toList()
+        : null;
     return new Expanded(
       child: filteredContacts != null
           ? new ListView.builder(
@@ -163,8 +172,11 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   }
 
   void scrollSelectedListToEnd() {
-    _scrollController.animateTo(selectedContactWidth * (_selectedContacts.length - 1),
-        duration: Duration(milliseconds: 1000), curve: Curves.ease);
+    double width = MediaQuery.of(context).size.width;
+    if (selectedContactWidth * (_selectedContacts.length) > width) {
+      _scrollController.animateTo(selectedContactWidth * (_selectedContacts.length),
+          duration: Duration(milliseconds: 1000), curve: Curves.ease);
+    }
   }
 
   Container createSearchEditText() {
@@ -178,26 +190,25 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
         ),
         borderRadius: BorderRadius.circular(10),
       ),
-      child:  TextField(
-        decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search),
-            suffixIcon: IconButton(
-              icon: Icon(Icons.clear),
-              onPressed: () {
-                setState(() {
-                  _searchFilterText = "";
-                });
-              },
-            ),
-            hintText: 'Search...',
-            border: InputBorder.none),
-            onChanged: (text) {
-              print('search $text');
-              setState(() {
-                _searchFilterText = text;
-              });
-            }
-      ),
+      child: TextField(
+          decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  setState(() {
+                    _searchFilterText = "";
+                  });
+                },
+              ),
+              hintText: 'Search...',
+              border: InputBorder.none),
+          onChanged: (text) {
+            print('search $text');
+            setState(() {
+              _searchFilterText = text;
+            });
+          }),
     );
   }
 
@@ -216,7 +227,8 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
     if (_selectedContacts.contains(contact)) {
       setState(() {
         _selectedContacts.remove(contact);
-        scrollSelectedListToEnd();
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 1000), curve: Curves.ease);
       });
     }
   }
