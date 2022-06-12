@@ -1,4 +1,4 @@
-import 'package:event2go/features/chat/users_selection_widget.dart';
+import 'package:event2go/features/chat/contacts_selection_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

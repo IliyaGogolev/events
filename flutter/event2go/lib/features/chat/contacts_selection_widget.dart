@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:event2go/features/chat/no_glow_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,6 +16,9 @@ class UsersSelectionWidget extends StatefulWidget {
 class UsersSelectionState extends State<UsersSelectionWidget> {
   // List<String> _chatList = [];
   Iterable<Contact> _contacts;
+  List<Contact> _selectedContacts = [];
+  double selectedContactWidth = 80.0;
+  ScrollController _scrollController = ScrollController();
 
   // bool _isLoading = false;
 
@@ -73,11 +79,44 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
               onPressed: () {})
         ]),
         body: Column(
-          children: <Widget>[
-            createSearchEditText(),
-            createContactsList()
-          ],
+          children: <Widget>[createSearchEditText(), addSelectedContacts(), createContactsList()].notNulls(),
         ));
+  }
+
+  SingleChildScrollView addSelectedContacts() {
+    return _selectedContacts.isNotEmpty
+        ? SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+            scrollDirection: Axis.horizontal,
+            controller: _scrollController,
+            child: Row(
+              children: _selectedContacts
+                  .map((contact) => InkWell(
+                        onTap: () => removeSelectedContact(contact),
+                        child: Container(
+                          width: selectedContactWidth,
+                          child: Stack(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  contactCircleAvatar(contact),
+                                  Text(
+                                    contact.displayName,
+                                    maxLines: 1,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(child: Align(alignment: Alignment(1, -1), child: Icon(Icons.close, size: 18)))
+                          ]),
+                        ),
+                      ))
+                  .toList(),
+            ),
+          )
+        : null;
   }
 
   Expanded createContactsList() {
@@ -90,20 +129,39 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
                 var c2 = c;
                 return new ListTile(
                   onTap: () {
-                    Navigator.of(context)
-                        .push(new MaterialPageRoute(builder: (BuildContext context) => new ContactDetails(c)));
+                    addContactToSelectedContacts(c);
+                    // Navigator.of(context)
+                    //     .push(new MaterialPageRoute(builder: (BuildContext context) => new ContactDetails(c)));
                   },
-                  leading: (c.avatar != null && c.avatar.length > 0)
-                      ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar))
-                      : new CircleAvatar(
-                          child: Icon(Icons.person)),
-                          // child: new Text(c2.displayName.length > 1 ? c.displayName?.substring(0, 2) : "")),
+                  leading: contactCircleAvatar(c),
+                  // child: new Text(c2.displayName.length > 1 ? c.displayName?.substring(0, 2) : "")),
                   title: new Text(c.displayName ?? ""),
                 );
               },
             )
           : new Center(child: new CircularProgressIndicator()),
     );
+  }
+
+  void addContactToSelectedContacts(Contact c) {
+    if (!_selectedContacts.contains(c)) {
+      setState(() {
+        print("selectedContacts : ${c.displayName}");
+        _selectedContacts.add(c);
+        scrollSelectedListToEnd();
+      });
+    }
+  }
+
+  CircleAvatar contactCircleAvatar(Contact c) {
+    return (c.avatar != null && c.avatar.length > 0)
+        ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar))
+        : new CircleAvatar(child: Icon(Icons.person));
+  }
+
+  void scrollSelectedListToEnd() {
+    _scrollController.animateTo(selectedContactWidth * (_selectedContacts.length - 1),
+        duration: Duration(milliseconds: 1000), curve: Curves.ease);
   }
 
   Container createSearchEditText() {
@@ -154,5 +212,22 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   @override
   dispose() {
     super.dispose();
+  }
+
+  removeSelectedContact(Contact contact) {
+    print("removeSelectedContact ${contact.displayName}");
+    if (_selectedContacts.contains(contact)) {
+      setState(() {
+        _selectedContacts.remove(contact);
+        scrollSelectedListToEnd();
+      });
+    }
+  }
+}
+
+extension NotNulls on List {
+  ///Returns items that are not null, for UI Widgets/PopupMenuItems etc.
+  notNulls() {
+    return where((e) => e != null).toList();
   }
 }
