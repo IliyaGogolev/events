@@ -16,6 +16,8 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   double selectedContactWidth = 80.0;
   ScrollController _scrollController = ScrollController();
   String _searchFilterText = "";
+  String _toolbarSubtitle = "";
+  var _searchTextFieldController = TextEditingController();
 
   // bool _isLoading = false;
 
@@ -58,17 +60,35 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
     setState(() {
       print("setState contacts: ${contacts.length}");
       _contacts = contacts;
+      updateToolbarSubtitle();
     });
   }
 
   Widget selectUsersWidget() {
+
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: new AppBar(title: new Text('Add Participants'), actions: <Widget>[
+        appBar: new AppBar(title:
+        RichText(
+          textAlign: TextAlign.left,
+          text: TextSpan(
+              text: "Add Participants",
+              style: TextStyle(fontSize: 20),
+              children: <TextSpan>[
+                TextSpan(
+                  text: _toolbarSubtitle.isEmpty ? "" : "\n$_toolbarSubtitle",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ]
+          ),
+        ),
+            actions: <Widget>[
           new TextButton(
               child: new Text(
                 'Next',
-                textScaleFactor: 1.5,
+                textScaleFactor: 1.4,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -155,16 +175,6 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
     );
   }
 
-  void addContactToSelectedContacts(Contact c) {
-    if (!_selectedContacts.contains(c)) {
-      setState(() {
-        print("selectedContacts : ${c.displayName}");
-        _selectedContacts.add(c);
-        scrollSelectedListToEnd();
-      });
-    }
-  }
-
   CircleAvatar contactCircleAvatar(Contact c) {
     return (c.avatar != null && c.avatar.length > 0)
         ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar))
@@ -191,6 +201,7 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
+          controller: _searchTextFieldController,
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.search),
               suffixIcon: IconButton(
@@ -198,6 +209,7 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
                 onPressed: () {
                   setState(() {
                     _searchFilterText = "";
+                    _searchTextFieldController.clear();
                   });
                 },
               ),
@@ -222,14 +234,41 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
     super.dispose();
   }
 
-  removeSelectedContact(Contact contact) {
+  void addContactToSelectedContacts(Contact c) {
+    if (!_selectedContacts.contains(c)) {
+      setState(() {
+        print("selectedContacts : ${c.displayName}");
+        _selectedContacts.add(c);
+        scrollSelectedListToEnd();
+        updateToolbarSubtitle();
+        hideKeyboard();
+      });
+    }
+  }
+
+  void removeSelectedContact(Contact contact) {
     print("removeSelectedContact ${contact.displayName}");
     if (_selectedContacts.contains(contact)) {
       setState(() {
         _selectedContacts.remove(contact);
         _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 1000), curve: Curves.ease);
+            duration: Duration(milliseconds: 1000), curve: Curves.ease
+        );
+        updateToolbarSubtitle();
+        hideKeyboard();
       });
+    }
+  }
+
+  void hideKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  void updateToolbarSubtitle() {
+    if (_contacts.isEmpty) {
+      _toolbarSubtitle = "";
+    } else {
+      _toolbarSubtitle = "${_selectedContacts.length}/${_contacts.length}";
     }
   }
 }
