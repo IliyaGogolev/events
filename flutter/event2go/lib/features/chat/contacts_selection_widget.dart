@@ -15,6 +15,7 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   List<Contact> _selectedContacts = [];
   double selectedContactWidth = 80.0;
   ScrollController _scrollController = ScrollController();
+  String _searchFilterText = "";
 
   // bool _isLoading = false;
 
@@ -120,12 +121,14 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   }
 
   Expanded createContactsList() {
+    Iterable<Contact> filteredContacts = _contacts.where((element) =>
+        element.displayName.toLowerCase().startsWith(_searchFilterText.toLowerCase())).toList();
     return new Expanded(
-      child: _contacts != null
+      child: filteredContacts != null
           ? new ListView.builder(
-              itemCount: _contacts?.length ?? 0,
+              itemCount: filteredContacts?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
-                Contact c = _contacts?.elementAt(index);
+                Contact c = filteredContacts?.elementAt(index);
                 var c2 = c;
                 return new ListTile(
                   onTap: () {
@@ -182,7 +185,7 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
       //     ),
       //   ),
       // ),
-      child: const ListTile(
+      child:  ListTile(
         horizontalTitleGap: 0,
         leading: Icon(
           Icons.search,
@@ -199,6 +202,12 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
             ),
             border: InputBorder.none,
           ),
+          onChanged: (text) {
+            print('search $text');
+            setState(() {
+              _searchFilterText = text;
+            });
+          },
         ),
       ),
     );
