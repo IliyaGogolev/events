@@ -1,31 +1,43 @@
+import 'package:event2go/features/chat/contactsbloc/contacts_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class UsersSelectionWidget extends StatefulWidget {
+class ContactsSelectionWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
 
   @override
-  UsersSelectionState createState() => UsersSelectionState();
+  ContactsSelectionState createState() => ContactsSelectionState();
 }
 
-class UsersSelectionState extends State<UsersSelectionWidget> {
-  // List<String> _chatList = [];
-  Iterable<Contact> _contacts;
-  List<Contact> _selectedContacts = [];
+class ContactsSelectionState extends State<ContactsSelectionWidget> {
   double selectedContactWidth = 80.0;
   ScrollController _scrollController = ScrollController();
   String _searchFilterText = "";
   String _toolbarSubtitle = "";
   var _searchTextFieldController = TextEditingController();
 
-  // bool _isLoading = false;
+  ContactsBloc _contactsBloc;
 
   @override
   void initState() {
     super.initState();
+    print ("ContactsSelectionState initState");
+    _contactsBloc = context.read<ContactsBloc>();
     initContacts();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ContactsBloc, ContactsState>(
+        builder: (context, state) {
+          print ("build selectUsersWidget, state $state");
+          return selectUsersWidget();
+        }
+    );
+  }
+
 
   initContacts() async {
     PermissionStatus permission = await Permission.contacts.status;
@@ -34,7 +46,7 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
       await Permission.contacts.request();
       PermissionStatus permission = await Permission.contacts.status;
       if (permission == PermissionStatus.granted) {
-        loadContactsPermissionGranted();
+        loadContactsPermissionGranted(context);
       } else {
         showDialog(
           context: context,
@@ -51,18 +63,22 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
         );
       }
     } else {
-      loadContactsPermissionGranted();
+      loadContactsPermissionGranted(context);
     }
   }
 
-  void loadContactsPermissionGranted() async {
+  void loadContactsPermissionGranted(BuildContext context) async {
     var contacts = await ContactsService.getContacts();
-    setState(() {
+    // setState(() {
       print("setState contacts: ${contacts.length}");
-      _contacts = contacts;
-      updateToolbarSubtitle();
-    });
+      _contactsBloc.add(ContactsLoadedEvent(contacts: contacts));
+      // getModel(context).setContacts(contacts);
+      // _contacts = contacts;
+      // updateToolbarSubtitle();
+    // });
   }
+
+  // ContactsSelectionCubit getModel(BuildContext context) => context.read<ContactsSelectionCubit>();
 
   Widget selectUsersWidget() {
 
@@ -93,15 +109,20 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () {})
+              onPressed: () {
+                  onNextButtonClick();
+              })
         ]),
         body: Column(
-          children: <Widget>[createSearchEditText(), addSelectedContacts(), createContactsList()].notNulls(),
+          children: <Widget>[
+            createSearchEditText(),
+            addSelectedContacts(context),
+            createContactsList()].notNulls(),
         ));
   }
 
-  LayoutBuilder addSelectedContacts() {
-    return _selectedContacts.isNotEmpty
+  LayoutBuilder addSelectedContacts(BuildContext context) {
+    return _contactsBloc.selectedContacts.isNotEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
             return SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
@@ -110,7 +131,7 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minWidth: viewportConstraints.maxWidth),
                   child: Row(
-                    children: _selectedContacts
+                    children: _contactsBloc.selectedContacts
                         .map((contact) => InkWell(
                               onTap: () => removeSelectedContact(contact),
                               child: Container(
@@ -147,8 +168,9 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   }
 
   Expanded createContactsList() {
-    Iterable<Contact> filteredContacts = _contacts != null
-        ? _contacts
+    var contacts = _contactsBloc.contacts;
+    Iterable<Contact> filteredContacts = contacts.isNotEmpty
+        ? contacts
             .where((element) => element.displayName.toLowerCase().startsWith(_searchFilterText.toLowerCase()))
             .toList()
         : null;
@@ -183,8 +205,9 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
 
   void scrollSelectedListToEnd() {
     double width = MediaQuery.of(context).size.width;
-    if (selectedContactWidth * (_selectedContacts.length) > width) {
-      _scrollController.animateTo(selectedContactWidth * (_selectedContacts.length),
+    var selectedContacts = _contactsBloc.selectedContacts;
+    if (selectedContactWidth * (selectedContacts.length) > width) {
+      _scrollController.animateTo(selectedContactWidth * (selectedContacts.length),
           duration: Duration(milliseconds: 1000), curve: Curves.ease);
     }
   }
@@ -225,20 +248,15 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return selectUsersWidget();
-  }
-
-  @override
   dispose() {
     super.dispose();
   }
 
   void addContactToSelectedContacts(Contact c) {
-    if (!_selectedContacts.contains(c)) {
+    if (! _contactsBloc.selectedContacts.contains(c)) {
       setState(() {
         print("selectedContacts : ${c.displayName}");
-        _selectedContacts.add(c);
+        _contactsBloc.selectedContacts.add(c);
         scrollSelectedListToEnd();
         updateToolbarSubtitle();
         hideKeyboard();
@@ -248,9 +266,10 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
 
   void removeSelectedContact(Contact contact) {
     print("removeSelectedContact ${contact.displayName}");
-    if (_selectedContacts.contains(contact)) {
+    var selectedContacts = _contactsBloc.selectedContacts;
+    if (selectedContacts.contains(contact)) {
       setState(() {
-        _selectedContacts.remove(contact);
+        selectedContacts.remove(contact);
         _scrollController.animateTo(_scrollController.position.maxScrollExtent,
             duration: Duration(milliseconds: 1000), curve: Curves.ease
         );
@@ -265,11 +284,15 @@ class UsersSelectionState extends State<UsersSelectionWidget> {
   }
 
   void updateToolbarSubtitle() {
-    if (_contacts.isEmpty) {
+    if (_contactsBloc.contacts.isEmpty) {
       _toolbarSubtitle = "";
     } else {
-      _toolbarSubtitle = "${_selectedContacts.length}/${_contacts.length}";
+      _toolbarSubtitle = "${_contactsBloc.selectedContacts.length}/${_contactsBloc.contacts.length}";
     }
+  }
+
+  void onNextButtonClick() {
+
   }
 }
 

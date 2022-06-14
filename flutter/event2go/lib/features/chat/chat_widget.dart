@@ -1,6 +1,8 @@
 import 'package:event2go/features/chat/contacts_selection_widget.dart';
+import 'package:event2go/features/chat/contactsbloc/contacts_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
@@ -57,10 +59,11 @@ class ChatState extends State<ChatWidget> {
   }
 
   void _onFabButtonClicked() {
-    // Putting our code inside "setState" tells the app that our state has changed, and
-    // it will automatically re-render the list
     setState(() {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => UsersSelectionWidget()));
+      Navigator.push(context, MaterialPageRoute(
+          // builder: (context) => SecondScreen())
+          builder: (context) => BlocProvider(create: (_) => ContactsBloc(), child: ContactsSelectionWidget())),
+      );
     });
   }
 

@@ -40,7 +40,9 @@ dependencies:
 #  permission_handler: ^8.2.5
   meta: ^1.1.6
   http: ^0.13.4
-#  todo remove from app, move to module
+  flutter_bloc: 8.0.1
+  equatable: ^2.0.0
+  #  todo remove from app, move to module
 #  flutterfire_ui: ^0.4.0+4
 #  firebase_auth: ^3.3.16
 #  firebase_core: ^1.15.0
