@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:contacts_service/contacts_service.dart';
@@ -6,7 +7,6 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'contacts_event.dart';
-
 part 'contacts_state.dart';
 
 class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
@@ -35,10 +35,11 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
     Emitter<ContactsState> emit,
   ) async {
     if (event.selected) {
+      print ("contact added ${event.contact.displayName}");
       _selectedContacts.add(event.contact);
     } else {
       _selectedContacts.remove(event.contact);
     }
-    emit(ContactsStateLoaded(_contacts, _selectedContacts));
+    emit(ContactsSelected(event.contact, event.selected));
   }
 }

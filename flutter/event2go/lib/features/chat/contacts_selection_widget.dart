@@ -26,7 +26,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   @override
   void initState() {
     super.initState();
-    print ("ContactsSelectionState initState");
+    print("ContactsSelectionState initState");
     _contactsBloc = context.read<ContactsBloc>();
     initContacts();
   }
@@ -34,13 +34,12 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ContactsBloc, ContactsState>(
+        bloc: _contactsBloc,
         builder: (context, state) {
-          print ("build selectUsersWidget, state $state");
+          print("build selectUsersWidget, state $state");
           return selectUsersWidget();
-        }
-    );
+        });
   }
-
 
   initContacts() async {
     PermissionStatus permission = await Permission.contacts.status;
@@ -72,59 +71,44 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
 
   void loadContactsPermissionGranted(BuildContext context) async {
     var contacts = await ContactsService.getContacts();
-    // setState(() {
-      print("setState contacts: ${contacts.length}");
-      _contactsBloc.add(ContactsLoadedEvent(contacts: contacts));
-      // getModel(context).setContacts(contacts);
-      // _contacts = contacts;
-      // updateToolbarSubtitle();
-    // });
+    print("setState contacts: ${contacts.length}");
+    _contactsBloc.add(ContactsLoadedEvent(contacts: contacts));
   }
 
-  // ContactsSelectionCubit getModel(BuildContext context) => context.read<ContactsSelectionCubit>();
-
   Widget selectUsersWidget() {
-
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: new AppBar(title:
-        RichText(
-          textAlign: TextAlign.left,
-          text: TextSpan(
-              text: "Add Participants",
-              style: TextStyle(fontSize: 20),
-              children: <TextSpan>[
+        appBar: new AppBar(
+            title: RichText(
+              textAlign: TextAlign.left,
+              text: TextSpan(text: "Add Participants", style: TextStyle(fontSize: 20), children: <TextSpan>[
                 TextSpan(
                   text: _toolbarSubtitle.isEmpty ? "" : "\n$_toolbarSubtitle",
                   style: TextStyle(
                     fontSize: 16,
                   ),
                 ),
-              ]
-          ),
-        ),
+              ]),
+            ),
             actions: <Widget>[
-          new TextButton(
-              child: new Text(
-                'Next',
-                textScaleFactor: 1.4,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                  onNextButtonClick();
-              })
-        ]),
+              new TextButton(
+                  child: new Text(
+                    'Next',
+                    textScaleFactor: 1.4,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () {
+                    onNextButtonClick();
+                  })
+            ]),
         body: Column(
-          children: <Widget>[
-            createSearchEditText(),
-            addSelectedContacts(context),
-            createContactsList()].notNulls()
-        ));
+            children: <Widget>[createSearchEditText(), addSelectedContacts(context), createContactsList()].notNulls()));
   }
 
   LayoutBuilder addSelectedContacts(BuildContext context) {
+    print("addSelectedContacts ${_contactsBloc.selectedContacts.length}");
     return _contactsBloc.selectedContacts.isNotEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
             return SingleChildScrollView(
@@ -255,15 +239,13 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
     super.dispose();
   }
 
-  void addContactToSelectedContacts(Contact c) {
-    if (! _contactsBloc.selectedContacts.contains(c)) {
-      setState(() {
-        print("selectedContacts : ${c.displayName}");
-        _contactsBloc.selectedContacts.add(c);
-        scrollSelectedListToEnd();
-        updateToolbarSubtitle();
-        hideKeyboard();
-      });
+  void addContactToSelectedContacts(Contact contact) {
+    if (!_contactsBloc.selectedContacts.contains(contact)) {
+      print("selectedContacts : ${contact.displayName}");
+      _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: true));
+      scrollSelectedListToEnd();
+      updateToolbarSubtitle();
+      hideKeyboard();
     }
   }
 
@@ -271,14 +253,11 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
     print("removeSelectedContact ${contact.displayName}");
     var selectedContacts = _contactsBloc.selectedContacts;
     if (selectedContacts.contains(contact)) {
-      setState(() {
-        selectedContacts.remove(contact);
-        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 1000), curve: Curves.ease
-        );
-        updateToolbarSubtitle();
-        hideKeyboard();
-      });
+      _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: false));
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 1000), curve: Curves.ease);
+      updateToolbarSubtitle();
+      hideKeyboard();
     }
   }
 
@@ -296,8 +275,9 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
 
   void onNextButtonClick() {
     setState(() {
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context) => BlocProvider(create: (_) => _contactsBloc, child: GroupWidget())),
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BlocProvider(create: (_) => _contactsBloc, child: GroupWidget())),
       );
     });
   }
