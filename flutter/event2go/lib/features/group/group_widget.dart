@@ -90,15 +90,15 @@ class GroupWidgetState extends State<GroupWidget> {
 
   Container createTitleEditBox() {
     return Container(
-      height: 24,
+      height: 48,
       child: TextField(
         style: TextStyle(
-          height: 0.9, //SETTING THIS CAN SOLVE YOUR PROBLEM
-          fontSize: 20,
+          height: 0.8,
+          fontSize: 18,
           fontWeight: FontWeight.w300,
         ),
           controller: _groupTitleTextFieldController,
-          //maxLength: 24,
+          maxLength: 24,
           decoration: InputDecoration(hintText: 'Group Subject')
           ),
     );
