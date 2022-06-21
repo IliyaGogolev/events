@@ -72,7 +72,7 @@ class GroupWidgetState extends State<GroupWidget> {
 
   Container createGroupSubjectEditText() {
     return Container(
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.all(18),
         child: ListTile(
           leading: Icon(
             Icons.photo_size_select_actual,
@@ -88,11 +88,20 @@ class GroupWidgetState extends State<GroupWidget> {
         child: FittedBox(child: Text(" ${_contactsBloc.selectedContacts.length} Participants")));
   }
 
-  TextField createTitleEditBox() {
-    return TextField(
-        controller: _groupTitleTextFieldController,
-        maxLength: 24,
-        decoration: InputDecoration(hintText: 'Group Subject'));
+  Container createTitleEditBox() {
+    return Container(
+      height: 24,
+      child: TextField(
+        style: TextStyle(
+          height: 0.9, //SETTING THIS CAN SOLVE YOUR PROBLEM
+          fontSize: 20,
+          fontWeight: FontWeight.w300,
+        ),
+          controller: _groupTitleTextFieldController,
+          //maxLength: 24,
+          //decoration: InputDecoration(hintText: 'Group Subject')
+          ),
+    );
   }
 
   LayoutBuilder addSelectedContacts(BuildContext context) {
@@ -100,36 +109,39 @@ class GroupWidgetState extends State<GroupWidget> {
     print("_contactsBloc.selectedContacts.isNotEmpty $empty");
     return _contactsBloc.selectedContacts.isNotEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
-            return Wrap(
-              children: _contactsBloc.selectedContacts
-                  .map((contact) => InkWell(
-                        onTap: () => removeSelectedContact(contact),
-                        child: Container(
-                          width: contactWidth,
-                          child: Stack(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  contactCircleAvatar(contact),
-                                  SizedBox(height: 6),
-                                  Text(
-                                    contact.displayName,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
+            return Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Wrap(
+                children: _contactsBloc.selectedContacts
+                    .map((contact) => InkWell(
+                          onTap: () => removeSelectedContact(contact),
+                          child: Container(
+                            width: contactWidth,
+                            child: Stack(children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    contactCircleAvatar(contact),
+                                    SizedBox(height: 6),
+                                    Text(
+                                      contact.displayName,
+                                      maxLines: 1,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                                child: Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
-                            ))
-                          ]),
-                        ),
-                      ))
-                  .toList(),
+                              Container(
+                                  child: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
+                              ))
+                            ]),
+                          ),
+                        ))
+                    .toList(),
+              ),
             );
           })
         : null;
