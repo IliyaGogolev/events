@@ -237,6 +237,8 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   @override
   dispose() {
     super.dispose();
+    // Closes the [Event] and [State] [Stream]s.
+    //   _contactsBloc.close();
   }
 
   void addContactToSelectedContacts(Contact contact) {
@@ -277,8 +279,9 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
     setState(() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BlocProvider(create: (_) => _contactsBloc, child: GroupWidget())),
+        MaterialPageRoute(builder: (context) => BlocProvider.value(value: _contactsBloc, child: GroupWidget())),
       );
     });
   }
+
 }

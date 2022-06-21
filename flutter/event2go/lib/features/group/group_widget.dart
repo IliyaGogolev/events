@@ -144,6 +144,7 @@ class GroupWidgetState extends State<GroupWidget> {
   @override
   dispose() {
     super.dispose();
+    // _contactsBloc.close();
   }
 
   void removeSelectedContact(Contact contact) {
