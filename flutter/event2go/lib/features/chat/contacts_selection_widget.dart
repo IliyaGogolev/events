@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:event2go/utils/ext.dart';
+
+import '../group/group_widget.dart';
 
 class ContactsSelectionWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
@@ -117,7 +120,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
           children: <Widget>[
             createSearchEditText(),
             addSelectedContacts(context),
-            createContactsList()].notNulls(),
+            createContactsList()].notNulls()
         ));
   }
 
@@ -292,13 +295,10 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   }
 
   void onNextButtonClick() {
-
-  }
-}
-
-extension NotNulls on List {
-  ///Returns items that are not null, for UI Widgets/PopupMenuItems etc.
-  notNulls() {
-    return where((e) => e != null).toList();
+    setState(() {
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context) => BlocProvider(create: (_) => _contactsBloc, child: GroupWidget())),
+      );
+    });
   }
 }

@@ -60,9 +60,10 @@ class ChatState extends State<ChatWidget> {
 
   void _onFabButtonClicked() {
     setState(() {
-      Navigator.push(context, MaterialPageRoute(
-          // builder: (context) => SecondScreen())
-          builder: (context) => BlocProvider(create: (_) => ContactsBloc(), child: ContactsSelectionWidget())),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => BlocProvider(create: (_) => ContactsBloc(), child: ContactsSelectionWidget())),
       );
     });
   }
