@@ -99,7 +99,7 @@ class GroupWidgetState extends State<GroupWidget> {
         ),
           controller: _groupTitleTextFieldController,
           //maxLength: 24,
-          //decoration: InputDecoration(hintText: 'Group Subject')
+          decoration: InputDecoration(hintText: 'Group Subject')
           ),
     );
   }
