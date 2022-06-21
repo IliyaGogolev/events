@@ -23,7 +23,9 @@ class GroupWidgetState extends State<GroupWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContactsBloc, ContactsState>(builder: (context, state) {
+    return BlocBuilder<ContactsBloc, ContactsState>(
+        bloc: _contactsBloc,
+        builder: (context, state) {
       print("build selectUsersWidget, state $state");
       return createEditGroupWidget();
     });
@@ -148,12 +150,12 @@ class GroupWidgetState extends State<GroupWidget> {
     print("removeSelectedContact ${contact.displayName}");
     var selectedContacts = _contactsBloc.selectedContacts;
     if (selectedContacts.contains(contact)) {
-      setState(() {
-        selectedContacts.remove(contact);
-        // _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: false));
+      // setState(() {
+        // selectedContacts.remove(contact);
+        _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: false));
         // _contactsBloc.add(ContactSelectedEvent(contacts: contacts));
         hideKeyboard();
-      });
+      // });
     }
   }
 
