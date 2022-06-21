@@ -26,9 +26,9 @@ class GroupWidgetState extends State<GroupWidget> {
     return BlocBuilder<ContactsBloc, ContactsState>(
         bloc: _contactsBloc,
         builder: (context, state) {
-      print("build selectUsersWidget, state $state");
-      return createEditGroupWidget();
-    });
+          print("build selectUsersWidget, state $state");
+          return createEditGroupWidget();
+        });
   }
 
   Widget createEditGroupWidget() {
@@ -83,15 +83,16 @@ class GroupWidgetState extends State<GroupWidget> {
   }
 
   Padding createParticipantCountTextView() {
-    return Padding(padding: EdgeInsets.only(left: 12, right: 12), child: FittedBox(child: Text("11 Participants")));
+    return Padding(
+        padding: EdgeInsets.only(left: 12, right: 12),
+        child: FittedBox(child: Text(" ${_contactsBloc.selectedContacts.length} Participants")));
   }
 
   TextField createTitleEditBox() {
     return TextField(
         controller: _groupTitleTextFieldController,
         maxLength: 24,
-        decoration: InputDecoration(hintText: 'Group Subject')
-    );
+        decoration: InputDecoration(hintText: 'Group Subject'));
   }
 
   LayoutBuilder addSelectedContacts(BuildContext context) {
@@ -100,36 +101,35 @@ class GroupWidgetState extends State<GroupWidget> {
     return _contactsBloc.selectedContacts.isNotEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
             return Wrap(
-                children: _contactsBloc.selectedContacts
-                    .map((contact) => InkWell(
-                          onTap: () => removeSelectedContact(contact),
-                          child: Container(
-                            width: contactWidth,
-                            child: Stack(children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    contactCircleAvatar(contact),
-                                    SizedBox(height: 6),
-                                    Text(
-                                      contact.displayName,
-                                      maxLines: 1,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
+              children: _contactsBloc.selectedContacts
+                  .map((contact) => InkWell(
+                        onTap: () => removeSelectedContact(contact),
+                        child: Container(
+                          width: contactWidth,
+                          child: Stack(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  contactCircleAvatar(contact),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    contact.displayName,
+                                    maxLines: 1,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
-                              Container(
-                                  child: Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child:
-                                    Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
-                              ))
-                            ]),
-                          ),
-                        ))
-                    .toList(),
+                            ),
+                            Container(
+                                child: Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
+                            ))
+                          ]),
+                        ),
+                      ))
+                  .toList(),
             );
           })
         : null;
@@ -152,10 +152,10 @@ class GroupWidgetState extends State<GroupWidget> {
     var selectedContacts = _contactsBloc.selectedContacts;
     if (selectedContacts.contains(contact)) {
       // setState(() {
-        // selectedContacts.remove(contact);
-        _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: false));
-        // _contactsBloc.add(ContactSelectedEvent(contacts: contacts));
-        hideKeyboard();
+      // selectedContacts.remove(contact);
+      _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: false));
+      // _contactsBloc.add(ContactSelectedEvent(contacts: contacts));
+      hideKeyboard();
       // });
     }
   }
