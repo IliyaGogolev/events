@@ -40,3 +40,6 @@ https://github.com/firebase/flutterfire/issues/8016
 
 # Reference
 Take a picture: https://github.com/QuisApp/flutter_contacts
+
+# JSON to Dart
+https://javiercbk.github.io/json_to_dart/

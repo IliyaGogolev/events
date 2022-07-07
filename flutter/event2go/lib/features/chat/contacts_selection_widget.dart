@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:event2go/utils/ext.dart';
+import 'package:event2go/utils/extensions.dart';
 
 import '../group/group_widget.dart';
 

@@ -17,10 +17,10 @@ class HomeTabsFactory implements TabsFactory {
     String title = "";
     switch (position) {
       case 0:
-        title = "Events";
+        title = "Chat";
         break;
       case 1:
-        title = "Chat";
+        title = "Events";
         break;
       case 2:
         title = "Notifications";
@@ -34,10 +34,10 @@ class HomeTabsFactory implements TabsFactory {
     Widget widget;
     switch (position) {
       case 0:
-        widget = EventListWidget();
+        widget = ChatWidget();
         break;
       case 1:
-        widget = ChatWidget();
+        widget = EventListWidget();
         break;
       case 2:
         widget = Icon(Icons.notifications);

@@ -1,5 +1,5 @@
 import 'package:event2go/features/chat/contactsbloc/contacts_bloc.dart';
-import 'package:event2go/utils/ext.dart';
+import 'package:event2go/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +17,7 @@ class GroupWidgetState extends State<GroupWidget> {
   @override
   void initState() {
     super.initState();
-    print("ContactsSelectionState initState");
+    print("GroupWidgetState initState");
     _contactsBloc = context.read<ContactsBloc>();
   }
 
@@ -26,7 +26,7 @@ class GroupWidgetState extends State<GroupWidget> {
     return BlocBuilder<ContactsBloc, ContactsState>(
         bloc: _contactsBloc,
         builder: (context, state) {
-          print("build selectUsersWidget, state $state");
+          print("build createEditGroupWidget, state $state");
           return createEditGroupWidget();
         });
   }

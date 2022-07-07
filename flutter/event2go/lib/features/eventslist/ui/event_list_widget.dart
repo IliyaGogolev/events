@@ -1,39 +1,27 @@
 // import 'package:event2go/login/ui/signup.dart';
-import 'package:event2go/net/api_provider.dart';
+import 'package:event2go/network/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:event2go/features/addevent/add_event_widget.dart';
+import 'package:models/models/contact.dart';
 
 class EventListWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new EventListState();
 }
 
-class Contact {
-  String identifier,
-      displayName,
-      givenName,
-      middleName,
-      prefix,
-      suffix,
-      familyName,
-      company,
-      jobTitle,
-      note;
-
-  Contact(this.givenName, this.middleName, this.prefix, this.suffix,
-      this.familyName, this.company, this.jobTitle, this.note);
-}
-
 class EventListState extends State<EventListWidget> {
   final Contact _contact = new Contact(
-    "givenName",
-    "middleName",
-    "prefix",
-    "suffix",
-    "familyName",
-    "company",
-    "jobTitle",
-    "note",
+    id: "firstName",
+    firstName: "firstName",
+    lastName: "lastName",
+    email: null,
+    phone: null,
+    avatar: null,
+    birthday: null
+    // "familyName",
+    // "company",
+    // "jobTitle",
+    // "note",
   );
 
   @override
@@ -49,47 +37,47 @@ class EventListState extends State<EventListWidget> {
           child: new ListView(
             children: <Widget>[
               new ListTile(
-                  title: new Text("Name"),
-                  trailing: new Text(_contact.givenName ?? "")),
+                  title: new Text("First Name"),
+                  trailing: new Text(_contact.firstName ?? "")),
               new ListTile(
-                  title: new Text("Middle name"),
-                  trailing: new Text(_contact.middleName ?? "")),
-              new ListTile(
-                  title: new Text("Family name"),
-                  trailing: new Text(_contact.familyName ?? "")),
-              new ListTile(
-                  title: new Text("Prefix"),
-                  trailing: new Text(_contact.prefix ?? "")),
-              new ListTile(
-                  title: new Text("Suffix"),
-                  trailing: new Text(_contact.suffix ?? "")),
-              new ListTile(
-                  title: new Text("Company"),
-                  trailing: new Text(_contact.company ?? "")),
-              new ListTile(
-                  title: new Text("Job"),
-                  trailing: new Text(_contact.jobTitle ?? "")),
-              new ListTile(
-                  title: new Text("Name"),
-                  trailing: new Text(_contact.givenName ?? "")),
-              new ListTile(
-                  title: new Text("Middle name"),
-                  trailing: new Text(_contact.middleName ?? "")),
-              new ListTile(
-                  title: new Text("Family name"),
-                  trailing: new Text(_contact.familyName ?? "")),
-              new ListTile(
-                  title: new Text("Prefix"),
-                  trailing: new Text(_contact.prefix ?? "")),
-              new ListTile(
-                  title: new Text("Suffix"),
-                  trailing: new Text(_contact.suffix ?? "")),
-              new ListTile(
-                  title: new Text("Company"),
-                  trailing: new Text(_contact.company ?? "")),
-              new ListTile(
-                  title: new Text("Job"),
-                  trailing: new Text(_contact.jobTitle ?? "")),
+                  title: new Text("Last name"),
+                  trailing: new Text(_contact.lastName ?? "")),
+              // new ListTile(
+              //     title: new Text("Family name"),
+              //     trailing: new Text(_contact.familyName ?? "")),
+              // new ListTile(
+              //     title: new Text("Prefix"),
+              //     trailing: new Text(_contact.prefix ?? "")),
+              // new ListTile(
+              //     title: new Text("Suffix"),
+              //     trailing: new Text(_contact.suffix ?? "")),
+              // new ListTile(
+              //     title: new Text("Company"),
+              //     trailing: new Text(_contact.company ?? "")),
+              // new ListTile(
+              //     title: new Text("Job"),
+              //     trailing: new Text(_contact.jobTitle ?? "")),
+              // new ListTile(
+              //     title: new Text("Name"),
+              //     trailing: new Text(_contact.givenName ?? "")),
+              // new ListTile(
+              //     title: new Text("Middle name"),
+              //     trailing: new Text(_contact.middleName ?? "")),
+              // new ListTile(
+              //     title: new Text("Family name"),
+              //     trailing: new Text(_contact.familyName ?? "")),
+              // new ListTile(
+              //     title: new Text("Prefix"),
+              //     trailing: new Text(_contact.prefix ?? "")),
+              // new ListTile(
+              //     title: new Text("Suffix"),
+              //     trailing: new Text(_contact.suffix ?? "")),
+              // new ListTile(
+              //     title: new Text("Company"),
+              //     trailing: new Text(_contact.company ?? "")),
+              // new ListTile(
+              //     title: new Text("Job"),
+              //     trailing: new Text(_contact.jobTitle ?? "")),
             ],
           ),
         ),
