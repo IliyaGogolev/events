@@ -50,6 +50,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
         bloc: _contactsBloc,
         builder: (context, state) {
           print("build selectUsersWidget, state $state");
+          updateToolbarSubtitle();
           return selectUsersWidget();
         });
   }
