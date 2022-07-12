@@ -1,11 +1,11 @@
-import 'package:event2go/features/chat/contactsbloc/contacts_bloc.dart';
+import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
+import 'package:event2go/features/group/group_widget.dart';
+import 'package:event2go/features/navigator/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:event2go/utils/extensions.dart';
-
-import '../group/group_widget.dart';
 
 class ContactsSelectionWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
@@ -277,11 +277,12 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
 
   void onNextButtonClick() {
     setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => BlocProvider.value(value: _contactsBloc, child: GroupWidget())),
-      );
+      navigateToCreateGroupWidget(
+          context, _contactsBloc.contacts.map((phoneContact) => phoneContact.toContact()).toList());
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => BlocProvider.value(value: _contactsBloc, child: GroupWidget())),
+      // );
     });
   }
-
 }

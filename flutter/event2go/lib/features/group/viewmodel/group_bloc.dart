@@ -12,11 +12,11 @@ part 'group_event.dart';
 part 'group_state.dart';
 
 class GroupBloc extends Bloc<GroupLoadedEvent, GroupState> {
-  Group _group;
+  Group group;
 
-  Group get selectedGroupProfile => _group;
+  // Group get group => _group;
 
-  GroupBloc() : super(GroupStateInitial()) {
+  GroupBloc(this.group) : super(GroupStateInitial()) {
     on<GroupLoadedEvent>(_onGroupLoadedEvent);
     // on<GroupProfileelectedEvent>(_onGroupProfileelectedEvent);
   }
@@ -25,9 +25,9 @@ class GroupBloc extends Bloc<GroupLoadedEvent, GroupState> {
     GroupLoadedEvent event,
     Emitter<GroupState> emit,
   ) async {
-    _group = event.group;
-    print("_onGroupProfileLoadedEvent $_group");
-    emit(GroupStateLoaded(_group));
+    group = event.group;
+    print("_onGroupProfileLoadedEvent $group");
+    emit(GroupStateLoaded(group));
   }
 
 // void _onGroupProfileelectedEvent(

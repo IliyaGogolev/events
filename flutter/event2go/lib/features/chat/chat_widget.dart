@@ -1,7 +1,6 @@
-import 'package:event2go/features/chat/contacts_selection_widget.dart';
-import 'package:event2go/features/chat/contactsbloc/contacts_bloc.dart';
+import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
+import 'package:event2go/features/contacts/contacts_selection_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatWidget extends StatefulWidget {

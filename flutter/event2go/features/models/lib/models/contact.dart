@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 
 class Contact extends Equatable {
+
   Contact({
     this.id,
     this.firstName,
@@ -9,12 +12,15 @@ class Contact extends Equatable {
     this.phone,
     this.avatar,
     this.birthday,
+    this.displayName
   });
 
   String? firstName, lastName, id;
   Map<String, String>? email;
   Map<String, String>? phone;
-  Uri? avatar;
+  // TODO check how to save contact image URI
+  Uint8List? avatar;
+  String? displayName;
   DateTime? birthday;
 
   @override

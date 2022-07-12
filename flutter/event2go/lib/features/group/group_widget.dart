@@ -1,8 +1,10 @@
-import 'package:event2go/features/chat/contactsbloc/contacts_bloc.dart';
+// import 'package:event2go/features/chat/bloc/contacts_bloc.dart';
+import 'package:event2go/features/group/viewmodel/group_bloc.dart';
 import 'package:event2go/utils/extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:contacts_service/contacts_service.dart';
+// import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:models/models/contact.dart';
 
 class GroupWidget extends StatefulWidget {
   @override
@@ -12,19 +14,21 @@ class GroupWidget extends StatefulWidget {
 class GroupWidgetState extends State<GroupWidget> {
   double contactWidth = 80.0;
   var _groupTitleTextFieldController = TextEditingController();
-  ContactsBloc _contactsBloc;
+  // ContactsBloc _contactsBloc;
+  GroupBloc _groupBloc;
 
   @override
   void initState() {
     super.initState();
     print("GroupWidgetState initState");
-    _contactsBloc = context.read<ContactsBloc>();
+    // _contactsBloc = context.read<ContactsBloc>();
+    _groupBloc = context.read<GroupBloc>();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContactsBloc, ContactsState>(
-        bloc: _contactsBloc,
+    return BlocBuilder<GroupBloc, GroupState>(
+        bloc: _groupBloc,
         builder: (context, state) {
           print("build createEditGroupWidget, state $state");
           return createEditGroupWidget();
@@ -85,7 +89,7 @@ class GroupWidgetState extends State<GroupWidget> {
   Padding createParticipantCountTextView() {
     return Padding(
         padding: EdgeInsets.only(left: 12, right: 12),
-        child: FittedBox(child: Text(" ${_contactsBloc.selectedContacts.length} Participants")));
+        child: FittedBox(child: Text(" ${_groupBloc.group.contacts.length} Participants")));
   }
 
   Container createTitleEditBox() {
@@ -105,16 +109,16 @@ class GroupWidgetState extends State<GroupWidget> {
   }
 
   LayoutBuilder addSelectedContacts(BuildContext context) {
-    bool empty = _contactsBloc.selectedContacts.isEmpty;
+    bool empty = _groupBloc.group.contacts.isEmpty;
     print("_contactsBloc.selectedContacts.isNotEmpty $empty");
-    return _contactsBloc.selectedContacts.isNotEmpty
+    return _groupBloc.group.contacts.isNotEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
             return Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Wrap(
-                children: _contactsBloc.selectedContacts
+                children: _groupBloc.group.contacts
                     .map((contact) => InkWell(
-                          onTap: () => removeSelectedContact(contact),
+                          // onTap: () => removeSelectedContact(contact),
                           child: Container(
                             width: contactWidth,
                             child: Stack(children: [
@@ -132,11 +136,11 @@ class GroupWidgetState extends State<GroupWidget> {
                                   ],
                                 ),
                               ),
-                              Container(
-                                  child: Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
-                              ))
+                              // Container(
+                              //     child: Padding(
+                              //   padding: const EdgeInsets.only(right: 10),
+                              //   child: Align(alignment: Alignment(1, -1), child: Icon(Icons.remove_circle, size: 18)),
+                              // ))
                             ]),
                           ),
                         ))
@@ -159,18 +163,18 @@ class GroupWidgetState extends State<GroupWidget> {
     // _contactsBloc.close();
   }
 
-  void removeSelectedContact(Contact contact) {
-    print("removeSelectedContact ${contact.displayName}");
-    var selectedContacts = _contactsBloc.selectedContacts;
-    if (selectedContacts.contains(contact)) {
-      // setState(() {
-      // selectedContacts.remove(contact);
-      _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: false));
-      // _contactsBloc.add(ContactSelectedEvent(contacts: contacts));
-      hideKeyboard();
-      // });
-    }
-  }
+  // void removeSelectedContact(Contact contact) {
+  //   print("removeSelectedContact ${contact.displayName}");
+  //   var selectedContacts = _contactsBloc.selectedContacts;
+  //   if (selectedContacts.contains(contact)) {
+  //     // setState(() {
+  //     // selectedContacts.remove(contact);
+  //     _contactsBloc.add(ContactSelectedEvent(contact: contact, selected: false));
+  //     // _contactsBloc.add(ContactSelectedEvent(contacts: contacts));
+  //     hideKeyboard();
+  //     // });
+  //   }
+  // }
 
   void hideKeyboard() {
     FocusManager.instance.primaryFocus?.unfocus();
