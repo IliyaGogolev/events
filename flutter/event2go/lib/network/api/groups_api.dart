@@ -6,7 +6,7 @@ import '../endpoints.dart';
 import '../raw_models/contact.dart';
 
 class GroupsApi {
-  DioClient dioClient;
+  NetworkClient dioClient;
 
   GroupsApi ({@required this.dioClient}):assert(dioClient != null);
 

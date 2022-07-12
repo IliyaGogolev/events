@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 
 import 'endpoints.dart';
 
-class DioClient {
+class NetworkClient {
 // dio instance
   Dio dio;
 
-  DioClient(this.dio) {
+  NetworkClient(this.dio) {
     dio
       ..options.baseUrl = Endpoints.baseUrl
       ..options.connectTimeout = Endpoints.connectionTimeout

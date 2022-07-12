@@ -56,7 +56,7 @@ class GroupWidgetState extends State<GroupWidget> {
                     ),
                   ),
                   onPressed: () {
-                    onNextButtonClick();
+                    onCreateButtonClick();
                   })
             ]),
         body: Column(
@@ -176,5 +176,7 @@ class GroupWidgetState extends State<GroupWidget> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void onNextButtonClick() {}
+  void onCreateButtonClick() {
+
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:event2go/network/api/groups_api.dart';
+import 'package:models/models.dart';
 import 'package:models/models/contact.dart';
 import 'package:models/models/group.dart';
 
@@ -7,12 +8,13 @@ import '../network/dio_exception.dart';
 import '../network/raw_models/group.dart' as rawGroup;
 import '../network/raw_models/contact.dart' as rawContact;
 
-class GroupsRepository {
+class GroupsRepositoryImp extends GroupsRepository {
   final GroupsApi groupsApi;
 
-  GroupsRepository(this.groupsApi);
+  GroupsRepositoryImp(this.groupsApi);
 
-  Future<List<Group>> getUsersRequested() async {
+  @override
+  Future<List<Group>> getGroups() async {
     try {
       final response = await groupsApi.groups();
       final groups = (response.data['data'] as List)
@@ -54,6 +56,7 @@ class GroupsRepository {
       throw errorMessage;
     }
   }
+
 }
 
 extension RawGroupMapping on rawGroup.Group {
