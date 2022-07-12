@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:models/models.dart';
@@ -11,7 +10,7 @@ part 'group_event.dart';
 
 part 'group_state.dart';
 
-class GroupBloc extends Bloc<GroupLoadedEvent, GroupState> {
+class GroupBloc extends Bloc<GroupEvent, GroupState> {
   Group group;
 
   final GroupsRepository groupsRepository;
@@ -20,7 +19,7 @@ class GroupBloc extends Bloc<GroupLoadedEvent, GroupState> {
   GroupBloc({this.group, @required this.groupsRepository}) : super(GroupStateInitial()) {
   // GroupBloc({this.group}) : super(GroupStateInitial()) {
     on<GroupLoadedEvent>(_onGroupLoadedEvent);
-    // on<GroupProfileelectedEvent>(_onGroupProfileelectedEvent);
+    on<CreateGroupEvent>(_onCreateGroupEvent);
   }
 
   void _onGroupLoadedEvent(
@@ -32,6 +31,12 @@ class GroupBloc extends Bloc<GroupLoadedEvent, GroupState> {
     emit(GroupStateLoaded(group));
   }
 
+  void _onCreateGroupEvent(
+      CreateGroupEvent event,
+      Emitter<GroupState> emit,
+      ) async {
+    print("_onCreateGroupEvent $event");
+  }
 // void _onGroupProfileelectedEvent(
 //   GroupProfileelectedEvent event,
 //   Emitter<GroupProfileState> emit,

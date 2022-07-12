@@ -3,6 +3,7 @@ import 'package:event2go/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:models/models/contact.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GroupWidget extends StatelessWidget {
   @override
@@ -17,6 +18,7 @@ class GroupWidget extends StatelessWidget {
 class GroupView extends StatelessWidget {
   double contactWidth = 80.0;
   var _groupTitleTextFieldController = TextEditingController();
+
   // ContactsBloc _contactsBloc;
   GroupBloc _groupBloc;
 
@@ -93,15 +95,14 @@ class GroupView extends StatelessWidget {
     return Container(
       height: 48,
       child: TextField(
-        style: TextStyle(
-          height: 0.8,
-          fontSize: 18,
-          fontWeight: FontWeight.w300,
-        ),
+          style: TextStyle(
+            height: 0.8,
+            fontSize: 18,
+            fontWeight: FontWeight.w300,
+          ),
           controller: _groupTitleTextFieldController,
           maxLength: 24,
-          decoration: InputDecoration(hintText: 'Group Subject')
-          ),
+          decoration: InputDecoration(hintText: 'Group Subject')),
     );
   }
 
@@ -178,6 +179,16 @@ class GroupView extends StatelessWidget {
   }
 
   void onCreateButtonClick() {
-
+    String title = _groupTitleTextFieldController.text;
+    if (title.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter a group subject",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0
+      );
+    } else {
+      _groupBloc.add(CreateGroupEvent(title: title));
+    }
   }
 }

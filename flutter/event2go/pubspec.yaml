@@ -43,6 +43,7 @@ dependencies:
   flutter_bloc: 8.0.1
   equatable: ^2.0.0
   retrofit: '>=3.0.0 <4.0.0'
+  fluttertoast: ^8.0.8
   logger: any  #for logging purpose
   #  todo remove from app, move to module
 #  flutterfire_ui: ^0.4.0+4

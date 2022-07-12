@@ -17,6 +17,18 @@ class GroupLoadedEvent extends GroupEvent {
   String toString() => 'Group $group';
 }
 
+class CreateGroupEvent extends GroupEvent {
+  CreateGroupEvent({@required this.title});
+  final String title;
+
+  @override
+  List<Object> get props => [title];
+
+  @override
+  String toString() => 'CreateGroupEvent title $title';
+
+}
+
 // class ContactSelectedEvent extends GroupEvent {
 //   const ContactSelectedEvent({@required this.group, @required this.selected});
 //
