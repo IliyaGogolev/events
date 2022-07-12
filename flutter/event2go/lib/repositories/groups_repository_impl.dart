@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:event2go/network/api/groups_api.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:models/models.dart';
 import 'package:models/models/contact.dart';
 import 'package:models/models/group.dart';
@@ -11,7 +12,9 @@ import '../network/raw_models/contact.dart' as rawContact;
 class GroupsRepositoryImp extends GroupsRepository {
   final GroupsApi groupsApi;
 
-  GroupsRepositoryImp(this.groupsApi);
+  GroupsRepositoryImp({@required this.groupsApi});
+
+  String test = "HELLO WORLD";
 
   @override
   Future<List<Group>> getGroups() async {

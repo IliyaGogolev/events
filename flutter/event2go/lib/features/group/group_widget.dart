@@ -1,41 +1,38 @@
-// import 'package:event2go/features/chat/bloc/contacts_bloc.dart';
-import 'package:event2go/features/group/viewmodel/group_bloc.dart';
+import 'package:event2go/features/group/bloc/group_bloc.dart';
 import 'package:event2go/utils/extensions.dart';
 import 'package:flutter/material.dart';
-// import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:models/models/contact.dart';
 
-class GroupWidget extends StatefulWidget {
+class GroupWidget extends StatelessWidget {
   @override
-  GroupWidgetState createState() => GroupWidgetState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => context.read<GroupBloc>(),
+      child: GroupView(),
+    );
+  }
 }
 
-class GroupWidgetState extends State<GroupWidget> {
+class GroupView extends StatelessWidget {
   double contactWidth = 80.0;
   var _groupTitleTextFieldController = TextEditingController();
   // ContactsBloc _contactsBloc;
   GroupBloc _groupBloc;
 
   @override
-  void initState() {
-    super.initState();
-    print("GroupWidgetState initState");
-    // _contactsBloc = context.read<ContactsBloc>();
-    _groupBloc = context.read<GroupBloc>();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GroupBloc, GroupState>(
-        bloc: _groupBloc,
-        builder: (context, state) {
-          print("build createEditGroupWidget, state $state");
-          return createEditGroupWidget();
-        });
+    return createEditGroupWidget(context);
+    // BlocBuilder<GroupBloc, GroupState>(
+    //     bloc: _groupBloc,
+    //     builder: (context, state) {
+    //       print("build createEditGroupWidget, state $state");
+    //       return createEditGroupWidget();
+    //     });
   }
 
-  Widget createEditGroupWidget() {
+  Widget createEditGroupWidget(BuildContext context) {
+    _groupBloc = context.read<GroupBloc>();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: new AppBar(
@@ -157,11 +154,11 @@ class GroupWidgetState extends State<GroupWidget> {
         : new CircleAvatar(child: Icon(Icons.person));
   }
 
-  @override
-  dispose() {
-    super.dispose();
-    // _contactsBloc.close();
-  }
+  // @override
+  // dispose() {
+  //   super.dispose();
+  //   // _contactsBloc.close();
+  // }
 
   // void removeSelectedContact(Contact contact) {
   //   print("removeSelectedContact ${contact.displayName}");

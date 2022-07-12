@@ -1,4 +1,4 @@
-import 'package:models/models.dart';
+import '../models/group.dart';
 
 abstract class GroupsRepository {
   Future<List<Group>> getGroups();

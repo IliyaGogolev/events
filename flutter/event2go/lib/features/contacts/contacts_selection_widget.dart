@@ -1,13 +1,25 @@
 import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
 import 'package:event2go/features/navigator/app_navigator.dart';
+import 'package:event2go/features/repositories/repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:models/repositories/groups_repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:event2go/utils/extensions.dart';
 
 class ContactsSelectionWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
+
+  // TODO remove
+  // static Route route(Repositories repositories) {
+  //   return MaterialPageRoute<void>(
+  //     builder: (_) => RepositoryProvider.value(
+  //       value: repositories,
+  //       child: ContactsSelectionWidget(),
+  //     ),
+  //   );
+  // }
 
   @override
   ContactsSelectionState createState() => ContactsSelectionState();
@@ -21,12 +33,14 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   var _searchTextFieldController = TextEditingController();
 
   ContactsBloc _contactsBloc;
+  // Repositories _repository;
 
   @override
   void initState() {
     super.initState();
     print("ContactsSelectionState initState");
     _contactsBloc = context.read<ContactsBloc>();
+    // _repository = context.read<Repositories>();
     initContacts();
   }
 
@@ -277,7 +291,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   void onNextButtonClick() {
     setState(() {
       navigateToCreateGroupWidget(
-          context, _contactsBloc.contacts.map((phoneContact) => phoneContact.toContact()).toList());
+          context, _contactsBloc.selectedContacts.map((phoneContact) => phoneContact.toContact()).toList());
       // Navigator.push(
       //   context,
       //   MaterialPageRoute(builder: (context) => BlocProvider.value(value: _contactsBloc, child: GroupWidget())),

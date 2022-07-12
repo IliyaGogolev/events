@@ -14,9 +14,11 @@ part 'group_state.dart';
 class GroupBloc extends Bloc<GroupLoadedEvent, GroupState> {
   Group group;
 
+  final GroupsRepository groupsRepository;
   // Group get group => _group;
 
-  GroupBloc(this.group) : super(GroupStateInitial()) {
+  GroupBloc({this.group, @required this.groupsRepository}) : super(GroupStateInitial()) {
+  // GroupBloc({this.group}) : super(GroupStateInitial()) {
     on<GroupLoadedEvent>(_onGroupLoadedEvent);
     // on<GroupProfileelectedEvent>(_onGroupProfileelectedEvent);
   }

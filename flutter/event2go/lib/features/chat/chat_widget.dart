@@ -1,6 +1,6 @@
 import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
-import 'package:event2go/features/contacts/contacts_selection_widget.dart';
 import 'package:event2go/features/navigator/app_navigator.dart';
+import 'package:event2go/features/repositories/repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +17,7 @@ class ChatState extends State<ChatWidget> {
   @override
   void initState() {
     super.initState();
+    // print("repo ${context.read<Repositories>()}");
   }
 
   Widget chatFab() {

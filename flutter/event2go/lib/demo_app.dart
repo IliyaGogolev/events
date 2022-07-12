@@ -1,4 +1,4 @@
-import 'package:event2go/application.dart';
+import 'package:event2go/event2go_app.dart';
 //import 'package:event2go/features/selectcontacts/ui/phone_contact_List.dart';
 import 'package:event2go/features/phone/ui/select_contacts.dart';
 import 'package:flutter/material.dart';
