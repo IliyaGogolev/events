@@ -1,5 +1,6 @@
 import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
 import 'package:event2go/features/contacts/contacts_selection_widget.dart';
+import 'package:event2go/features/navigator/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,11 +60,7 @@ class ChatState extends State<ChatWidget> {
 
   void _onFabButtonClicked() {
     setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => BlocProvider(create: (_) => ContactsBloc(), child: ContactsSelectionWidget())),
-      );
+      navigateToSelectContactsWidget(context);
     });
   }
 
