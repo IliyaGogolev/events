@@ -1,6 +1,7 @@
 import 'package:event2go/features/group/bloc/group_bloc.dart';
 import 'package:event2go/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:models/models/contact.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,9 +9,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 class GroupWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => context.read<GroupBloc>(),
-      child: GroupView(),
+    return BlocProvider.value(
+      value: BlocProvider.of<GroupBloc>(context),
+      child: GroupView()
     );
   }
 }
@@ -24,17 +25,23 @@ class GroupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return createEditGroupWidget(context);
-    // BlocBuilder<GroupBloc, GroupState>(
-    //     bloc: _groupBloc,
-    //     builder: (context, state) {
-    //       print("build createEditGroupWidget, state $state");
-    //       return createEditGroupWidget();
-    //     });
+    // return createEditGroupWidget(context);
+    return BlocBuilder<GroupBloc, GroupState>(
+        bloc: _groupBloc,
+        builder: (context, state) {
+          print("build createEditGroupWidget, state $state");
+          return createEditGroupWidget(context, state);
+        });
   }
 
-  Widget createEditGroupWidget(BuildContext context) {
+  Widget createEditGroupWidget(BuildContext context, GroupState state) {
     _groupBloc = context.read<GroupBloc>();
+    if (state is GroupStateError) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        showAlertDialog('Error', state.message, context);
+      });
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: new AppBar(
@@ -71,6 +78,30 @@ class GroupView extends StatelessWidget {
               Divider(color: Colors.black),
               addSelectedContacts(context)
             ].notNulls()));
+  }
+
+  void showAlertDialog(String title, String message, BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: true, // user must tap button!
+        builder: (context) {
+          return AlertDialog(
+            title: Center(child: Text(title)),
+            content: Text(message, textAlign: TextAlign.center),
+            actions: <Widget>[
+              Center(
+                child: TextButton(
+                    onPressed: () {
+                      _dismissDialog(context);
+                    },
+                    child: Text('Dismiss')),
+              ),
+            ],
+          );
+        }).then((val){
+          _groupBloc.add(ErrorDialogDismissedCreateGroupEvent());
+      // Navigator.pop(context);
+    });
   }
 
   Container createGroupSubjectEditText() {
@@ -155,6 +186,10 @@ class GroupView extends StatelessWidget {
         : new CircleAvatar(child: Icon(Icons.person));
   }
 
+  _dismissDialog(context) {
+    Navigator.pop(context);
+    _groupBloc.add(ErrorDialogDismissedCreateGroupEvent());
+  }
   // @override
   // dispose() {
   //   super.dispose();

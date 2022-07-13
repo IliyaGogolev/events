@@ -6,13 +6,13 @@ import '../endpoints.dart';
 import '../raw_models/contact.dart';
 
 class GroupsApi {
-  NetworkClient dioClient;
+  NetworkClient networkClient;
 
-  GroupsApi ({@required this.dioClient}):assert(dioClient != null);
+  GroupsApi ({@required this.networkClient}):assert(networkClient != null);
 
   Future<Response> add(String title, List<Contact> contacts) async {
     try {
-      final Response response = await dioClient.dio.post(
+      final Response response = await networkClient.dio.post(
         Endpoints.groups,
         data: {
           'title': title,
@@ -27,7 +27,7 @@ class GroupsApi {
 
   Future<Response> groups() async {
     try {
-      final Response response = await dioClient.dio.get(Endpoints.groups);
+      final Response response = await networkClient.dio.get(Endpoints.groups);
       return response;
     } catch (e) {
       rethrow;
@@ -36,7 +36,7 @@ class GroupsApi {
 
   Future<Response> update(int groupId, String title, List<Contact> contacts) async {
     try {
-      final Response response = await dioClient.dio.put(
+      final Response response = await networkClient.dio.put(
         Endpoints.groups + '/$groupId',
         data: {
           'title': title,
@@ -51,7 +51,7 @@ class GroupsApi {
 
   Future<void> delete(int groupId) async {
     try {
-      await dioClient.dio.delete(Endpoints.groups + '/$groupId');
+      await networkClient.dio.delete(Endpoints.groups + '/$groupId');
     } catch (e) {
       rethrow;
     }

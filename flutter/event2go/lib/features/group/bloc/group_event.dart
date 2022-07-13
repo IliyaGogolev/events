@@ -29,6 +29,15 @@ class CreateGroupEvent extends GroupEvent {
 
 }
 
+class ErrorDialogDismissedCreateGroupEvent extends GroupEvent {
+  @override
+  List<Object> get props => [];
+
+  @override
+  String toString() => 'ErrorDialogDismissedCreateGroupEvent';
+
+}
+
 // class ContactSelectedEvent extends GroupEvent {
 //   const ContactSelectedEvent({@required this.group, @required this.selected});
 //

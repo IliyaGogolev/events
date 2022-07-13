@@ -23,3 +23,27 @@ class GroupStateLoaded extends GroupState {
   String toString() => 'GroupStateLoaded $group';
 }
 
+class GroupStateError extends GroupState {
+  const GroupStateError({this.message});
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+
+  @override
+  String toString() => 'GroupStateError, message $message';
+}
+
+class GroupCreated extends GroupState {
+  const GroupCreated(this.group);
+
+  final Group group;
+
+  @override
+  List<Object> get props => [group];
+
+  @override
+  String toString() => 'GroupStateError, group $group';
+}
+

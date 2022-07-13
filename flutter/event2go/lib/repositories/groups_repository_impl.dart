@@ -31,6 +31,7 @@ class GroupsRepositoryImp extends GroupsRepository {
     }
   }
 
+  @override
   Future<Group> addGroup(String title, List<Contact> contacts) async {
     try {
       final response = await groupsApi.add(title, contacts.map((e) => e.toRawContact()));
@@ -41,6 +42,7 @@ class GroupsRepositoryImp extends GroupsRepository {
     }
   }
 
+  @override
   Future<Group> update(Group group) async {
     try {
       final response = await groupsApi.update(group.id, group.title, group.contacts.map((e) => e.toRawContact()));
@@ -51,7 +53,8 @@ class GroupsRepositoryImp extends GroupsRepository {
     }
   }
 
-  Future<void> deleteNewUserRequested(int groupId) async {
+  @override
+  Future<void> delete(int groupId) async {
     try {
       await groupsApi.delete(groupId);
     } on DioError catch (e) {
@@ -63,7 +66,6 @@ class GroupsRepositoryImp extends GroupsRepository {
 }
 
 extension RawGroupMapping on rawGroup.Group {
-  ///Returns items that are not null, for UI Widgets/PopupMenuItems etc.
   Group toGroup() {
     return Group(title: this.title, contacts: this.contacts.map((e) => e.toContact()).toList());
   }
