@@ -55,7 +55,6 @@ dependencies:
   json_annotation: ^3.0.1
   # https://github.com/flutterchina/dio#examples
   dio: ^4.0.6
-  http_mock_adapter: ^0.3.3
   content_feed:
     path: features/content_feed
   networking:
