@@ -1,6 +1,5 @@
 import 'package:event2go/features/repositories/repository_provider.dart';
 import 'package:event2go/features/splash/splashscreen.dart';
-import 'package:event2go/network/api/groups_api.dart';
 import 'package:event2go/repositories/groups_repository_impl.dart';
 import 'package:event2go/theme/theme_cubit.dart';
 import 'package:flutter/material.dart';

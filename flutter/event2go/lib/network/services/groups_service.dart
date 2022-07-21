@@ -1,19 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:event2go/network/dio_exception.dart';
+import 'package:event2go/network/network_exception.dart';
 import 'package:flutter/material.dart';
 
-import '../dio_client.dart';
+import '../network_client.dart';
 import '../endpoints.dart';
 import '../raw_models/contact.dart';
 
-class GroupsApi {
+class GroupsService {
   NetworkClient networkClient;
 
-  GroupsApi ({@required this.networkClient}):assert(networkClient != null);
+  GroupsService ({@required this.networkClient}):assert(networkClient != null);
 
   Future<Response> add(String title, List<Contact> contacts) async {
     try {
       final Response response = await networkClient.dio.post(
-        Endpoints.groups,
+        Endpoints.group,
         data: {
           'title': title,
           'contacts' : contacts.map((e) => e.toJson()).toList()
@@ -21,7 +23,11 @@ class GroupsApi {
       );
       return response;
     } catch (e) {
-      rethrow;
+
+      // rethrow;
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw NetworkException(e.toString());
+      throw NetworkException(errorMessage);
     }
   }
 

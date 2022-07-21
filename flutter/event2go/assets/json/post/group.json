@@ -1,0 +1,12 @@
+{
+  "group": {
+    "name": "Group 1",
+    "contacts": [{
+      "name": "Peter"
+    },
+      {
+        "name": "Mike"
+      }
+    ]
+  }
+}

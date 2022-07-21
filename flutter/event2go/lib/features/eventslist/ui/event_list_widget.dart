@@ -1,8 +1,10 @@
 // import 'package:event2go/login/ui/signup.dart';
-import 'package:event2go/network/api_provider.dart';
+import 'package:event2go/data/event.dart';
+import 'package:event2go/utils/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:event2go/features/addevent/add_event_widget.dart';
 import 'package:models/models/contact.dart';
+import 'dart:convert';
 
 class EventListWidget extends StatefulWidget {
   @override
@@ -106,10 +108,18 @@ class EventListState extends State<EventListWidget> {
   }
 
   void loadEvents() async {
-    ApiProvider p = new ApiProvider();
-    var events = await p.getEvents();
+    var events = await loadMockEvents();
     for (final e in events) {
       print("Event $e");
     }
+  }
+
+  loadMockEvents() async {
+    FileManager p = new FileManager();
+    var jsonString = await p.loadFile('assets/events.json');
+//    Map eventMap = jsonDecode(jsonString)
+//    return Event.fromJson(eventMap);
+    var  eventsJson = jsonDecode(jsonString)['events'] as List;
+    return eventsJson.map((eventMap) => Event.fromJson(eventMap)).toList();
   }
 }

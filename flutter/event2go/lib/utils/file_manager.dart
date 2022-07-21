@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:convert';
 
-class ApiProvider {
+class FileManager {
 //  Client client = Client();
 //  fetchPosts() async {
 //    final response = await client.get("https://jsonplaceholder.typicode.com/posts/1");
@@ -11,16 +11,8 @@ class ApiProvider {
 //    return itemModel;
 //  }
 
-  getEvents() async {
-    var jsonString = await _loadEventsFile();
-//    Map eventMap = jsonDecode(jsonString)
-//    return Event.fromJson(eventMap);
-    var  eventsJson = jsonDecode(jsonString)['events'] as List;
-    return eventsJson.map((eventMap) => Event.fromJson(eventMap)).toList();
-  }
-
-  Future<String> _loadEventsFile() async {
-    return await rootBundle.loadString('assets/events.json');
+  Future<String> loadFile(String fileName) async {
+    return await rootBundle.loadString(fileName);
   }
 
 //  Future<String> loadAsset(BuildContext context) async {

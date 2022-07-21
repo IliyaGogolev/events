@@ -14,6 +14,10 @@ class NetworkClient {
       ..options.responseType = ResponseType.json;
   }
 
+  addInterceptor(Interceptor interceptor) {
+    dio.interceptors.add(interceptor);
+  }
+
   // Future<Response<T>> get<T>(
   //     String path, {
   //       Map<String, dynamic> queryParameters,
