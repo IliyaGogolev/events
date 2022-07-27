@@ -24,6 +24,7 @@ class GroupsService {
       return response;
     } catch (e) {
 
+      print("group_service [add], exception: $e");
       // rethrow;
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw NetworkException(e.toString());

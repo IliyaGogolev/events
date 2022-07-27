@@ -43,7 +43,5 @@ class GroupCreated extends GroupState {
   @override
   List<Object> get props => [group];
 
-  @override
-  String toString() => 'GroupStateError, group $group';
 }
 

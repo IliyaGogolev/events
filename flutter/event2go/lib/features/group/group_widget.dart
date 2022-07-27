@@ -29,16 +29,23 @@ class GroupView extends StatelessWidget {
     return BlocBuilder<GroupBloc, GroupState>(
         bloc: _groupBloc,
         builder: (context, state) {
-          print("build createEditGroupWidget, state $state");
+          print("[GroupView][build] builder state $state");
           return createEditGroupWidget(context, state);
         });
   }
 
   Widget createEditGroupWidget(BuildContext context, GroupState state) {
     _groupBloc = context.read<GroupBloc>();
+    print("[GroupView][createEditGroupWidget] state $state");
     if (state is GroupStateError) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         showAlertDialog('Error', state.message, context);
+      });
+    }
+
+    if (state is GroupCreated) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        showAlertDialog('Created', "", context);
       });
     }
 
@@ -66,7 +73,7 @@ class GroupView extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    onCreateButtonClick();
+                    onCreateButtonClick(context);
                   })
             ]),
         body: Column(
@@ -213,15 +220,16 @@ class GroupView extends StatelessWidget {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void onCreateButtonClick() {
+  void onCreateButtonClick(BuildContext context) {
     String title = _groupTitleTextFieldController.text;
     if (title.isEmpty) {
-      Fluttertoast.showToast(
-          msg: "Please enter a group subject",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          fontSize: 16.0
-      );
+      showAlertDialog('Missing data', "Please enter a group subject", context);
+      // Fluttertoast.showToast(
+      //     msg: "Please enter a group subject",
+      //     toastLength: Toast.LENGTH_LONG,
+      //     gravity: ToastGravity.CENTER,
+      //     fontSize: 16.0
+      // );
     } else {
       _groupBloc.add(CreateGroupEvent(title: title));
     }

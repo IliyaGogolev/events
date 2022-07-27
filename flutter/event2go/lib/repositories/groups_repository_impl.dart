@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:event2go/network/network_exception.dart';
 import 'package:event2go/network/services/groups_service.dart';
+import 'package:event2go/repositories/mapper/groups_mapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:models/models.dart';
 import 'package:models/models/contact.dart';
@@ -36,6 +37,7 @@ class GroupsRepositoryImp extends GroupsRepository {
     try {
       List rawContacts = contacts.map((e) => e.toRawContact()).toList();
       final response = await groupsService.add(title, rawContacts);
+      print("GroupsRepositoryImp addGroup");
       final data = response.data['group'];
       return rawGroup.Group.fromJson(data).toGroup();
     } catch (e) {
@@ -66,20 +68,3 @@ class GroupsRepositoryImp extends GroupsRepository {
 
 }
 
-extension RawGroupMapping on rawGroup.Group {
-  Group toGroup() {
-    return Group(title: this.title, contacts: this.contacts.map((e) => e.toContact()).toList());
-  }
-}
-
-extension RawContactMapping on rawContact.Contact {
-  Contact toContact() {
-    return Contact(firstName: this.name);
-  }
-}
-
-extension ContactToRawMapping on Contact {
-  rawContact.Contact toRawContact() {
-    return rawContact.Contact(name: this.firstName);
-  }
-}

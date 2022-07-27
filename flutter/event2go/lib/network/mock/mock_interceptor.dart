@@ -22,10 +22,8 @@ class MockInterceptor extends Interceptor {
         jsonString.buffer.asUint8List(jsonString.offsetInBytes, jsonString.lengthInBytes),
       ),
     );
-
-    return Response(
-      data: map,
-      statusCode: 200,
-    );
+    print("response $map");
+    Response response = Response(data: map, statusCode: 200,);
+    handler.resolve(response);
   }
 }

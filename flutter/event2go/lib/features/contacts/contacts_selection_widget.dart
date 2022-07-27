@@ -38,7 +38,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   @override
   void initState() {
     super.initState();
-    print("ContactsSelectionState initState");
+    print("[ContactsSelectionState][initState]");
     _contactsBloc = context.read<ContactsBloc>();
     // _repository = context.read<Repositories>();
     initContacts();
@@ -49,7 +49,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
     return BlocBuilder<ContactsBloc, ContactsState>(
         bloc: _contactsBloc,
         builder: (context, state) {
-          print("build selectUsersWidget, state $state");
+          print("[ContactsSelectionState][build] selectUsersWidget, state $state");
           updateToolbarSubtitle();
           return selectUsersWidget();
         });
@@ -85,7 +85,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
 
   void loadContactsPermissionGranted(BuildContext context) async {
     var contacts = await ContactsService.getContacts();
-    print("setState contacts: ${contacts.length}");
+    print("[ContactsSelectionState][loadContactsPermissionGranted] contacts: ${contacts.length}");
     _contactsBloc.add(ContactsLoadedEvent(contacts: contacts));
   }
 
@@ -122,7 +122,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   }
 
   LayoutBuilder addSelectedContacts(BuildContext context) {
-    print("addSelectedContacts ${_contactsBloc.selectedContacts.length}");
+    print("[ContactsSelectionState][addSelectedContacts] selectedContacts.length ${_contactsBloc.selectedContacts.length}");
     return _contactsBloc.selectedContacts.isNotEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
             return SingleChildScrollView(

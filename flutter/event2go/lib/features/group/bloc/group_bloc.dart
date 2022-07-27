@@ -37,16 +37,17 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     CreateGroupEvent event,
     Emitter<GroupState> emit,
   ) async {
-    print("_onCreateGroupEvent $event");
+    print("[GroupBloc][_onCreateGroupEvent] event $event");
 
-    groupsRepository.addGroup(event.title, group.contacts).then((value) {
-      print("_onCreateGroupEvent created");
+    await groupsRepository.addGroup(event.title, group.contacts).then((value) {
+      print("[GroupBloc][_onCreateGroupEvent] groupsRepository.addGroup created");
       group.title = event.title;
       emit(GroupCreated(group));
     }).onError((error, stackTrace) {
-      print("_onCreateGroupEvent onError");
-      GroupStateError error = GroupStateError(message: "We're sorry, but something went wrong. Please try again");
-      emit(error);
+      print("[GroupBloc][_onCreateGroupEvent] onError $error");
+      GroupStateError errorState = GroupStateError(message: "We're sorry, but something went wrong. Please try again");
+
+      emit(errorState);
     });
   }
 
@@ -57,6 +58,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     print("_onErrorDialogDismissedCreateGroupEvent");
     emit(GroupStateLoaded(group));
   }
+
 // void _onGroupProfileelectedEvent(
 //   GroupProfileelectedEvent event,
 //   Emitter<GroupProfileState> emit,

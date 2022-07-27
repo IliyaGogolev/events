@@ -8,6 +8,7 @@ import 'package:event2go/network/services/groups_service.dart';
 import 'package:event2go/repositories/groups_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:auth/auth.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'config/config.dart';
 
@@ -25,6 +26,7 @@ Future<void> main() async  {
 myApp() {
   NetworkClient network = NetworkClient(Dio());
   network.addInterceptor(MockInterceptor());
+  network.addInterceptor(PrettyDioLogger());
   return new AppProviderWidget(
     child: new Event2GoApp(repositoriesProvider: RepositoriesProvider(
         groupsRepository: GroupsRepositoryImp(groupsService: GroupsService(networkClient: network))

@@ -10,7 +10,7 @@ class Group {
 
   Group.fromJson(Map<String, dynamic> json) {
     title = json['name'];
-    contacts = json['contacts'];
+    contacts = json['contacts'].map<Contact>((c) => Contact.fromJson(c)).toList();
   }
 
   Map<String, dynamic> toJson() {
