@@ -5,7 +5,7 @@ import 'package:home/tabs_factory.dart';
 export 'package:home/home_tabs_view.dart';
 
 class HomeTabsView extends StatelessWidget {
-  static String tag = '/home';
+  static const String tag = '/home';
   final TabsFactory tabBuilder;
   const HomeTabsView(this.tabBuilder);
 
