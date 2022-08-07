@@ -4,7 +4,7 @@ import 'package:event2go/data/repo/event_repository.dart';
 
 class CreateEventUseCase {
 
-  CreateEventUseCase({this.repository});
+  CreateEventUseCase({required this.repository});
 
   EventRepository repository;
 

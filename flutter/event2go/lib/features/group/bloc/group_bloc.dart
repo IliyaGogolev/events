@@ -17,7 +17,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
 
   // Group get group => _group;
 
-  GroupBloc({this.group, @required this.groupsRepository}) : super(GroupStateInitial()) {
+  GroupBloc({required this.group, required this.groupsRepository}) : super(GroupStateInitial()) {
     // GroupBloc({this.group}) : super(GroupStateInitial()) {
     on<GroupLoadedEvent>(_onGroupLoadedEvent);
     on<CreateGroupEvent>(_onCreateGroupEvent);

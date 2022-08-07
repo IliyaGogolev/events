@@ -5,7 +5,7 @@ class PhoneContact {
   bool isChecked;
 
   PhoneContact({
-    this.contact,
+    required this.contact,
     this.isChecked = false,
   });
 }

@@ -6,7 +6,7 @@ abstract class GroupEvent extends Equatable {
 }
 
 class GroupLoadedEvent extends GroupEvent {
-  const GroupLoadedEvent({@required this.group});
+  const GroupLoadedEvent({required this.group});
 
   final Group group;
 
@@ -18,7 +18,7 @@ class GroupLoadedEvent extends GroupEvent {
 }
 
 class CreateGroupEvent extends GroupEvent {
-  CreateGroupEvent({@required this.title});
+  CreateGroupEvent({required this.title});
   final String title;
 
   @override

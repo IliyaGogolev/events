@@ -3,7 +3,7 @@ import 'package:models/models.dart';
 
 class RepositoriesProvider {
 
-  const RepositoriesProvider({@required this.groupsRepository});
+  const RepositoriesProvider({required this.groupsRepository});
 
   final GroupsRepository groupsRepository;
 

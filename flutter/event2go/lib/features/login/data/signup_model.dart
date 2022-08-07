@@ -2,9 +2,9 @@ import 'package:flutter/widgets.dart';
 
 class SignUpModel extends InheritedModel<String> {
 
-  SignUpModel({@required Widget child}) : super(child: child);
+  SignUpModel({required Widget child}) :  super(key: null, child: child);
 
-  String verificationId;
+  // late String verificationId;
 
   @override
   bool updateShouldNotify(SignUpModel old) => false;
@@ -18,7 +18,7 @@ class SignUpModel extends InheritedModel<String> {
 //    return (user.token != old.user.token && aspects.contains('user'));
 //  }
 
-  static SignUpModel of(BuildContext context) =>
+  static SignUpModel? of(BuildContext context) =>
       // context.inheritFromWidgetOfExactType(SignUpModel);
       context.dependOnInheritedWidgetOfExactType<SignUpModel>();
 }

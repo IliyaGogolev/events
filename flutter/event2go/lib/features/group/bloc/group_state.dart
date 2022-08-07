@@ -24,7 +24,7 @@ class GroupStateLoaded extends GroupState {
 }
 
 class GroupStateError extends GroupState {
-  const GroupStateError({this.message});
+  const GroupStateError({required this.message});
 
   final String message;
 

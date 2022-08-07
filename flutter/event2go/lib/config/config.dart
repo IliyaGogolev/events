@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 // TODO Move to core module
 class Config extends InheritedWidget {
 
-  Config({this.appDisplayName, Widget child}):super(child: child);
+  Config({required this.appDisplayName, required Widget child}):super(child: child);
 
   final String appDisplayName;
 
-  static Config of(BuildContext context) {
+  static Config? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<Config>();
   }
 

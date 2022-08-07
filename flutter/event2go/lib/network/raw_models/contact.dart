@@ -1,6 +1,6 @@
 // raw
 class Contact {
-  String name;
+  String? name;
 
   Contact({this.name});
 

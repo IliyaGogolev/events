@@ -18,9 +18,9 @@ class Event {
 
 //  final String test;
 
-  String name;
-  DateTime startAt;
-  DateTime endAt;
+  String? name;
+  DateTime? startAt;
+  DateTime? endAt;
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
   Map<String, dynamic> toJson() => _$EventToJson(this);

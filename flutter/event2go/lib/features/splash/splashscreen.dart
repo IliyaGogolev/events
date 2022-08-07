@@ -30,14 +30,14 @@ class SplashScreen extends StatefulWidget {
       this.backgroundColor = Colors.white,
       this.styleTextUnderTheLoader = const TextStyle(
           fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
-      this.image});
+      required this.image});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  AppModel appModel;
+  late AppModel appModel;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SchedulerBinding.instance.addPostFrameCallback((_) {
 
       if (appModel.user.token != null)
-        debugPrint("User token: " + appModel.user.token);
+        debugPrint("User token: " + (appModel.user.token ?? "null"));
       else
         debugPrint("User token: ");
 
@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    appModel = AppModel.of(context);
+    appModel = AppModel.of(context)!;
     String log = "BB: $appModel.user.uid";
     debugPrint(log);
 

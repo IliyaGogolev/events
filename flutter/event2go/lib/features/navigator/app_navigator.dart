@@ -23,7 +23,7 @@ void navigateToCreateGroupWidget(BuildContext context, List<Contact> contacts) {
     context,
     MaterialPageRoute(
         builder: (context) => BlocProvider(create: (context) => GroupBloc(
-            group: Group(contacts: contacts),
+            group: Group(contacts: contacts, title: ''),
             groupsRepository:  repo.groupsRepository
         ), child: GroupWidget())),
   );
@@ -37,6 +37,10 @@ void navigateToGroupWidget(BuildContext context, Group group) {
         builder: (context) => BlocProvider(create: (_) => GroupBloc(
             group: group,
             groupsRepository:  repo.groupsRepository
-        ), child: GroupWidget())),
-    );
+        ), child: GroupWidget())
+    ));
+}
+
+void navigatePopToRouteName(BuildContext context, String routeName) {
+  Navigator.popUntil(context, ModalRoute.withName(routeName));
 }

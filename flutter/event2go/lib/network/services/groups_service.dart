@@ -10,7 +10,7 @@ import '../raw_models/contact.dart';
 class GroupsService {
   NetworkClient networkClient;
 
-  GroupsService ({@required this.networkClient}):assert(networkClient != null);
+  GroupsService ({required this.networkClient}):assert(networkClient != null);
 
   Future<Response> add(String title, List<Contact> contacts) async {
     try {
@@ -22,7 +22,7 @@ class GroupsService {
         },
       );
       return response;
-    } catch (e) {
+    } on DioError catch (e) {
 
       print("group_service [add], exception: $e");
       // rethrow;

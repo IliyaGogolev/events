@@ -1,8 +1,9 @@
 
 class NetworkException implements Exception {
-  NetworkException(String errorMessage);
 
-  String error;
+  const NetworkException(String error) : error = error;
 
-  String get message => (error?.toString() ?? '');
+  final String error;
+
+  String get message => error;
 }

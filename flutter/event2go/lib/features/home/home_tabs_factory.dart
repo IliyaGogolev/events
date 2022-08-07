@@ -1,7 +1,6 @@
 import 'package:event2go/features/chat/chat_widget.dart';
 import 'package:event2go/features/eventslist/ui/event_list_widget.dart';
 import 'package:home/home_exports.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 class HomeTabsFactory implements TabsFactory {
@@ -31,7 +30,7 @@ class HomeTabsFactory implements TabsFactory {
 
   @override
   Widget tabWidget(int position) {
-    Widget widget;
+    late Widget widget;
     switch (position) {
       case 0:
         widget = ChatWidget();

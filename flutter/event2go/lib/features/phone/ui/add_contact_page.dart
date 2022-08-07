@@ -20,7 +20,7 @@ class _AddContactPageState extends State<AddContactPage>{
         actions: <Widget>[
           new FlatButton(
               onPressed: (){
-                _formKey.currentState.save();
+                _formKey.currentState?.save();
                 contact.postalAddresses = [address];
                 ContactsService.addContact(contact);
                 Navigator.of(context).pop();

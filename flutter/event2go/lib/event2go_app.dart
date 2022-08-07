@@ -10,17 +10,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:home/home_widget.dart';
 import 'features/contacts/bloc/contacts_bloc.dart';
 import 'features/home/home_tabs_factory.dart';
-import 'features/login/ui/signup.dart';
+import 'package:event2go/features/login/ui/signup.dart';
 
 import 'package:home/home_tabs_view.dart';
-import 'package:home/tabs_factory.dart';
 import 'features/addevent/add_event_widget.dart';
 import 'features/phone/ui/select_contacts.dart';
 
 import 'package:auth/auth.dart';
 
 class Event2GoApp extends StatelessWidget {
-  const Event2GoApp({Key key, @required RepositoriesProvider repositoriesProvider})
+  const Event2GoApp({Key? key, required RepositoriesProvider repositoriesProvider})
       : _repositoriesProvider = repositoriesProvider,
         super(key: key);
 
@@ -95,7 +94,7 @@ class Event2GoView extends StatelessWidget {
     return FutureBuilder<bool>(
         future: isAuthorized(),
         builder: (BuildContext context, AsyncSnapshot<bool> isAuthorized) {
-          bool authorized = isAuthorized.hasData && isAuthorized.data;
+          bool authorized = isAuthorized.hasData && (isAuthorized.data ?? false);
 
           print("repo ${context.read<RepositoriesProvider>()}");
           return new MaterialApp(

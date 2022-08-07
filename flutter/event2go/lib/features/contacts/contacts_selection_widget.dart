@@ -32,7 +32,8 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   String _toolbarSubtitle = "";
   var _searchTextFieldController = TextEditingController();
 
-  ContactsBloc _contactsBloc;
+  late ContactsBloc _contactsBloc;
+
   // Repositories _repository;
 
   @override
@@ -118,11 +119,15 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
                   })
             ]),
         body: Column(
-            children: <Widget>[createSearchEditText(), addSelectedContacts(context), createContactsList()].notNulls()));
+            children:
+            <Widget?>[createSearchEditText(), addSelectedContacts(context), createContactsList()].notNulls()
+                .cast<Widget>() )
+    );
   }
 
-  LayoutBuilder addSelectedContacts(BuildContext context) {
-    print("[ContactsSelectionState][addSelectedContacts] selectedContacts.length ${_contactsBloc.selectedContacts.length}");
+  LayoutBuilder? addSelectedContacts(BuildContext context) {
+    print(
+        "[ContactsSelectionState][addSelectedContacts] selectedContacts.length ${_contactsBloc.selectedContacts.length}");
     return _contactsBloc.selectedContacts.isNotEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
             return SingleChildScrollView(
@@ -145,7 +150,7 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
                                         contactCircleAvatar(contact),
                                         SizedBox(height: 6),
                                         Text(
-                                          contact.displayName,
+                                          contact.displayName ?? "",
                                           maxLines: 1,
                                           textAlign: TextAlign.center,
                                         ),
@@ -170,27 +175,29 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
 
   Expanded createContactsList() {
     var contacts = _contactsBloc.contacts;
-    Iterable<Contact> filteredContacts = contacts.isNotEmpty
-        ? contacts
-            .where((element) => element.displayName.toLowerCase().startsWith(_searchFilterText.toLowerCase()))
-            .toList()
-        : null;
+    Iterable<Contact>? filteredContacts;
+    if (contacts.isNotEmpty) {
+      filteredContacts = contacts
+          .where((element) => element.displayName?.toLowerCase()?.startsWith(_searchFilterText.toLowerCase()) ?? false)
+          .toList();
+    } else {
+      filteredContacts = null;
+    }
     return new Expanded(
       child: filteredContacts != null
           ? new ListView.builder(
-              itemCount: filteredContacts?.length ?? 0,
+              itemCount: filteredContacts.length,
               itemBuilder: (BuildContext context, int index) {
-                Contact c = filteredContacts?.elementAt(index);
-                var c2 = c;
+                Contact? filteredContact = filteredContacts!.elementAt(index);
                 return new ListTile(
                   onTap: () {
-                    addContactToSelectedContacts(c);
+                    addContactToSelectedContacts(filteredContact);
                     // Navigator.of(context)
                     //     .push(new MaterialPageRoute(builder: (BuildContext context) => new ContactDetails(c)));
                   },
-                  leading: contactCircleAvatar(c),
+                  leading: contactCircleAvatar(filteredContact),
                   // child: new Text(c2.displayName.length > 1 ? c.displayName?.substring(0, 2) : "")),
-                  title: new Text(c.displayName ?? ""),
+                  title: new Text(filteredContact.displayName ?? ""),
                 );
               },
             )
@@ -199,8 +206,8 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   }
 
   CircleAvatar contactCircleAvatar(Contact c) {
-    return (c.avatar != null && c.avatar.length > 0)
-        ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar))
+    return (c.avatar != null && c.avatar!.length > 0)
+        ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar!))
         : new CircleAvatar(child: Icon(Icons.person));
   }
 

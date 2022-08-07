@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginUseCase {
-  LoginUseCase({@required this.loginRepository})
-      : assert(loginRepository != null);
+  LoginUseCase({required this.loginRepository});
 
   LoginRepository loginRepository;
 
   void testVerifyPhoneNumber(String phoneNumber, Function func) async {
-    loginRepository.testVerifyPhoneNumber(phoneNumber, func);
+    return loginRepository.testVerifyPhoneNumber(phoneNumber, func);
   }
 
-  Future<bool> sendCode(String verificationId, String smsCode) async {
-    loginRepository.sendCode(verificationId, smsCode);
+  Future<bool?> sendCode(String verificationId, String smsCode) async {
+    return loginRepository.sendCode(verificationId, smsCode);
   }
 }

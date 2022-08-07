@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class SelectContactsWidget extends StatefulWidget {
   static String tag = '/selectContact';
 
-  final List<Contact> selectedContacts;
+  final List<Contact>? selectedContacts;
 
   SelectContactsWidget(this.selectedContacts);
 
@@ -19,23 +19,25 @@ class SelectContactsWidget extends StatefulWidget {
 class _SelectContactsState extends State<SelectContactsWidget> {
   TextEditingController controller = new TextEditingController();
 
-  List<Contact> _contacts;
+  late List<Contact> _contacts;
   Set<String> _argContacts = new Set();
-  List<Contact> _argSelectedContacts;
+  // List<Contact> _argSelectedContacts;
 
 //  List<PhoneContact> _allContacts = List<PhoneContact>();
-  List<PhoneContact> _uiCustomContacts = List<PhoneContact>();
+  List<PhoneContact> _uiCustomContacts = [];
   bool _isLoading = false;
 
   String _toolbarText = "Select Friends ";
   int selectedCount = 0;
 
-  _SelectContactsState(List<Contact> selectedContacts) {
+  _SelectContactsState(List<Contact>? selectedContacts) {
     if (selectedContacts != null) {
       selectedCount = selectedContacts.length;
       for (var value in selectedContacts) {
-        String phoneNumber = value.phones.first.value;
-        _argContacts.add(phoneNumber);
+        String? phoneNumber = value.phones?.first.value;
+        if (phoneNumber != null) {
+          _argContacts.add(phoneNumber);
+        }
         print("phoneNumber $phoneNumber");
       }
 
@@ -149,12 +151,12 @@ class _SelectContactsState extends State<SelectContactsWidget> {
             new Expanded(
               child: (!_isLoading && _uiCustomContacts != null)
                   ? new ListView.builder(
-                      itemCount: _uiCustomContacts?.length ?? 0,
+                      itemCount: _uiCustomContacts.length,
                       itemBuilder: (BuildContext context, int index) {
                         PhoneContact contact = _uiCustomContacts[index];
 
                         return _buildListTile(
-                            contact, contact.contact.phones.toList());
+                            contact, contact.contact.phones?.toList());
                       },
                     )
                   : new Center(child: new CircularProgressIndicator()),
@@ -165,26 +167,30 @@ class _SelectContactsState extends State<SelectContactsWidget> {
         );
   }
 
-  GestureDetector _buildListTile(PhoneContact c, List<Item> list) {
+  GestureDetector _buildListTile(PhoneContact phoneContact, List<Item>? list) {
+    String phoneContactDisplayName = "No Name";
+    if (phoneContact.contact.displayName != null) {
+      phoneContactDisplayName = (phoneContact.contact.displayName![0] +
+          phoneContact.contact.displayName![1].toUpperCase());
+    }
     return new GestureDetector(
       child: new ListTile(
-        leading: (c.contact.avatar != null)
-            ? CircleAvatar(backgroundImage: MemoryImage(c.contact.avatar))
+        leading: (phoneContact.contact.avatar != null)
+            ? CircleAvatar(backgroundImage: MemoryImage(phoneContact.contact.avatar!))
             : CircleAvatar(
                 child: Text(
-                    (c.contact.displayName[0] +
-                        c.contact.displayName[1].toUpperCase()),
+                    phoneContactDisplayName,
                     style: TextStyle(color: Colors.white)),
               ),
-        title: Text(c.contact.displayName ?? ""),
-        subtitle: list.length >= 1 && list[0]?.value != null
-            ? Text(list[0].value)
+        title: Text(phoneContact.contact.displayName ?? ""),
+        subtitle: (list?.length ?? 0) >= 1 && list![0].value != null
+            ? Text(list[0].value ?? "")
             : Text(''),
         trailing: Checkbox(
             activeColor: Colors.green,
-            value: c.isChecked,
-            onChanged: (bool value) {
-              onContactClicked(c);
+            value: phoneContact.isChecked,
+            onChanged: (bool? value) {
+              onContactClicked(phoneContact);
             }
 //    ,
 //            onChanged: (bool value) {
@@ -195,7 +201,7 @@ class _SelectContactsState extends State<SelectContactsWidget> {
             ),
       ),
       onTap: () {
-        onContactClicked(c);
+        onContactClicked(phoneContact);
       },
     );
   }
@@ -225,7 +231,7 @@ class _SelectContactsState extends State<SelectContactsWidget> {
     }
 
     _uiCustomContacts = _contacts
-        .where((i) => i.displayName.toLowerCase().contains(text.toLowerCase()))
+        .where((i) => i.displayName?.toLowerCase().contains(text.toLowerCase()) ?? false)
         .map((contact) => PhoneContact(contact: contact))
         .toList();
 
@@ -235,7 +241,7 @@ class _SelectContactsState extends State<SelectContactsWidget> {
   void _populateContacts(Iterable<Contact> contacts) {
     _contacts = contacts.where((item) => item.displayName != null).toList();
 
-    _contacts.sort((a, b) => a.displayName.compareTo(b.displayName));
+    _contacts.sort((a, b) => a.displayName?.compareTo(b.displayName ?? "") ?? -1);
 
     _uiCustomContacts =
         _contacts.map((contact) => PhoneContact(contact: contact)).toList();

@@ -11,16 +11,16 @@ class AppStateContainer extends StatefulWidget {
   final Widget child;
 
   AppStateContainer({
-    @required this.child,
-    this.state,
+    required this.child,
+    required this.state,
   });
 
   // This creates a method on the AppState that's just like 'of'
   // On MediaQueries, Theme, etc
   // This is the secret to accessing your AppState all over your app
-  static _AppStateContainerState of(BuildContext context) {
+  static _AppStateContainerState? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()
-        .data;
+        ?.data;
   }
 
   @override
@@ -30,7 +30,7 @@ class AppStateContainer extends StatefulWidget {
 class _AppStateContainerState extends State<AppStateContainer> {
   // Just padding the state through so we don't have to
   // manipulate it with widget.state.
-  AppState state;
+  late AppState state;
 
   @override
   void initState() {
@@ -62,9 +62,9 @@ class _InheritedStateContainer extends InheritedWidget {
   // Although Flutter just knows to build the Widget thats passed to it
   // So you don't have have a build method or anything.
   _InheritedStateContainer({
-    Key key,
-    @required this.data,
-    @required Widget child,
+    Key? key,
+    required this.data,
+    required Widget child,
   }) : super(key: key, child: child);
 
   // This is a better way to do this, which you'll see later.

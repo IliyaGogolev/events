@@ -13,7 +13,7 @@ import '../network/raw_models/contact.dart' as rawContact;
 class GroupsRepositoryImp extends GroupsRepository {
   final GroupsService groupsService;
 
-  GroupsRepositoryImp({@required this.groupsService});
+  GroupsRepositoryImp({required this.groupsService});
 
   String test = "HELLO WORLD";
 
@@ -35,12 +35,12 @@ class GroupsRepositoryImp extends GroupsRepository {
   @override
   Future<Group> addGroup(String title, List<Contact> contacts) async {
     try {
-      List rawContacts = contacts.map((e) => e.toRawContact()).toList();
+      List<rawContact.Contact> rawContacts = contacts.map((e) => e.toRawContact()).toList();
       final response = await groupsService.add(title, rawContacts);
       print("GroupsRepositoryImp addGroup");
       final data = response.data['group'];
       return rawGroup.Group.fromJson(data).toGroup();
-    } catch (e) {
+    }  on NetworkException catch (e) {
       throw e.message;
     }
   }
@@ -48,7 +48,10 @@ class GroupsRepositoryImp extends GroupsRepository {
   @override
   Future<Group> update(Group group) async {
     try {
-      final response = await groupsService.update(group.id, group.title, group.contacts.map((e) => e.toRawContact()));
+      final response = await groupsService.update(
+          group.id!,
+          group.title,
+          group.contacts.map((e) => e.toRawContact()).toList());
       return group;
     } on DioError catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();

@@ -1,6 +1,6 @@
 class AttendeeCounts {
-  int coming;
-  int needsAction;
-  int tentative;
-  int notComing;
+  late int coming;
+  late int needsAction;
+  late int tentative;
+  late int notComing;
 }

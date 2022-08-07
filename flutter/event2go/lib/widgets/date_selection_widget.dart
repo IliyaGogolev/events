@@ -11,7 +11,7 @@ class DateSelectionWidget extends StatefulWidget {
   final ValueChanged<DateTime> onChange;
   DateTime date;
 
-  DateSelectionWidget({DateTime date, TimeOfDay time, this.onChange, Key key})
+  DateSelectionWidget({DateTime? date, TimeOfDay? time, required this.onChange, Key? key})
       : date = date ?? DateTime.now(),
         super(key: key);
 
@@ -20,16 +20,16 @@ class DateSelectionWidget extends StatefulWidget {
 }
 
 class _DateState extends State<DateSelectionWidget> {
-  TextEditingController _c;
+  late TextEditingController _textEditingController;
 
   var _formatter = new DateFormat('MM-dd-yyyy');
 
-  String _dateText;
-  String _timeText;
+  late String _dateText;
+  late String _timeText;
 
   @override
   void initState() {
-    _c = new TextEditingController();
+    _textEditingController = new TextEditingController();
     _dateText = _formatter.format(widget.date);
     super.initState();
   }

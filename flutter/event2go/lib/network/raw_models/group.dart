@@ -3,10 +3,10 @@ import 'contact.dart';
 
 class Group {
 
-  String title;
-  List<Contact> contacts;
+  late String title;
+  List<Contact> contacts = [];
 
-  Group({this.title});
+  Group({required this.title});
 
   Group.fromJson(Map<String, dynamic> json) {
     title = json['name'];

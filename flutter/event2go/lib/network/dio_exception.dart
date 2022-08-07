@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class DioExceptions implements Exception {
-  String message;
+  late String message;
 
   DioExceptions.fromDioError(DioError dioError) {
     switch (dioError.type) {
@@ -36,7 +36,7 @@ class DioExceptions implements Exception {
     }
   }
 
-  String _handleError(int statusCode, dynamic error) {
+  String _handleError(int? statusCode, dynamic error) {
     switch (statusCode) {
       case 400:
         return 'Bad request';

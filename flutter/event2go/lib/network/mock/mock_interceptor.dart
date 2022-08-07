@@ -23,7 +23,7 @@ class MockInterceptor extends Interceptor {
       ),
     );
     print("response $map");
-    Response response = Response(data: map, statusCode: 200,);
+    Response response = Response(data: map, requestOptions: options, statusCode: 200);
     handler.resolve(response);
   }
 }

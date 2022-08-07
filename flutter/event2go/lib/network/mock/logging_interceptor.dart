@@ -5,9 +5,9 @@ import 'package:dio/dio.dart';
 class LoggingInterceptor extends Interceptor {
 
   @override
-  FutureOr<dynamic> onRequest(RequestOptions options) {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     print(
-        "--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"" + (options.baseUrl ?? "") + (options.path ?? "")}");
+        "--> ${options.method.toUpperCase()}");
     print("Headers:");
     options.headers.forEach((k, v) => print('$k: $v'));
     if (options.queryParameters != null) {
@@ -20,22 +20,28 @@ class LoggingInterceptor extends Interceptor {
     print(
         "--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}");
 
-    return options;
+    handler.next(options);
   }
 
   @override
-  FutureOr<dynamic> onError(DioError dioError) {
+  void onError(DioError dioError,
+      ErrorInterceptorHandler handler) {
+    String? baseUrl = dioError.response?.requestOptions.baseUrl;
+    String? path = dioError.response?.requestOptions.path;
     print(
-        "<-- ${dioError.message} ${(dioError.response?.request != null ? (dioError.response.request.baseUrl + dioError.response.request.path) : 'URL')}");
+        "<-- ${dioError.message} ${(baseUrl != null && path != null ? (baseUrl + path) : 'URL')}");
     print(
-        "${dioError.response != null ? dioError.response.data : 'Unknown Error'}");
+        "${dioError.response != null ? dioError.response?.data : 'Unknown Error'}");
     print("<-- End error");
+    handler.next(dioError);
   }
 
   @override
-  FutureOr<dynamic> onResponse(Response response) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    String? baseUrl = response.requestOptions.baseUrl;
+    String? path = response.requestOptions.path;
     print(
-        "<-- ${response.statusCode} ${(response.request != null ? (response.request.baseUrl + response.request.path) : 'URL')}");
+        "<-- ${response.statusCode} ${baseUrl + path}");
     print("Headers:");
     response.headers?.forEach((k, v) => print('$k: $v'));
     print("Response: ${response.data}");

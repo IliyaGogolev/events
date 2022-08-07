@@ -7,11 +7,11 @@ part 'user.g.dart';
 class MyUser {
 
 //  User({this.token, this.test = "111"});
-  MyUser({this.token, this.uid, this.phoneNumber, this.email});
+  MyUser({required this.token, required this.uid, required this.phoneNumber, required this.email});
 
 //  final String test;
 
-  String token;
+  String? token;
   String uid;
   String phoneNumber;
   String email;

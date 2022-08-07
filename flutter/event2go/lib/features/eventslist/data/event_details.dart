@@ -2,8 +2,8 @@ import 'attendee.dart';
 
 class EventDetails {
 
-  String eventId;
-  List<Attendee> attendees = new List<Attendee>();
+  late String eventId;
+  List<Attendee> attendees = [];
 
   void addAttendee(Attendee attendee) {
     attendees.add(attendee);

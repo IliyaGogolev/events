@@ -19,13 +19,13 @@ class AddEventState extends State<AddEventWidget> {
 
   EventRepository repo = new EventRepository();
   Event event = new Event(null, DateTime.now(), DateTime.now());
-  CreateEventUseCase useCase;
+  late CreateEventUseCase useCase;
   var _inviteText = "Invite People";
 
 // of the TextField.
   final eventNameController = TextEditingController();
 
-  List<Contact> _selectedContacts = new List<Contact>();
+  List<Contact> _selectedContacts = [];
 
   @override
   void dispose() {

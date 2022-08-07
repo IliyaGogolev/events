@@ -1,12 +1,15 @@
 import 'package:event2go/features/group/bloc/group_bloc.dart';
+import 'package:event2go/features/navigator/app_navigator.dart';
 import 'package:event2go/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home/home_tabs_view.dart';
 import 'package:models/models/contact.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class GroupWidget extends StatelessWidget {
+  static String tag = '/group';
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -21,13 +24,13 @@ class GroupView extends StatelessWidget {
   var _groupTitleTextFieldController = TextEditingController();
 
   // ContactsBloc _contactsBloc;
-  GroupBloc _groupBloc;
+  late GroupBloc _groupBloc;
 
   @override
   Widget build(BuildContext context) {
     // return createEditGroupWidget(context);
     return BlocBuilder<GroupBloc, GroupState>(
-        bloc: _groupBloc,
+        bloc: context.read<GroupBloc>(),
         builder: (context, state) {
           print("[GroupView][build] builder state $state");
           return createEditGroupWidget(context, state);
@@ -46,6 +49,7 @@ class GroupView extends StatelessWidget {
     if (state is GroupCreated) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         showAlertDialog('Created', "", context);
+        navigatePopToRouteName(context, HomeTabsView.tag);
       });
     }
 
@@ -78,13 +82,13 @@ class GroupView extends StatelessWidget {
             ]),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: <Widget?>[
               createGroupSubjectEditText(),
               Divider(color: Colors.black),
               createParticipantCountTextView(),
               Divider(color: Colors.black),
               addSelectedContacts(context)
-            ].notNulls()));
+            ].notNulls().cast<Widget>()));
   }
 
   void showAlertDialog(String title, String message, BuildContext context) {
@@ -144,7 +148,7 @@ class GroupView extends StatelessWidget {
     );
   }
 
-  LayoutBuilder addSelectedContacts(BuildContext context) {
+  LayoutBuilder? addSelectedContacts(BuildContext context) {
     bool empty = _groupBloc.group.contacts.isEmpty;
     print("_contactsBloc.selectedContacts.isNotEmpty $empty");
     return _groupBloc.group.contacts.isNotEmpty
@@ -165,7 +169,7 @@ class GroupView extends StatelessWidget {
                                     contactCircleAvatar(contact),
                                     SizedBox(height: 6),
                                     Text(
-                                      contact.displayName,
+                                      contact.displayName ?? "",
                                       maxLines: 1,
                                       textAlign: TextAlign.center,
                                     ),
@@ -188,8 +192,8 @@ class GroupView extends StatelessWidget {
   }
 
   CircleAvatar contactCircleAvatar(Contact c) {
-    return (c.avatar != null && c.avatar.length > 0)
-        ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar))
+    return (c.avatar != null && c.avatar!.length > 0)
+        ? new CircleAvatar(backgroundImage: new MemoryImage(c.avatar!))
         : new CircleAvatar(child: Icon(Icons.person));
   }
 

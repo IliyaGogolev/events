@@ -2,9 +2,9 @@ import 'attendee_counts.dart';
 
 class EventPlacard {
 
-  String eventId;
-  DateTime dateStart;
-  DateTime dateEnd;
-  AttendeeCounts counts;
+  late String eventId;
+  late DateTime dateStart;
+  late DateTime dateEnd;
+  late AttendeeCounts counts;
 }
 

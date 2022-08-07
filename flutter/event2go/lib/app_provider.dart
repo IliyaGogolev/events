@@ -4,11 +4,9 @@ import 'package:event2go/data/user.dart';
 class AppModel extends InheritedModel<String> {
 
   AppModel({
-    @required Widget child,
-    this.user
-  }) : assert(child != null),
-        assert(user != null),
-        super(child: child);
+    required Widget child,
+    required this.user
+  }) : super(child: child);
 
   final MyUser user;
 
@@ -22,7 +20,7 @@ class AppModel extends InheritedModel<String> {
 //    return (user.token != old.user.token && aspects.contains('user'));
 //  }
 
-  static AppModel of(BuildContext context) =>
+  static AppModel? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<AppModel>();
 
 }

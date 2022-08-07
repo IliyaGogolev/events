@@ -6,7 +6,7 @@ abstract class ContactsEvent extends Equatable {
 }
 
 class ContactsLoadedEvent extends ContactsEvent {
-  const ContactsLoadedEvent({@required this.contacts});
+  const ContactsLoadedEvent({required this.contacts});
 
   final List<Contact> contacts;
 
@@ -18,7 +18,7 @@ class ContactsLoadedEvent extends ContactsEvent {
 }
 
 class ContactSelectedEvent extends ContactsEvent {
-  const ContactSelectedEvent({@required this.contact, @required this.selected});
+  const ContactSelectedEvent({required this.contact, required this.selected});
 
   final Contact contact;
   final bool selected;

@@ -5,9 +5,7 @@ import 'package:event2go/features/login/domain/login_repository.dart';
 import 'package:meta/meta.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
-  LoginRepositoryImpl({@required this.user, @required this.signUpModel})
-  : assert(user != null),
-        assert(signUpModel != null);
+  LoginRepositoryImpl({required this.user, required this.signUpModel});
 //
   @override
   Future<bool> sendCode(String verificationId, String smsCode) {

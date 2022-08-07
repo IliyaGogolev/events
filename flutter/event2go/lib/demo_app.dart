@@ -39,9 +39,9 @@ class _ContactDetails extends StatelessWidget{
               new ListTile(title: new Text("Suffix"),trailing: new Text(_contact.suffix ?? "")),
               new ListTile(title: new Text("Company"),trailing: new Text(_contact.company ?? "")),
               new ListTile(title: new Text("Job"),trailing: new Text(_contact.jobTitle ?? "")),
-              new _AddressesTile(_contact.postalAddresses),
-              new ItemsTile("Phones", _contact.phones),
-              new ItemsTile("Emails", _contact.emails)
+              new _AddressesTile(_contact.postalAddresses ?? []),
+              new ItemsTile("Phones", _contact.phones ?? []),
+              new ItemsTile("Emails", _contact.emails ?? [])
             ],
           ),
         )
@@ -64,11 +64,11 @@ class _AddressesTile extends StatelessWidget{
                 padding : const EdgeInsets.symmetric(horizontal: 16.0),
                 child: new Column(
                   children: <Widget>[
-                    new ListTile(title : new Text("Street"), trailing: new Text(a.street)),
-                    new ListTile(title : new Text("Postcode"), trailing: new Text(a.postcode)),
-                    new ListTile(title : new Text("City"), trailing: new Text(a.city)),
-                    new ListTile(title : new Text("Region"), trailing: new Text(a.region)),
-                    new ListTile(title : new Text("Country"), trailing: new Text(a.country)),
+                    new ListTile(title : new Text("Street"), trailing: new Text(a.street ?? "")),
+                    new ListTile(title : new Text("Postcode"), trailing: new Text(a.postcode ?? "")),
+                    new ListTile(title : new Text("City"), trailing: new Text(a.city ?? "")),
+                    new ListTile(title : new Text("Region"), trailing: new Text(a.region ?? "")),
+                    new ListTile(title : new Text("Country"), trailing: new Text(a.country ?? "")),
                   ],
                 ),
               )).toList()
