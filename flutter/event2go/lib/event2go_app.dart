@@ -107,7 +107,7 @@ class Event2GoView extends StatelessWidget {
             //         padding: const EdgeInsets.symmetric(vertical: 100.0, horizontal: 25.0),
             //         child: PhoneInputView())
             // ),
-              onGenerateRoute: AppRouter.generateRoute,
+              onGenerateRoute: AppRouter.onGenerateRoute,
             // routes: routes
           );
         });

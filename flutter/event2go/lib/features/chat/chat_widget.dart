@@ -61,7 +61,7 @@ class ChatState extends State<ChatWidget> {
 
   void _onFabButtonClicked() {
     setState(() {
-      navigateToSelectContactsWidget(context);
+      navigateToCreateGroupWidget(context);
     });
   }
 

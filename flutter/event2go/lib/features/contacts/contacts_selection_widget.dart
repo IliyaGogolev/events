@@ -7,19 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:models/repositories/groups_repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:event2go/utils/extensions.dart';
+import 'package:models/models/contact.dart' as modelContact;
 
 class ContactsSelectionWidget extends StatefulWidget {
-  static String tag = 'chat_list_view';
+  const ContactsSelectionWidget({
+    required this.onContactsSelected,
+  });
 
-  // TODO remove
-  // static Route route(Repositories repositories) {
-  //   return MaterialPageRoute<void>(
-  //     builder: (_) => RepositoryProvider.value(
-  //       value: repositories,
-  //       child: ContactsSelectionWidget(),
-  //     ),
-  //   );
-  // }
+  static const String tag = 'chat_list_view';
+  final void Function(List<modelContact.Contact> contacts) onContactsSelected;
 
   @override
   ContactsSelectionState createState() => ContactsSelectionState();
@@ -33,8 +29,6 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
   var _searchTextFieldController = TextEditingController();
 
   late ContactsBloc _contactsBloc;
-
-  // Repositories _repository;
 
   @override
   void initState() {
@@ -119,10 +113,9 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
                   })
             ]),
         body: Column(
-            children:
-            <Widget?>[createSearchEditText(), addSelectedContacts(context), createContactsList()].notNulls()
-                .cast<Widget>() )
-    );
+            children: <Widget?>[createSearchEditText(), addSelectedContacts(context), createContactsList()]
+                .notNulls()
+                .cast<Widget>()));
   }
 
   LayoutBuilder? addSelectedContacts(BuildContext context) {
@@ -298,12 +291,9 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
 
   void onNextButtonClick() {
     setState(() {
-      navigateToCreateGroupWidget(
-          context, _contactsBloc.selectedContacts.map((phoneContact) => phoneContact.toContact()).toList());
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => BlocProvider.value(value: _contactsBloc, child: GroupWidget())),
-      // );
+      List<modelContact.Contact> contacts =
+          _contactsBloc.selectedContacts.map((phoneContact) => phoneContact.toContact()).toList();
+      widget.onContactsSelected(contacts);
     });
   }
 }

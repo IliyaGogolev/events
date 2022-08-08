@@ -8,23 +8,38 @@ import 'package:home/home_tabs_view.dart';
 import 'package:models/models/contact.dart';
 
 class GroupWidget extends StatelessWidget {
-  static String tag = '/group';
+  static const String tag = '/group';
+
+  const GroupWidget({
+    required this.finish,
+  });
+
+  final void Function(Object? arguments) finish;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: BlocProvider.of<GroupBloc>(context),
-      child: GroupView()
+      child: GroupView(finish: finish)
     );
   }
 }
 
+
 class GroupView extends StatelessWidget {
-  double contactWidth = 80.0;
-  var _groupTitleTextFieldController = TextEditingController();
+
+  GroupView({
+    required this.finish,
+  });
+
+
+  final double contactWidth = 80.0;
+  final TextEditingController _groupTitleTextFieldController = TextEditingController();
 
   // ContactsBloc _contactsBloc;
   late GroupBloc _groupBloc;
+
+  final void Function(Object? arguments) finish;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +62,10 @@ class GroupView extends StatelessWidget {
     }
 
     if (state is GroupCreated) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        showAlertDialog('Created', "", context);
-        navigatePopToRouteName(context, HomeTabsView.tag);
-      });
+      // SchedulerBinding.instance.addPostFrameCallback((_) {
+      //   showAlertDialog('Created', "", context);
+      // });
+        finish(null);
     }
 
     return Scaffold(
@@ -201,6 +216,7 @@ class GroupView extends StatelessWidget {
     Navigator.pop(context);
     _groupBloc.add(ErrorDialogDismissedCreateGroupEvent());
   }
+  
   // @override
   // dispose() {
   //   super.dispose();
@@ -235,7 +251,7 @@ class GroupView extends StatelessWidget {
       //     fontSize: 16.0
       // );
     } else {
-      _groupBloc.add(CreateGroupEvent(title: title));
+      _groupBloc.add(CreateGroupEvent(title: title.trim()));
     }
   }
 }
