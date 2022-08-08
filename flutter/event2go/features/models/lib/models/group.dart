@@ -3,7 +3,7 @@ import 'package:models/models/contact.dart';
 
 class Group extends Equatable {
 
-  int? id;
+  String? id;
   String title;
   List<Contact> contacts;
 

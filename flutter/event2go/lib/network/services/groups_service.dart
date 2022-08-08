@@ -41,7 +41,7 @@ class GroupsService {
     }
   }
 
-  Future<Response> update(int groupId, String title, List<Contact> contacts) async {
+  Future<Response> update(String groupId, String title, List<Contact> contacts) async {
     try {
       final Response response = await networkClient.dio.put(
         Endpoints.groups + '/$groupId',

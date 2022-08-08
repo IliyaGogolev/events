@@ -1,6 +1,7 @@
 import 'package:event2go/features/group/bloc/group_bloc.dart';
 import 'package:event2go/features/navigator/app_navigator.dart';
 import 'package:event2go/utils/extensions.dart';
+import 'package:event2go/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ class GroupWidget extends StatelessWidget {
     required this.finish,
   });
 
-  final void Function(Object? arguments) finish;
+  final void Function(String groupId, bool newGroupCreated) finish;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class GroupView extends StatelessWidget {
   // ContactsBloc _contactsBloc;
   late GroupBloc _groupBloc;
 
-  final void Function(Object? arguments) finish;
+  final void Function(String groupId, bool newGroupCreated) finish;
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +63,11 @@ class GroupView extends StatelessWidget {
     }
 
     if (state is GroupCreated) {
-      // SchedulerBinding.instance.addPostFrameCallback((_) {
-      //   showAlertDialog('Created', "", context);
-      // });
-        finish(null);
+
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        // Wait until widget build
+        finish(state.group.id.toString(), true);
+      });
     }
 
     return Scaffold(
@@ -216,7 +218,7 @@ class GroupView extends StatelessWidget {
     Navigator.pop(context);
     _groupBloc.add(ErrorDialogDismissedCreateGroupEvent());
   }
-  
+
   // @override
   // dispose() {
   //   super.dispose();
@@ -240,10 +242,13 @@ class GroupView extends StatelessWidget {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void onCreateButtonClick(BuildContext context) {
+  void onCreateButtonClick(BuildContext context) async{
     String title = _groupTitleTextFieldController.text;
     if (title.isEmpty) {
-      showAlertDialog('Missing data', "Please enter a group subject", context);
+      final isConfirmed = await showDialogAsync(context, null, "Please enter a group subject", "Ok", null);
+      if (isConfirmed) {
+        _groupBloc.add(ErrorDialogDismissedCreateGroupEvent());
+      }
       // Fluttertoast.showToast(
       //     msg: "Please enter a group subject",
       //     toastLength: Toast.LENGTH_LONG,

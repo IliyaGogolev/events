@@ -12,10 +12,12 @@ import 'package:models/models/contact.dart' as modelContact;
 class ContactsSelectionWidget extends StatefulWidget {
   const ContactsSelectionWidget({
     required this.onContactsSelected,
+    required this.onBackPressed,
   });
 
   static const String tag = 'chat_list_view';
   final void Function(List<modelContact.Contact> contacts) onContactsSelected;
+  final VoidCallback onBackPressed;
 
   @override
   ContactsSelectionState createState() => ContactsSelectionState();
@@ -88,6 +90,11 @@ class ContactsSelectionState extends State<ContactsSelectionWidget> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: new AppBar(
+            leading: BackButton(
+              onPressed: () {
+                widget.onBackPressed();
+              },
+            ),
             title: RichText(
               textAlign: TextAlign.left,
               text: TextSpan(text: "Add Participants", style: TextStyle(fontSize: 20), children: <TextSpan>[

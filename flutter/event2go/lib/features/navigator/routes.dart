@@ -1,15 +1,11 @@
 
 import 'package:auth/auth.dart';
+import 'package:event2go/features/addevent/add_event_widget.dart';
 import 'package:event2go/features/home/home_tabs_factory.dart';
 import 'package:event2go/features/navigator/group_flow.dart';
 import 'package:event2go/features/phone/ui/select_contacts.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home_tabs_view.dart';
-
-const routeGroupSetupPrefix = '/group/';
-const routeGroupSetupStart = '/group/$routeGroupSetupStartPage';
-const routeGroupSetupStartPage = 'select_contacts';
-const routeDeviceSetupGroupProfilePage = 'profile';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -27,6 +23,8 @@ class AppRouter {
           return MaterialPageRoute(builder: (_) => HomeTabsView(HomeTabsFactory()));
         case SelectContactsWidget.tag:
           return MaterialPageRoute(builder: (_) => SelectContactsWidget(null));
+        case AddEventWidget.tag:
+          return MaterialPageRoute(builder: (_) => AddEventWidget());
         case '/sign-in':
           return MaterialPageRoute(builder: (_) => createSingIn());
         default:

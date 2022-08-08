@@ -1,8 +1,5 @@
-import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
-import 'package:event2go/features/navigator/app_navigator.dart';
-import 'package:event2go/features/repositories/repository_provider.dart';
+import 'package:event2go/features/navigator/group_flow.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatWidget extends StatefulWidget {
   static String tag = 'chat_list_view';
@@ -17,13 +14,11 @@ class ChatState extends State<ChatWidget> {
   @override
   void initState() {
     super.initState();
-    // print("repo ${context.read<Repositories>()}");
   }
 
   Widget chatFab() {
     return Scaffold(
       backgroundColor: Colors.white,
-//      appBar: new AppBar(title: new Text('Todo List')),
       body: _buildTodoList(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,

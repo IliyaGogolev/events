@@ -1,3 +1,4 @@
+import 'package:event2go/features/addevent/add_event_widget.dart';
 import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
 import 'package:event2go/features/contacts/contacts_selection_widget.dart';
 import 'package:event2go/features/group/bloc/group_bloc.dart';
@@ -8,10 +9,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:models/models/contact.dart';
 import 'package:models/models/group.dart';
 
-const routeGroupSetupPrefix = 'group';
+const routeGroupSetupPrefix = '/group/';
 const routeGroupSetupStart = '/group/$routeGroupSelectContactsPage';
+// const load = 'load';
 const routeGroupSelectContactsPage = 'select_contacts';
 const routeGroupProfilePage = 'profile';
+
+void navigateToCreateGroupWidget(BuildContext context) {
+  Navigator.of(context).pushNamed(routeGroupSetupStart);
+}
 
 @immutable
 class GroupFlow extends StatefulWidget {
@@ -37,51 +43,46 @@ class GroupFlowState extends State<GroupFlow> {
     super.initState();
   }
 
+  void _onInitialized() {
+    _navigatorKey.currentState!.pushNamed(routeGroupSelectContactsPage);
+  }
+
   void _onContactsSelected(List<Contact> contacts) {
     _navigatorKey.currentState!.pushNamed(routeGroupProfilePage, arguments: contacts);
   }
 
-  Future<bool> _isExitDesired() async {
-    return await showDialog<bool>(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Are you sure?'),
-                content: const Text('If you exit device setup, your progress will be lost.'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                    child: const Text('Leave'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text('Stay'),
-                  ),
-                ],
-              );
-            }) ??
-        false;
+  void _pop() {
+    Navigator.of(context).pop();
   }
 
-  void _exitGroup(Object? data) {
+  void _exitGroup(String? groupId, bool newGroupCreated) {
     Navigator.of(context).pop();
+    if (newGroupCreated) {
+      Navigator.of(context).pushNamed(AddEventWidget.tag);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _isExitDesired,
-      child: Scaffold(
+    return
+      // WillPopScope(
+      // onWillPop: _isExitDesired,
+      // child:
+    Scaffold(
         // appBar: _buildFlowAppBar(),
         body: Navigator(
           key: _navigatorKey,
           initialRoute: widget.initialPageRoute,
           onGenerateRoute: onGenerateRoute,
         ),
+      );
+    // );
+  }
+
+  PreferredSizeWidget _buildFlowAppBar() {
+    return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.chevron_left), onPressed: () {  },
       ),
     );
   }
@@ -92,7 +93,7 @@ class GroupFlowState extends State<GroupFlow> {
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                 create: (_) => ContactsBloc(),
-                child: ContactsSelectionWidget(onContactsSelected: _onContactsSelected)));
+                child: ContactsSelectionWidget(onContactsSelected: _onContactsSelected, onBackPressed: _pop )));
 
       case routeGroupProfilePage:
         List<Contact> contacts = settings.arguments as List<Contact>;
