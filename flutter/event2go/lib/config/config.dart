@@ -1,13 +1,12 @@
 import 'package:event2go/utils/build_mode.dart';
 import 'package:flutter/material.dart';
 
-
 // TODO Move to core module
 class Config extends InheritedWidget {
-
-  Config({required this.appDisplayName, required Widget child}):super(child: child);
+  Config({required this.appDisplayName, required this.isUserAuthorized, required Widget child}) : super(child: child);
 
   final String appDisplayName;
+  final bool isUserAuthorized;
 
   static Config? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<Config>();
@@ -31,4 +30,3 @@ class Config extends InheritedWidget {
 //   final int appInternalId;
 //
 // }
-

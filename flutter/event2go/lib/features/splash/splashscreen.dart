@@ -4,7 +4,6 @@ import 'dart:core';
 import 'package:event2go/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:event2go/features/login/ui/signup.dart';
 
 @Deprecated("flutter has its own splash screen, remove this")
 class SplashScreen extends StatefulWidget {
@@ -26,7 +25,7 @@ class SplashScreen extends StatefulWidget {
       this.photoSize = 200.0,
       this.onClick,
       this.navigateAfterSeconds,
-      this.title = const Text('Welcome In Our App'),
+      this.title = const Text('Event2Go'),
       this.backgroundColor = Colors.white,
       this.styleTextUnderTheLoader = const TextStyle(
           fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),

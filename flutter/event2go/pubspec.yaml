@@ -46,9 +46,9 @@ dependencies:
   fluttertoast: ^8.0.8
   logger: any  #for logging purpose
   #  todo remove from app, move to module
-#  flutterfire_ui: ^0.4.0+4
-#  firebase_auth: ^3.3.16
-#  firebase_core: ^1.15.0
+  firebase_auth: ^3.10.0
+  firebase_core: ^1.23.0
+  flutterfire_ui: ^0.4.0+4
 
   # https://flutter.dev/docs/development/data-and-backend/json#code-generation
   # $> flutter packages pub run build_runner build
@@ -62,8 +62,8 @@ dependencies:
     path: features/networking
   home:
     path: features/home
-  auth:
-    path: features/auth
+#  auth:
+#    path: features/auth
   models:
     path: features/models
 
