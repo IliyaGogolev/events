@@ -1,5 +1,5 @@
 import 'package:event2go/features/contacts/bloc/contacts_bloc.dart';
-import 'package:event2go/features/navigator/app_navigator.dart';
+import 'package:event2go/navigator/app_navigator.dart';
 import 'package:event2go/features/repositories/repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';

@@ -1,4 +1,4 @@
-import 'package:event2go/features/navigator/group_flow.dart';
+import 'package:event2go/navigator/group_flow.dart';
 import 'package:flutter/material.dart';
 
 

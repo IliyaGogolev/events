@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:event2go/features/addevent/add_event_widget.dart';
 import 'package:event2go/features/home/home_tabs_factory.dart';
-import 'package:event2go/features/navigator/group_flow.dart';
 import 'package:event2go/features/phone/ui/select_contacts.dart';
+import 'package:event2go/navigator/group_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home_tabs_view.dart';
 
@@ -21,6 +21,7 @@ class AppRouter {
       );
     } else {
       switch (settings.name) {
+        case "/":
         case HomeTabsView.tag:
           return MaterialPageRoute(builder: (_) => HomeTabsView(HomeTabsFactory()));
         case SelectContactsWidget.tag:

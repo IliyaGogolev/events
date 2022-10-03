@@ -1,5 +1,5 @@
 import 'package:event2go/features/group/bloc/group_bloc.dart';
-import 'package:event2go/features/navigator/app_navigator.dart';
+import 'package:event2go/navigator/app_navigator.dart';
 import 'package:event2go/utils/extensions.dart';
 import 'package:event2go/widgets/dialogs.dart';
 import 'package:flutter/material.dart';

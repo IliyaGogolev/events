@@ -1,7 +1,7 @@
 import 'package:event2go/features/repositories/repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:event2go/features/navigator/routes.dart';
+import 'package:event2go/navigator/routes.dart';
 import 'package:home/home_tabs_view.dart';
 import 'config/config.dart';
 
@@ -13,9 +13,7 @@ class Event2GoApp extends StatelessWidget {
   final RepositoriesProvider _repositoriesProvider;
 
   @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider.value(value: _repositoriesProvider, child: Event2GoView());
-  }
+  Widget build(BuildContext context) => RepositoryProvider.value(value: _repositoriesProvider, child: Event2GoView());
 }
 
 class Event2GoView extends StatelessWidget {
