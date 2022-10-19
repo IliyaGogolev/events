@@ -88,9 +88,10 @@ class AddEventState extends State<AddEventWidget> {
                 height: 40.0,
               ),
               new ListTile(
-                  title: new RaisedButton(
-                      padding: EdgeInsets.all(10.0),
-                      color: Colors.lightBlue,
+                  title: new ElevatedButton(
+                      // RaiseButton deprecated, padding & color changed in ElevateButton
+                      // padding: EdgeInsets.all(10.0),
+                      // color: Colors.lightBlue,
                       child: const Text('Create Event'),
                       onPressed: () {
                         event.name = eventNameController.text;

@@ -100,7 +100,7 @@ class _SelectContactsState extends State<SelectContactsWidget> {
         appBar: new AppBar(
           title: new Text('$_toolbarText'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
                 onPressed: () {
 //                  _formKey.currentState.save();
 //                  contact.postalAddresses = [address];
